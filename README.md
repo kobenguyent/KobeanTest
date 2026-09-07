@@ -24,16 +24,34 @@
 
 ---
 
-## 🚀 How to Run KobeanTest
+## 🚀 Quick Start — One Command to Launch
+
+Launch the entire application (Rust SQLite core, WAL mode, FTS5 engine, and localhost daemon):
+
+```bash
+pnpm start
+```
+
+Then open your browser to:
+👉 **`http://127.0.0.1:4000`**
+
+That's it! KobeanTest will instantly open with the full three-pane test suite authoring interface, sub-2ms FTS5 live search, keyboard execution runner, and floating Mini-HUD.
+
+---
+
+## 🛠️ How to Run & Build
 
 ### Prerequisites
 * **Node.js**: `v22+`
 * **pnpm**: `v10+` or `v11+`
 * **Rust**: `1.85+` stable with Cargo
 
-### 1. Start the Localhost Daemon & Database Engine
+### 1. Launch Localhost Web Console & Daemon
 ```bash
-# Starts the embedded SQLite WAL engine and HTTP server on http://127.0.0.1:4000
+# Single command (alias to cargo run in apps/desktop/src-tauri)
+pnpm start
+
+# Or using pnpm dev:daemon
 pnpm run dev:daemon
 
 # Or directly with Cargo:
@@ -50,9 +68,9 @@ pnpm run build:rust
 ./apps/desktop/src-tauri/target/release/kobean-desktop
 ```
 
-### 3. Open the Floating Mini-HUD
-- In the desktop application, click **"🪟 Float HUD"** in the top navigation bar.
-- Or open with query parameter: `http://localhost:5173/?view=hud`.
+### 3. Launch the Floating Mini-HUD (Pin-on-Top Testing)
+- In the web console or desktop app, click **"🪟 Launch Mini-HUD"** in the top bar.
+- Or open directly in a compact popup window: `http://127.0.0.1:4000/?view=hud`.
 
 ### 4. Ingest CI Test Results (`@kobean/cli`)
 ```bash

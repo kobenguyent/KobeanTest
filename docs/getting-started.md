@@ -19,26 +19,30 @@ All test data, media attachments, full-text indexes, and credentials live strict
 
 ## 2. Quick Start: Launching KobeanTest
 
-### Option A: Native Desktop App & Localhost Daemon (Recommended)
+### Option A: One Command Launch — Web Console & Localhost Daemon (Recommended)
 
-To start the embedded Rust backend and local daemon:
+To compile and boot the complete application with a single command:
 
 ```bash
-# Start the local daemon and database engine
-pnpm run dev:daemon
-# Or directly with Cargo:
-cd apps/desktop/src-tauri && cargo run
+pnpm start
 ```
+
+*(Alternatively: `pnpm run dev:daemon` or `cargo run --manifest-path apps/desktop/src-tauri/Cargo.toml`)*
+
+Then open your browser to:
+👉 **`http://127.0.0.1:4000`**
 
 When started, KobeanTest automatically:
 1. Initializes SQLite in Write-Ahead Logging (WAL) mode under `~/.kobean/kobean.db` (file permissions `0600`).
-2. Creates the media storage directory `~/.kobean/media/` (directory permissions `0700`).
-3. Generates a secure loopback session token in `~/.kobean/session.json` (permissions `0600`).
-4. Binds the embedded HTTP server to `http://127.0.0.1:4000`.
+2. Generates the FTS5 Porter stemmer full-text search indexes.
+3. Creates the local media storage directory `~/.kobean/media/` (directory permissions `0700`).
+4. Generates a secure loopback session token in `~/.kobean/session.json` (permissions `0600`).
+5. Serves the self-contained interactive web console on `GET /` and `GET /index.html`.
+6. Exposes the REST API and session discovery on `http://127.0.0.1:4000/api/v1` and `/session`.
 
 ### Option B: Compiling the Native Production Binary
 
-To build the optimized, zero-panic release binary:
+To build the optimized, release desktop binary:
 
 ```bash
 pnpm run build:rust

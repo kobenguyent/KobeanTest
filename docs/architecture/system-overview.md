@@ -17,10 +17,10 @@ graph TB
             WebUI[React 19 SPA on http://127.0.0.1:4000]
         end
 
-        subgraph LocalDaemon [Localhost HTTP & WebSocket Daemon: Axum / Tokio]
-            HTTPDaemon[Loopback API & WS Hub :4000]
+        subgraph LocalDaemon [Localhost Embedded HTTP Daemon]
+            HTTPDaemon[Loopback HTTP & API :4000]
             RustCore <--> HTTPDaemon
-            WebUI <-->|HTTP / WS with Bearer Auth| HTTPDaemon
+            WebUI <-->|HTTP with Bearer Auth & /session| HTTPDaemon
         end
 
         subgraph LocalStorage [Local Disk]

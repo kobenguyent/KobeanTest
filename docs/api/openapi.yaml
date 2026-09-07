@@ -23,6 +23,22 @@ paths:
       responses:
         '200':
           description: Daemon is healthy
+  /session:
+    get:
+      summary: Loopback session token discovery for local browser console
+      security: []
+      responses:
+        '200':
+          description: Session token found in ~/.kobean/session.json
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                  status:
+                    type: string
   /projects/{project_id}/suites:
     get:
       summary: List all test suites in a project
