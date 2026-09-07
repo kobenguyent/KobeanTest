@@ -1,0 +1,17 @@
+{
+  "name": "@kobean/cli",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "kobean": "./src/index.ts"
+  },
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": {
+    "test": "node --experimental-strip-types --test tests/*.test.js"
+  },
+  "dependencies": {
+    "@kobean/core": "workspace:*"
+  }
+}

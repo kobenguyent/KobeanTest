@@ -8,6 +8,21 @@ importers:
 
   .: {}
 
+  apps/desktop:
+    dependencies:
+      '@kobean/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+      '@kobean/ui':
+        specifier: workspace:*
+        version: link:../../packages/ui
+
+  packages/cli:
+    dependencies:
+      '@kobean/core':
+        specifier: workspace:*
+        version: link:../core
+
   packages/core: {}
 
   packages/ui:

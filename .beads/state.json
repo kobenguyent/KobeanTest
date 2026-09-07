@@ -1,7 +1,7 @@
 {
   "project": "KobeanTest",
   "version": "0.1.0",
-  "active_milestone": "Phase 4 - Local Interactive Pilot Workflow & Desktop Interface",
+  "active_milestone": "Phase 6 - Native Mini-HUD & Multi-OS Hardening",
   "tasks": [
     {
       "id": "KB-TASK-001",
@@ -58,6 +58,20 @@
       "status": "completed",
       "assignee": "AI Agent",
       "blocked_by": ["KB-TASK-002"]
+    },
+    {
+      "id": "KB-TASK-009",
+      "title": "Implement @kobean/cli test runner tool with zero-dependency JUnit XML parsing",
+      "status": "completed",
+      "assignee": "AI Agent",
+      "blocked_by": ["KB-TASK-006", "KB-TASK-007"]
+    },
+    {
+      "id": "KB-TASK-010",
+      "title": "Implement interactive Three-Pane desktop frontend with SuiteTree, CaseGrid, CaseDetailPane, and RunExecutionView",
+      "status": "completed",
+      "assignee": "AI Agent",
+      "blocked_by": ["KB-TASK-008"]
     }
   ]
 }

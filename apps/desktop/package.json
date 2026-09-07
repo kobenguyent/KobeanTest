@@ -1,0 +1,14 @@
+{
+  "name": "@kobean/desktop",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "@kobean/core": "workspace:*",
+    "@kobean/ui": "workspace:*"
+  }
+}
