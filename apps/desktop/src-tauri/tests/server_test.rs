@@ -272,4 +272,24 @@ fn test_http_server_endpoints_and_security() {
     dispatch_request(&mut cors_out, cors_req, secret_token, Arc::clone(&db)).expect("Dispatch options");
     let options_str = String::from_utf8_lossy(&cors_out);
     assert!(options_str.starts_with("HTTP/1.1 204 No Content"));
+
+    // 10. Root Web Console HTML -> 200 OK
+    let mut html_out = Vec::new();
+    let html_req = HttpRequest {
+        method: "GET".to_string(),
+        path: "/".to_string(),
+        query: "".to_string(),
+        headers: vec![],
+        body: vec![],
+    };
+    dispatch_request(&mut html_out, html_req, secret_token, Arc::clone(&db)).expect("Dispatch html get");
+    let html_resp = String::from_utf8_lossy(&html_out);
+    assert!(html_resp.starts_with("HTTP/1.1 200 OK"));
+    assert!(html_resp.contains("Content-Type: text/html"));
+    assert!(html_resp.contains("KobeanTest"));
+
+    // 11. Loopback Session Token Discovery -> 200 OK
+    let (status, sess) = run_request(Arc::clone(&db), secret_token, "GET", "/session", "", None, None);
+    assert_eq!(status, 200);
+    assert_eq!(sess["token"], secret_token);
 }

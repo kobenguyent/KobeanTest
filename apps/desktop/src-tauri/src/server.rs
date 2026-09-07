@@ -199,6 +199,22 @@ pub fn dispatch_request<W: Write>(
         );
     }
 
+    // Root web UI
+    if (req.path == "/" || req.path == "/index.html") && req.method == "GET" {
+        let html = include_str!("../static/index.html");
+        return send_raw_response(stream, 200, "OK", "text/html; charset=utf-8", html.as_bytes());
+    }
+
+    // Session discovery for local web UI
+    if req.path == "/session" && req.method == "GET" {
+        return send_response(
+            stream,
+            200,
+            "OK",
+            json!({ "token": expected_token, "status": "ok" }),
+        );
+    }
+
     // 3. Authenticate Bearer Token for /api/v1/*
     if req.path.starts_with("/api/v1") {
         let auth_header = req.get_header("Authorization").unwrap_or("");

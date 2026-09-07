@@ -1,0 +1,471 @@
+<!doctype html>
+<html lang="en" data-theme="obsidian">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KobeanTest — 100% Localhost Test Management</title>
+  <style>
+    :root, [data-theme="obsidian"] {
+      --canvas: #09090b;
+      --card: #121215;
+      --border: rgba(255, 255, 255, 0.08);
+      --text: #fafafa;
+      --muted: #a1a1aa;
+      --accent: #6366f1;
+      --accent-hover: #4f46e5;
+    }
+    [data-theme="nordic"] {
+      --canvas: #0f172a;
+      --card: #1e293b;
+      --border: rgba(255, 255, 255, 0.1);
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-hover: #0ea5e9;
+    }
+    [data-theme="paper"] {
+      --canvas: #ffffff;
+      --card: #f8fafc;
+      --border: rgba(0, 0, 0, 0.08);
+      --text: #0f172a;
+      --muted: #64748b;
+      --accent: #4f46e5;
+      --accent-hover: #4338ca;
+    }
+    [data-theme="sand"] {
+      --canvas: #fdfbf7;
+      --card: #f7f4ec;
+      --border: rgba(0, 0, 0, 0.08);
+      --text: #1c1917;
+      --muted: #78716c;
+      --accent: #d97706;
+      --accent-hover: #b45309;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Geist Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: var(--canvas);
+      color: var(--text);
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      height: 48px;
+      border-bottom: 1px solid var(--border);
+      background: var(--canvas);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      shrink: 0;
+      user-select: none;
+    }
+    .badge {
+      font-size: 10px;
+      font-family: monospace;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+    .btn {
+      background: var(--card);
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 500;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.1s;
+    }
+    .btn:hover { background: var(--border); }
+    .btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .btn-primary:hover { background: var(--accent-hover); }
+    .nav-tabs { display: flex; background: var(--card); border: 1px solid var(--border); border-radius: 4px; padding: 2px; }
+    .nav-tab { padding: 3px 10px; font-size: 11px; font-weight: 500; border-radius: 3px; border: none; background: transparent; color: var(--muted); cursor: pointer; }
+    .nav-tab.active { background: var(--canvas); color: var(--text); box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
+    .workspace { flex: 1; display: flex; overflow: hidden; }
+    .pane-left { width: 260px; border-right: 1px solid var(--border); background: var(--canvas); display: flex; flex-direction: column; }
+    .pane-center { flex: 1; display: flex; flex-direction: column; background: var(--card); overflow: hidden; }
+    .pane-right { width: 380px; border-left: 1px solid var(--border); background: var(--canvas); display: flex; flex-direction: column; }
+    .pane-header { padding: 12px 16px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+    .pane-title { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); }
+    .tree-item { padding: 8px 16px; font-size: 12px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; border-left: 2px solid transparent; }
+    .tree-item:hover { background: rgba(255,255,255,0.03); }
+    .tree-item.active { background: var(--card); border-left-color: var(--accent); color: var(--text); font-weight: 500; }
+    .case-row { padding: 10px 16px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; cursor: pointer; font-size: 12px; }
+    .case-row:hover { background: rgba(255,255,255,0.02); }
+    .case-row.active { background: var(--canvas); border-left: 2px solid var(--accent); }
+    .pill { display: inline-flex; align-items: center; gap: 4px; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 600; font-family: monospace; }
+    .pill-passed { background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.3); }
+    .pill-failed { background: rgba(244, 63, 94, 0.15); color: #f43f5e; border: 1px solid rgba(244, 63, 94, 0.3); }
+    .pill-blocked { background: rgba(245, 158, 11, 0.15); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.3); }
+    .pill-skipped { background: rgba(148, 163, 184, 0.15); color: #94a3b8; border: 1px solid rgba(148, 163, 184, 0.3); }
+    .pill-pending { background: rgba(255, 255, 255, 0.05); color: var(--muted); border: 1px solid var(--border); }
+    input, select, textarea { background: var(--card); color: var(--text); border: 1px solid var(--border); border-radius: 4px; padding: 6px 10px; font-size: 12px; outline: none; }
+    input:focus, select:focus, textarea:focus { border-color: var(--accent); }
+    /* Floating Mini HUD */
+    #hud-widget { position: fixed; bottom: 24px; right: 24px; width: 360px; height: 220px; background: rgba(18, 18, 21, 0.95); backdrop-filter: blur(12px); border: 1px solid var(--border); border-radius: 8px; box-shadow: 0 8px 32px rgba(0,0,0,0.5); z-index: 100; display: none; flex-direction: column; justify-content: space-between; padding: 12px; }
+    /* Modal Canvas */
+    #modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(4px); z-index: 200; display: none; align-items: center; justify-content: center; }
+    #modal-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; width: 880px; max-height: 90vh; display: flex; flex-direction: column; overflow: hidden; }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div style="display: flex; align-items: center; gap: 14px;">
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <div style="width: 22px; height: 22px; border-radius: 4px; background: var(--accent); display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 12px; color: #fff;">K</div>
+        <span style="font-weight: 600; font-size: 14px; letter-spacing: -0.02em;">KobeanTest</span>
+        <span class="badge" id="host-badge">127.0.0.1:4000</span>
+      </div>
+      <div style="height: 14px; width: 1px; background: var(--border);"></div>
+      <span style="font-size: 12px; font-weight: 500; color: var(--muted);" id="project-label">Core Platform</span>
+      <div class="nav-tabs">
+        <button class="nav-tab active" id="tab-authoring" onclick="setMode('authoring')">Authoring</button>
+        <button class="nav-tab" id="tab-execution" onclick="setMode('execution')">Execution Run</button>
+      </div>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 8px;">
+      <button class="btn btn-primary" onclick="startRun()">▶ Run Tests</button>
+      <button class="btn" onclick="toggleHud()">🪟 Float HUD</button>
+      <select onchange="document.documentElement.setAttribute('data-theme', this.value)" style="height: 28px; padding: 2px 6px;">
+        <option value="obsidian">Obsidian Dark</option>
+        <option value="nordic">Nordic Slate</option>
+        <option value="paper">Clean Paper</option>
+        <option value="sand">Warm Sand</option>
+      </select>
+    </div>
+  </header>
+
+  <!-- Main 3-Pane Container -->
+  <div class="workspace" id="authoring-view">
+    <!-- Left Pane: Suite Tree -->
+    <div class="pane-left">
+      <div class="pane-header">
+        <span class="pane-title">Test Suites</span>
+        <button class="btn" onclick="createSuitePrompt()" style="padding: 2px 6px; font-size: 10px;">+ New</button>
+      </div>
+      <div id="suite-list" style="flex: 1; overflow-y: auto; padding: 6px 0;"></div>
+    </div>
+
+    <!-- Center Pane: Case Grid -->
+    <div class="pane-center">
+      <div class="pane-header">
+        <input type="text" id="search-input" placeholder="Search test cases (FTS5 sub-2ms)..." style="width: 280px;" oninput="handleSearch(this.value)" />
+        <button class="btn btn-primary" onclick="createCasePrompt()">+ New Test Case</button>
+      </div>
+      <div id="case-grid" style="flex: 1; overflow-y: auto;"></div>
+    </div>
+
+    <!-- Right Pane: Detail & Step Editor -->
+    <div class="pane-right">
+      <div class="pane-header">
+        <span class="pane-title" id="detail-header">Case Details</span>
+        <button class="btn" onclick="saveActiveCase()">Save</button>
+      </div>
+      <div id="detail-content" style="flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 12px;">
+        <div style="color: var(--muted); font-size: 12px;">Select a test case to edit steps and attributes.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Execution Runner Container -->
+  <div class="workspace" id="execution-view" style="display: none; flex-direction: column;">
+    <div style="height: 44px; border-bottom: 1px solid var(--border); padding: 0 16px; display: flex; align-items: center; justify-content: space-between; background: var(--canvas);">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <span style="font-weight: 600; font-size: 13px;" id="run-title-label">Active Test Run</span>
+        <div id="run-stats" style="display: flex; gap: 6px;"></div>
+      </div>
+      <div style="font-size: 11px; color: var(--muted);">
+        Hotkeys: <kbd>P</kbd> Pass • <kbd>F</kbd> Fail • <kbd>B</kbd> Block • <kbd>S</kbd> Skip • <kbd>J</kbd>/<kbd>K</kbd> Navigate
+      </div>
+    </div>
+    <div style="flex: 1; display: flex; overflow: hidden;">
+      <div style="width: 300px; border-right: 1px solid var(--border); overflow-y: auto;" id="exec-items-list"></div>
+      <div style="flex: 1; padding: 24px; overflow-y: auto; display: flex; flex-direction: column; justify-content: space-between;" id="exec-active-detail">
+        <div style="color: var(--muted); font-size: 13px;">No item selected.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Mini HUD -->
+  <div id="hud-widget">
+    <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 6px;">
+      <span style="font-size: 11px; font-weight: bold; color: var(--accent);" id="hud-id">#LOC-1</span>
+      <button onclick="toggleHud()" style="background: none; border: none; color: var(--muted); cursor: pointer;">✕</button>
+    </div>
+    <div style="flex: 1; padding: 8px 0;">
+      <div style="font-size: 12px; font-weight: 600;" id="hud-title">Title</div>
+      <div style="font-size: 11px; color: var(--muted); margin-top: 4px;" id="hud-action">Action: ...</div>
+    </div>
+    <div style="display: flex; gap: 6px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 6px;">
+      <button class="btn" style="flex: 1; justify-content: center; color: #10b981;" onclick="triageActive('passed')">P Pass</button>
+      <button class="btn" style="flex: 1; justify-content: center; color: #f43f5e;" onclick="triageActive('failed')">F Fail</button>
+      <button class="btn" style="flex: 1; justify-content: center; color: #94a3b8;" onclick="triageActive('skipped')">S Skip</button>
+    </div>
+  </div>
+
+  <!-- Screenshot Canvas Modal -->
+  <div id="modal-overlay">
+    <div id="modal-card">
+      <div class="pane-header">
+        <span class="pane-title">Annotate Screenshot</span>
+        <div>
+          <button class="btn" onclick="closeModal()">Cancel</button>
+          <button class="btn btn-primary" onclick="saveAnnotation()">Attach to Defect</button>
+        </div>
+      </div>
+      <div style="padding: 16px; display: flex; justify-content: center; overflow: auto; background: rgba(0,0,0,0.5);">
+        <canvas id="anno-canvas" style="max-width: 100%; max-height: 60vh; border: 1px solid var(--border);"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let token = '';
+    let project = null;
+    let suites = [];
+    let cases = [];
+    let activeCase = null;
+    let activeRun = null;
+    let activeRunItems = [];
+    let activeRunIndex = 0;
+
+    async function init() {
+      try {
+        const sRes = await fetch('/session');
+        if (sRes.ok) {
+          const sData = await sRes.json();
+          token = sData.token;
+        }
+      } catch (e) {}
+
+      const authHeaders = { 'Authorization': `Bearer ${token}` };
+      try {
+        let wsRes = await fetch('/api/v1/workspaces', { headers: authHeaders });
+        let wsList = await wsRes.json();
+        let ws = wsList[0];
+        if (!ws) {
+          const createWs = await fetch('/api/v1/workspaces', { method: 'POST', headers: authHeaders, body: JSON.stringify({ name: 'Default Workspace', slug: 'default' }) });
+          ws = await createWs.json();
+        }
+
+        let pRes = await fetch('/api/v1/projects', { headers: { ...authHeaders, 'X-Workspace-Id': ws.id } });
+        let pList = await pRes.json();
+        project = pList[0];
+        if (!project) {
+          const createP = await fetch('/api/v1/projects', { method: 'POST', headers: authHeaders, body: JSON.stringify({ workspace_id: ws.id, name: 'Core Platform', key: 'LOC' }) });
+          project = await createP.json();
+        }
+        document.getElementById('project-label').innerText = project.name;
+
+        await loadSuites();
+        await loadCases();
+      } catch (err) {
+        console.warn('Standalone demo mode:', err);
+      }
+    }
+
+    async function loadSuites() {
+      const res = await fetch(`/api/v1/projects/${project.id}/suites`, { headers: { 'Authorization': `Bearer ${token}` } });
+      suites = await res.json();
+      renderSuites();
+    }
+
+    async function loadCases() {
+      const res = await fetch(`/api/v1/projects/${project.id}/cases`, { headers: { 'Authorization': `Bearer ${token}` } });
+      cases = await res.json();
+      renderCases(cases);
+    }
+
+    function renderSuites() {
+      const list = document.getElementById('suite-list');
+      list.innerHTML = `<div class="tree-item active" onclick="filterSuite(null)">All Test Cases (${cases.length})</div>` +
+        suites.map(s => `<div class="tree-item" onclick="filterSuite('${s.id}')">📁 ${s.title}</div>`).join('');
+    }
+
+    function renderCases(items) {
+      const grid = document.getElementById('case-grid');
+      grid.innerHTML = items.map((c, i) => `
+        <div class="case-row ${activeCase?.id === c.id ? 'active' : ''}" onclick="selectCase('${c.id}')">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span style="font-family: monospace; font-size: 11px; color: var(--accent);">#${project.key}-${c.case_number}</span>
+            <span style="font-weight: 500;">${c.title}</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <span class="badge">${c.priority}</span>
+            <span class="badge">${c.type_}</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function selectCase(id) {
+      activeCase = cases.find(c => c.id === id);
+      renderCases(cases);
+      const detail = document.getElementById('detail-content');
+      let steps = [];
+      try { steps = JSON.parse(activeCase.steps_json || '[]'); } catch(e){}
+
+      detail.innerHTML = `
+        <div>
+          <label style="font-size: 10px; text-transform: uppercase; color: var(--muted); font-weight: 600;">Title</label>
+          <input type="text" id="edit-title" value="${activeCase.title}" style="width: 100%; margin-top: 4px;" />
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+          <div>
+            <label style="font-size: 10px; text-transform: uppercase; color: var(--muted); font-weight: 600;">Priority</label>
+            <select id="edit-priority" style="width: 100%; margin-top: 4px;">
+              <option value="critical" ${activeCase.priority === 'critical' ? 'selected' : ''}>Critical</option>
+              <option value="high" ${activeCase.priority === 'high' ? 'selected' : ''}>High</option>
+              <option value="medium" ${activeCase.priority === 'medium' ? 'selected' : ''}>Medium</option>
+              <option value="low" ${activeCase.priority === 'low' ? 'selected' : ''}>Low</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size: 10px; text-transform: uppercase; color: var(--muted); font-weight: 600;">Type</label>
+            <select id="edit-type" style="width: 100%; margin-top: 4px;">
+              <option value="manual" ${activeCase.type_ === 'manual' ? 'selected' : ''}>Manual</option>
+              <option value="automated" ${activeCase.type_ === 'automated' ? 'selected' : ''}>Automated</option>
+              <option value="exploratory" ${activeCase.type_ === 'exploratory' ? 'selected' : ''}>Exploratory</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <label style="font-size: 10px; text-transform: uppercase; color: var(--muted); font-weight: 600;">Preconditions</label>
+          <textarea id="edit-preconditions" rows="2" style="width: 100%; margin-top: 4px;">${activeCase.preconditions || ''}</textarea>
+        </div>
+        <div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+            <label style="font-size: 10px; text-transform: uppercase; color: var(--muted); font-weight: 600;">Steps (${steps.length})</label>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 6px;">
+            ${steps.map((s, idx) => `
+              <div style="background: var(--card); border: 1px solid var(--border); padding: 8px; border-radius: 4px; font-size: 11px;">
+                <div style="font-weight: 600; color: var(--accent);">Step ${idx + 1}</div>
+                <div style="margin-top: 2px;">Action: ${s.action}</div>
+                <div style="margin-top: 2px; color: #10b981;">Expected: ${s.expected || 'N/A'}</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    async function handleSearch(q) {
+      if (!q.trim()) return renderCases(cases);
+      const res = await fetch(`/api/v1/projects/${project.id}/search?q=${encodeURIComponent(q)}`, { headers: { 'Authorization': `Bearer ${token}` } });
+      const hits = await res.json();
+      renderCases(hits);
+    }
+
+    function setMode(mode) {
+      document.getElementById('authoring-view').style.display = mode === 'authoring' ? 'flex' : 'none';
+      document.getElementById('execution-view').style.display = mode === 'execution' ? 'flex' : 'none';
+      document.getElementById('tab-authoring').classList.toggle('active', mode === 'authoring');
+      document.getElementById('tab-execution').classList.toggle('active', mode === 'execution');
+    }
+
+    function startRun() {
+      activeRun = { id: `run-${Date.now()}`, title: `Manual Test Run - ${new Date().toLocaleTimeString()}` };
+      activeRunItems = cases.map((c, idx) => ({ id: `item-${c.id}`, case: c, status: 'pending' }));
+      activeRunIndex = 0;
+      setMode('execution');
+      renderExecution();
+    }
+
+    function renderExecution() {
+      document.getElementById('run-title-label').innerText = activeRun.title;
+      const passed = activeRunItems.filter(i => i.status === 'passed').length;
+      const failed = activeRunItems.filter(i => i.status === 'failed').length;
+      const skipped = activeRunItems.filter(i => i.status === 'skipped').length;
+      const blocked = activeRunItems.filter(i => i.status === 'blocked').length;
+
+      document.getElementById('run-stats').innerHTML = `
+        <span class="pill pill-passed">✓ ${passed} Passed</span>
+        <span class="pill pill-failed">✕ ${failed} Failed</span>
+        ${blocked > 0 ? `<span class="pill pill-blocked">⊘ ${blocked} Blocked</span>` : ''}
+        ${skipped > 0 ? `<span class="pill pill-skipped">↷ ${skipped} Skipped</span>` : ''}
+      `;
+
+      const list = document.getElementById('exec-items-list');
+      list.innerHTML = activeRunItems.map((item, idx) => `
+        <div class="case-row ${idx === activeRunIndex ? 'active' : ''}" onclick="selectExecItem(${idx})">
+          <span style="font-size: 11px;">#${project.key}-${item.case.case_number} ${item.case.title}</span>
+          <span class="pill pill-${item.status}">${item.status}</span>
+        </div>
+      `).join('');
+
+      const active = activeRunItems[activeRunIndex];
+      const detail = document.getElementById('exec-active-detail');
+      if (!active) return;
+      detail.innerHTML = `
+        <div>
+          <span style="font-family: monospace; font-size: 12px; color: var(--accent);">#${project.key}-${active.case.case_number}</span>
+          <h1 style="font-size: 18px; font-weight: 600; margin: 8px 0;">${active.case.title}</h1>
+          <div style="background: var(--canvas); border: 1px solid var(--border); padding: 12px; border-radius: 6px; margin-top: 12px;">
+            <div style="font-size: 11px; text-transform: uppercase; color: var(--muted); font-weight: bold;">Quick Triage (0ms)</div>
+            <div style="display: flex; gap: 8px; margin-top: 8px;">
+              <button class="btn" style="flex: 1; justify-content: center; color: #10b981;" onclick="triageActive('passed')">P Pass</button>
+              <button class="btn" style="flex: 1; justify-content: center; color: #f43f5e;" onclick="triageActive('failed')">F Fail</button>
+              <button class="btn" style="flex: 1; justify-content: center; color: #f59e0b;" onclick="triageActive('blocked')">B Block</button>
+              <button class="btn" style="flex: 1; justify-content: center; color: #94a3b8;" onclick="triageActive('skipped')">S Skip</button>
+            </div>
+          </div>
+        </div>
+        <div style="font-size: 12px; color: var(--muted);">Paste <kbd>⌘V</kbd> to attach annotated screenshot</div>
+      `;
+
+      // Update HUD
+      document.getElementById('hud-id').innerText = `#${project.key}-${active.case.case_number}`;
+      document.getElementById('hud-title').innerText = active.case.title;
+    }
+
+    function selectExecItem(idx) {
+      activeRunIndex = idx;
+      renderExecution();
+    }
+
+    function triageActive(status) {
+      if (activeRunItems[activeRunIndex]) {
+        activeRunItems[activeRunIndex].status = status;
+        activeRunIndex = Math.min(activeRunItems.length - 1, activeRunIndex + 1);
+        renderExecution();
+      }
+    }
+
+    function toggleHud() {
+      const hud = document.getElementById('hud-widget');
+      hud.style.display = hud.style.display === 'flex' ? 'none' : 'flex';
+    }
+
+    // Keyboard shortcuts
+    window.addEventListener('keydown', (e) => {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      const k = e.key.toLowerCase();
+      if (document.getElementById('execution-view').style.display === 'flex') {
+        if (k === 'p') triageActive('passed');
+        else if (k === 'f') triageActive('failed');
+        else if (k === 'b') triageActive('blocked');
+        else if (k === 's') triageActive('skipped');
+        else if (k === 'j') selectExecItem(Math.min(activeRunItems.length - 1, activeRunIndex + 1));
+        else if (k === 'k') selectExecItem(Math.max(0, activeRunIndex - 1));
+      }
+    });
+
+    init();
+  </script>
+</body>
+</html>
