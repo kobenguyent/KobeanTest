@@ -1,7 +1,7 @@
 # KobeanTest — Hierarchical Work Breakdown Structure (WBS)
 
 > **Document Type**: Work Breakdown Structure (WBS) Dictionary  
-> **Total Sprints**: 7 Sprints (Sprint 0 through Sprint 6)  
+> **Structure**: Reorganized by Demonstrable Outcome Deliverables (1 through 6)  
 > **Total Story Points**: 233 Story Points
 
 ---
@@ -9,145 +9,98 @@
 ## Complete WBS Dictionary
 
 ```text
-WBS 0.0 - Governance, AI Harness & Monorepo Foundation (21 pts)
-├── 0.1 Repository Setup & Git Hooks (5 pts)
-│   ├── 0.1.1 Git repository initialization & branch 'main' baseline [DONE]
-│   ├── 0.1.2 Configure .gitignore for Rust, Node, Tauri, SQLite [DONE]
-│   ├── 0.1.3 Configure .betterleaks.toml secret scanner [DONE]
-│   └── 0.1.4 Configure lefthook.yml pre-commit hooks [DONE]
-├── 0.2 AI Agent Rules & Unified Knowledge Base (8 pts)
-│   ├── 0.2.1 AGENTS.md & CLAUDE.md master routers [DONE]
-│   ├── 0.2.2 .agents/rules/ core, ponytail, superpowers, taste, tauri, typescript, security [DONE]
-│   ├── 0.2.3 .agents/personas/ CTO, SDET, Security Auditor, Designer [DONE]
-│   ├── 0.2.4 .agents/skills/ new-adr, taste-skill, benchmark-ingest [DONE]
-│   └── 0.2.5 .cursor/rules/*.mdc scoped files & mcp.json [DONE]
-└── 0.3 Architectural Baseline & ADRs (8 pts)
-    ├── 0.3.1 docs/architecture/system-overview.md C4 diagram [DONE]
-    ├── 0.3.2 ADR-0001: Tauri v2 Desktop Shell [DONE]
-    ├── 0.3.3 ADR-0002: SQLite FTS5 Localhost Storage [DONE]
-    └── 0.3.4 ADR-0003: Embedded Localhost Web Server Daemon [DONE]
+DELIVERABLE 1.0 - Runnable Workspace & Unforgiving Quality Gates (21 pts)
+├── 1.1 Repository Setup & Git Hooks (8 pts)
+│   ├── 1.1.1 Git repository initialization & branch 'main' baseline [DONE]
+│   ├── 1.1.2 Configure .gitignore for Rust, Node, Tauri, SQLite [DONE]
+│   ├── 1.1.3 Configure .betterleaks.toml with zero-leak policy [DONE]
+│   ├── 1.1.4 Configure lefthook.yml without failure suppressions (no || true) [DONE]
+│   └── 1.1.5 Establish root package.json & pnpm-workspace.yaml with 'typecheck' script
+│       ├── Target: package.json, pnpm-workspace.yaml | Complexity: Low | Pts: 3
+├── 1.2 AI Agent Rules & Unified Knowledge Base (8 pts)
+│   ├── 1.2.1 AGENTS.md & CLAUDE.md master routers [DONE]
+│   ├── 1.2.2 .agents/rules/ with clippy::unwrap_used enforcement [DONE]
+│   ├── 1.2.3 .agents/personas/ CTO, SDET, Security Auditor, Designer [DONE]
+│   ├── 1.2.4 .agents/skills/ new-adr, taste-skill, benchmark-ingest [DONE]
+│   └── 1.2.5 .cursor/rules/*.mdc scoped files & mcp.json [DONE]
+└── 1.3 Architectural Baseline & ADRs (5 pts)
+    ├── 1.3.1 docs/architecture/system-overview.md C4 diagram [DONE]
+    ├── 1.3.2 ADR-0001: Tauri v2 Desktop Shell [DONE]
+    ├── 1.3.3 ADR-0002: SQLite FTS5 Localhost Storage & Native Backup API [DONE]
+    └── 1.3.4 ADR-0003: Embedded Localhost Web Server Daemon [DONE]
 
-WBS 1.0 - Core Domain Contracts & Linear Design System (34 pts)
-├── 1.1 Core Domain Models (packages/core) (13 pts)
-│   ├── 1.1.1 Scaffold packages/core TypeScript ESM workspace
-│   │   ├── Target File: packages/core/package.json, tsconfig.json
-│   │   └── Dependencies: None | Complexity: Low | Pts: 2
-│   ├── 1.1.2 Implement schemas.ts with Zod schemas for all entities
-│   │   ├── Target File: packages/core/src/schemas.ts
-│   │   └── Dependencies: 1.1.1 | Complexity: Med | Pts: 5
-│   ├── 1.1.3 Implement types.ts inferring types from Zod schemas
-│   │   ├── Target File: packages/core/src/types.ts
-│   │   └── Dependencies: 1.1.2 | Complexity: Low | Pts: 2
-│   ├── 1.1.4 Implement status.ts semantic color and icon mapping
-│   │   ├── Target File: packages/core/src/status.ts
-│   │   └── Dependencies: 1.1.2 | Complexity: Low | Pts: 2
-│   └── 1.1.5 Unit test suite for schemas and status mapping
-│       ├── Target File: packages/core/tests/schemas.test.ts
-│       └── Dependencies: 1.1.2 | Complexity: Low | Pts: 2
-└── 1.2 Linear-Grade Design System (packages/ui) (21 pts)
-    ├── 1.2.1 Tailwind CSS v4 & theme token configuration
-    │   ├── Target File: packages/ui/src/styles/theme.css
-    │   └── Dependencies: None | Complexity: Med | Pts: 3
-    ├── 1.2.2 Implement ThemeProvider (Obsidian, Nordic, Clean Paper, Warm Sand)
-    │   ├── Target File: packages/ui/src/theme/theme-provider.tsx
-    │   └── Dependencies: 1.2.1 | Complexity: Med | Pts: 4
-    ├── 1.2.3 Build Accessible StatusPill component (Color + Icon + Text)
-    │   ├── Target File: packages/ui/src/components/status-pill.tsx
-    │   └── Dependencies: 1.1.4, 1.2.1 | Complexity: Low | Pts: 3
-    ├── 1.2.4 Build CommandPalette (Cmd+K) modal with fuzzy search
-    │   ├── Target File: packages/ui/src/components/command-palette.tsx
-    │   └── Dependencies: 1.2.1 | Complexity: High | Pts: 5
-    ├── 1.2.5 Build StepEditor with TipTap markdown & DOMPurify
-    │   ├── Target File: packages/ui/src/components/step-editor.tsx
-    │   └── Dependencies: 1.1.2, 1.2.1 | Complexity: High | Pts: 4
-    └── 1.2.6 Execute Taste-Skill 7-point visual audit checklist
-        ├── Target File: docs/design-system/audit-report.md
-        └── Dependencies: 1.2.2, 1.2.3, 1.2.4, 1.2.5 | Complexity: Low | Pts: 2
+DELIVERABLE 2.0 - Durable Authoring & Immutable Execution Engine (45 pts)
+├── 2.1 Core Schema & Domain Invariants (18 pts)
+│   ├── 2.1.1 Implement DDL migrations with project-scoped foreign keys
+│   │   ├── Target: apps/desktop/src-tauri/src/db/migrations.rs
+│   │   └── Invariants: FOREIGN KEY (project_id, suite_id) REFERENCES test_suites(project_id, id)
+│   ├── 2.1.2 Implement test_case_revisions table and version triggers
+│   ├── 2.1.3 Implement test_run_items and test_executions with ON DELETE RESTRICT
+│   ├── 2.1.4 Implement execution_step_results and step-linked attachments
+│   └── 2.1.5 Automated test: Deleting/editing test case leaves historical runs 100% intact
+├── 2.2 External FTS5 Search & Authoritative Repopulation (14 pts)
+│   ├── 2.2.1 Implement fts5_cases virtual table and auto-sync triggers
+│   ├── 2.2.2 Implement authoritative index repopulation query
+│   └── 2.2.3 Benchmark: Sub-5ms FTS5 search across 50,000 test cases
+└── 2.3 Rust Core IPC & Daemon Logic (13 pts)
+    ├── 2.3.1 Case CRUD IPC commands with Result<T, AppError> (clippy::unwrap_used enforced)
+    ├── 2.3.2 Test run execution IPC commands (create_run, record_step_result)
+    └── 2.3.3 Loopback token generation (~/.kobean/session.json with 0600 permissions)
 
-WBS 2.0 - Local SQLite FTS5 Engine & Tauri v2 Shell (34 pts)
-├── 2.1 Tauri v2 Native Shell (10 pts)
-│   ├── 2.1.1 Scaffold apps/desktop/src-tauri with Cargo.toml & dependencies
-│   │   ├── Target File: apps/desktop/src-tauri/Cargo.toml
-│   │   └── Dependencies: None | Complexity: Low | Pts: 3
-│   ├── 2.1.2 Configure tauri.conf.json with sandboxed window & capabilities
-│   │   ├── Target File: apps/desktop/src-tauri/tauri.conf.json
-│   │   └── Dependencies: 2.1.1 | Complexity: Med | Pts: 4
-│   └── 2.1.3 Implement Rust main.rs entrypoint and error types
-│       ├── Target File: apps/desktop/src-tauri/src/main.rs, error.rs
-│       └── Dependencies: 2.1.2 | Complexity: Low | Pts: 3
-├── 2.2 Embedded SQLite 3 & FTS5 Engine (13 pts)
-│   ├── 2.2.1 Implement schema migrations and WAL journal configuration
-│   │   ├── Target File: apps/desktop/src-tauri/src/db/migrations.rs
-│   │   └── Dependencies: 2.1.1 | Complexity: Med | Pts: 4
-│   ├── 2.2.2 Implement FTS5 virtual table fts5_cases & auto-sync triggers
-│   │   ├── Target File: apps/desktop/src-tauri/src/db/fts.rs
-│   │   └── Dependencies: 2.2.1 | Complexity: Med | Pts: 4
-│   └── 2.2.3 Automated test verifying sub-5ms FTS5 search across 10k cases
-│       ├── Target File: apps/desktop/src-tauri/tests/fts_benchmark.rs
-│       └── Dependencies: 2.2.2 | Complexity: Med | Pts: 5
-└── 2.3 Type-Safe Tauri IPC Commands (11 pts)
-    ├── 2.3.1 Implement suite IPC handlers (list_suites, create_suite)
-    │   ├── Target File: apps/desktop/src-tauri/src/commands/suites.rs
-    │   └── Dependencies: 2.2.1 | Complexity: Low | Pts: 3
-    ├── 2.3.2 Implement case CRUD handlers (list_cases, create_case, update_case)
-    │   ├── Target File: apps/desktop/src-tauri/src/commands/cases.rs
-    │   └── Dependencies: 2.2.2 | Complexity: Med | Pts: 4
-    └── 2.3.3 Implement execution handlers (create_test_run, record_execution)
-        ├── Target File: apps/desktop/src-tauri/src/commands/runs.rs
-        └── Dependencies: 2.2.1 | Complexity: Med | Pts: 4
+DELIVERABLE 3.0 - Atomic Backup, Restore & Recovery Pipeline (21 pts)
+├── 3.1 Point-in-Time SQLite Backup API (13 pts)
+│   ├── 3.1.1 Implement VACUUM INTO / rusqlite::backup routine
+│   ├── 3.1.2 Verify backup consistency during active WAL write transactions
+│   └── 3.1.3 Bundle backup.db and ~/.kobean/media/ into timestamped .tar.gz
+└── 3.2 Recovery & Integrity Checks (8 pts)
+    ├── 3.2.1 On-startup PRAGMA integrity_check verification
+    ├── 3.2.2 FTS5 row count audit and auto-repair
+    └── 3.2.3 Automated test: Simulate crashed write and verify clean recovery
 
-WBS 3.0 - Interactive UI & Test Case Management (55 pts)
-├── 3.1 Three-Pane Layout Engine (13 pts)
-│   ├── 3.1.1 Resizable 3-pane layout (Tree Left, Grid Center, Inspector Right)
-│   ├── 3.1.2 Keyboard shortcuts for panel collapse ([ / ] and Cmd+B)
-│   └── 3.1.3 Mobile and tablet responsive breakpoint adaptation
-├── 3.2 Suite Tree Explorer (13 pts)
-│   ├── 3.2.1 Recursive folder tree with nested suite counts
-│   ├── 3.2.2 Drag-and-drop suite reordering
-│   └── 3.2.3 Visual pass-rate progress indicators per suite
-├── 3.3 High-Performance Virtual Grid (16 pts)
-│   ├── 3.3.1 TanStack Virtual integration rendering 50,000+ test cases at 120 FPS
-│   ├── 3.3.2 Multi-criteria filter bar (priority, type, tags, automation status)
-│   └── 3.3.3 Column customization and sorting engine
-└── 3.4 Keyboard-Driven Execution Mode (13 pts)
-    ├── 3.4.1 J/K row navigation with optical highlight
-    ├── 3.4.2 P (Pass), F (Fail), S (Skip) hotkeys with 0ms Optimistic UI
-    └── 3.4.3 Background async persistence to SQLite
+DELIVERABLE 4.0 - Local Interactive Pilot Workflow (55 pts)
+├── 4.1 Linear-Grade Design System & Themes (13 pts)
+│   ├── 4.1.1 4 Curated Themes with mathematically verified WCAG AAA contrast
+│   ├── 4.1.2 Accessible StatusPill (Color + Lucide 1.75px Icon + Text)
+│   └── 4.1.3 Window-scoped hotkey manager (P, F, S active only on window focus)
+├── 4.2 Three-Pane Navigation & Hierarchy (16 pts)
+│   ├── 4.2.1 Collapsible Suite Tree with cycle prevention (CHECK parent_id != id)
+│   ├── 4.2.2 Virtualized Test Grid (TanStack Virtual) handling 50k cases at 120 FPS
+│   └── 4.2.3 Multi-tag, priority, and type filtering bar
+├── 4.3 Notion-Style Markdown Step Editor (13 pts)
+│   ├── 4.3.1 Inline /step and /table block commands
+│   ├── 4.3.2 DOMPurify HTML sanitization
+│   └── 4.3.3 Keystroke draft caching & 500ms debounce with beforeunload flush
+└── 4.4 Execution Mode with Optimistic UI (13 pts)
+    ├── 4.4.1 Three-state lifecycle: optimistic_pending -> persisted / failed_rollback
+    ├── 4.4.2 J/K row navigation and status toggling in 0ms
+    └── 4.4.3 Failure toast with retry action
 
-WBS 4.0 - Native Desktop Exploratory HUD & Capture (34 pts)
-├── 4.1 Always-On-Top Mini-HUD Window (21 pts)
-│   ├── 4.1.1 Multi-window Tauri configuration for 360x220px HUD
-│   ├── 4.1.2 Mini-HUD UI with compact step action, expected result & hotkeys
-│   └── 4.1.3 Sub-2ms local event bus syncing HUD state with main window
-└── 4.2 Screenshot Capture & Annotation (13 pts)
-    ├── 4.2.1 Native screen capture hook in Rust
-    ├── 4.2.2 Clipboard paste handler (Cmd+V) with image crop & annotation tools
-    └── 4.2.3 Save media locally to ~/.kobean/media/ and link in database
-
-WBS 5.0 - Localhost Web Server & CI/CD Ingestion CLI (34 pts)
-├── 5.1 Localhost Web Server Daemon (13 pts)
-│   ├── 5.1.1 HTTP daemon bound to 127.0.0.1:4000
-│   ├── 5.1.2 Static SPA file serving for Chrome, Safari, Firefox
-│   └── 5.1.3 WebSocket hub for live multi-tab execution sync
-├── 5.2 CI/CD Ingestion Engine (13 pts)
-│   ├── 5.2.1 Streaming POST /api/v1/ci/ingest parser (Batch JSON & JUnit XML)
-│   ├── 5.2.2 Auto-Case Provisioning resolving automation_id to test cases
-│   └── 5.2.3 Chunked batch transaction insert (1,000 cases per transaction)
-└── 5.3 @kobean/cli Test Runner Tool (8 pts)
-    ├── 5.3.1 Scaffold CLI tool with Playwright runner wrapper
+DELIVERABLE 5.0 - Browser Access & Idempotent CI Ingestion (45 pts)
+├── 5.1 Localhost Web Server Daemon (18 pts)
+│   ├── 5.1.1 Axum/Tokio HTTP server bound to 127.0.0.1:4000
+│   ├── 5.1.2 Loopback bearer token authentication & Host/Origin validation
+│   ├── 5.1.3 Static React 19 SPA file serving
+│   └── 5.1.4 WebSocket room hub for multi-tab run synchronization
+├── 5.2 Idempotent CI Ingestion Engine (16 pts)
+│   ├── 5.2.1 POST /api/v1/projects/:project_id/ci/ingest with idempotency_key
+│   ├── 5.2.2 Streaming JSON and JUnit XML parser with partial recovery
+│   ├── 5.2.3 Auto-Case Provisioning resolving automation_id to project suites
+│   └── 5.2.4 Flaky test volatility tracking across commits
+└── 5.3 @kobean/cli Test Runner Tool (11 pts)
+    ├── 5.3.1 Playwright wrapper (npx kobean run --playwright)
     └── 5.3.2 JUnit XML report submitter utility
 
-WBS 6.0 - Hardening, Security Audit & Multi-OS Packaging (21 pts)
-├── 6.1 Performance SLA Benchmarking (8 pts)
-│   ├── 6.1.1 Cold start benchmark (< 200ms)
-│   ├── 6.1.2 FTS5 50k search benchmark (< 5ms)
-│   └── 6.1.3 CI 10k ingestion throughput benchmark (< 2.0s)
-├── 6.2 Security & Secret Defense (5 pts)
-│   ├── 6.2.1 Betterleaks full repository audit (0 leaks)
-│   ├── 6.2.2 DOMPurify XSS injection fuzz test
-│   └── 6.2.3 SQLite file permission verification (0700)
-└── 6.3 Cross-Platform Packaging (8 pts)
+DELIVERABLE 6.0 - Native HUD & Verified Multi-OS Packaging (47 pts)
+├── 6.1 Floating Mini-HUD (21 pts)
+│   ├── 6.1.1 Multi-window Tauri configuration (always_on_top: true, 360x220px)
+│   ├── 6.1.2 Isolated Tauri capability set (hud-window.json)
+│   └── 6.1.3 Compact step execution UI synced with main window in < 2ms
+├── 6.2 Native Screen Snapping (13 pts)
+│   ├── 6.2.1 Hardware-accelerated screenshot capture hook in Rust
+│   ├── 6.2.2 Clipboard paste handler (Cmd+V) with image annotation canvas
+│   └── 6.2.3 Save media locally to ~/.kobean/media/ with 10GB quota enforcement
+└── 6.3 Packaging & Distribution (13 pts)
     ├── 6.3.1 macOS Universal .dmg build & signing
-    ├── 6.3.2 Windows .msi / .exe installer build
-    └── 6.3.3 Linux .AppImage / .deb package build
+    ├── 6.3.2 Windows .msi installer build
+    └── 6.3.3 Linux .AppImage & .deb package build
 ```

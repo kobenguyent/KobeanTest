@@ -6,25 +6,75 @@ info:
 servers:
   - url: http://127.0.0.1:4000/api/v1
     description: Localhost loopback server
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: LocalSessionToken
+      description: Session token found in ~/.kobean/session.json
+security:
+  - bearerAuth: []
 paths:
-  /suites:
+  /health:
     get:
-      summary: List all test suites (tree hierarchy)
+      summary: Health check and version discovery
+      security: []
       responses:
         '200':
-          description: List of suites
+          description: Daemon is healthy
+  /projects/{project_id}/suites:
+    get:
+      summary: List all test suites in a project
+      parameters:
+        - name: project_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Hierarchical suite tree
     post:
       summary: Create a test suite
+      parameters:
+        - name: project_id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [title]
+              properties:
+                title:
+                  type: string
+                parent_id:
+                  type: string
+                  nullable: true
       responses:
         '201':
           description: Suite created
-  /cases:
+  /projects/{project_id}/cases:
     get:
       summary: List or search test cases
       parameters:
+        - name: project_id
+          in: path
+          required: true
+          schema:
+            type: string
         - name: q
           in: query
           description: Full-text search query (FTS5)
+          schema:
+            type: string
+        - name: suite_id
+          in: query
           schema:
             type: string
       responses:
@@ -32,26 +82,104 @@ paths:
           description: Matching test cases
     post:
       summary: Create a test case
-      responses:
-        '201':
-          description: Test case created
-  /ci/ingest:
-    post:
-      summary: Batch ingest automated test results
+      parameters:
+        - name: project_id
+          in: path
+          required: true
+          schema:
+            type: string
       requestBody:
         required: true
         content:
           application/json:
             schema:
               type: object
-              required: [run_name, results]
-          multipart/form-data:
+              required: [title, steps]
+              properties:
+                title:
+                  type: string
+                suite_id:
+                  type: string
+                  nullable: true
+                steps:
+                  type: array
+                  items:
+                    type: object
+                    required: [step_number, action, expected]
+                    properties:
+                      step_number:
+                        type: integer
+                      action:
+                        type: string
+                      expected:
+                        type: string
+      responses:
+        '201':
+          description: Test case created
+  /projects/{project_id}/ci/ingest:
+    post:
+      summary: Batch ingest automated test results with idempotency
+      parameters:
+        - name: project_id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
             schema:
               type: object
+              required: [run_name, results, idempotency_key]
               properties:
-                file:
+                idempotency_key:
                   type: string
-                  format: binary
+                  description: Unique run key to prevent duplicate runs on network retries
+                run_name:
+                  type: string
+                commit_sha:
+                  type: string
+                branch:
+                  type: string
+                auto_create_cases:
+                  type: boolean
+                  default: true
+                results:
+                  type: array
+                  items:
+                    type: object
+                    required: [automation_id, title, status]
+                    properties:
+                      automation_id:
+                        type: string
+                      title:
+                        type: string
+                      status:
+                        type: string
+                        enum: [passed, failed, blocked, skipped]
+                      duration_ms:
+                        type: integer
+                      error_message:
+                        type: string
+                      stack_trace:
+                        type: string
+                      attempt_number:
+                        type: integer
+                        default: 1
       responses:
         '200':
           description: Batch ingested successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  run_id:
+                    type: string
+                  ingested_count:
+                    type: integer
+                  created_cases_count:
+                    type: integer
+                  is_duplicate:
+                    type: boolean
