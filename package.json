@@ -5,6 +5,11 @@
   "scripts": {
     "typecheck": "echo '✓ Workspace baseline ready'",
     "test": "node --experimental-strip-types --test packages/*/tests/*.test.js apps/*/tests/*.test.js",
-    "test:rust": "cd apps/desktop/src-tauri && cargo test"
+    "test:rust": "cd apps/desktop/src-tauri && cargo test",
+    "dev:daemon": "cd apps/desktop/src-tauri && cargo run",
+    "build:rust": "cd apps/desktop/src-tauri && cargo build --release",
+    "benchmark": "cd apps/desktop/src-tauri && cargo test --test benchmark_test -- --nocapture",
+    "lint:clippy": "cd apps/desktop/src-tauri && cargo clippy -- -D clippy::unwrap_used -D clippy::expect_used -D warnings",
+    "security:scan": "betterleaks git --staged --validation=false --config .betterleaks.toml"
   }
 }
