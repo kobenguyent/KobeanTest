@@ -9,3 +9,9 @@ importers:
   .: {}
 
   packages/core: {}
+
+  packages/ui:
+    dependencies:
+      '@kobean/core':
+        specifier: workspace:*
+        version: link:../core

@@ -1,7 +1,7 @@
 {
   "project": "KobeanTest",
   "version": "0.1.0",
-  "active_milestone": "Phase 3 - Atomic Backup, Restore & Recovery Pipeline",
+  "active_milestone": "Phase 4 - Local Interactive Pilot Workflow & Desktop Interface",
   "tasks": [
     {
       "id": "KB-TASK-001",
@@ -30,6 +30,34 @@
       "status": "completed",
       "assignee": "AI Agent",
       "blocked_by": []
+    },
+    {
+      "id": "KB-TASK-005",
+      "title": "Implement Rust Core CRUD, Runs, Versioning, and Loopback session token with 0600 permissions",
+      "status": "completed",
+      "assignee": "AI Agent",
+      "blocked_by": ["KB-TASK-003"]
+    },
+    {
+      "id": "KB-TASK-006",
+      "title": "Implement Batch CI Ingestion Engine with idempotency and auto-case provisioning",
+      "status": "completed",
+      "assignee": "AI Agent",
+      "blocked_by": ["KB-TASK-005"]
+    },
+    {
+      "id": "KB-TASK-007",
+      "title": "Implement Embedded Localhost HTTP server daemon with loopback security and CORS",
+      "status": "completed",
+      "assignee": "AI Agent",
+      "blocked_by": ["KB-TASK-005", "KB-TASK-006"]
+    },
+    {
+      "id": "KB-TASK-008",
+      "title": "Scaffold @kobean/ui with 4 WCAG AAA themes, StatusPill, CommandPalette, StepEditor, and useHotkeys",
+      "status": "completed",
+      "assignee": "AI Agent",
+      "blocked_by": ["KB-TASK-002"]
     }
   ]
 }
