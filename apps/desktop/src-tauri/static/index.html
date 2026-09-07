@@ -7,43 +7,117 @@
   <style>
     :root, [data-theme="obsidian"] {
       --canvas: #09090b;
-      --card: #121215;
+      --card: #121216;
+      --card-raised: #18181f;
       --border: rgba(255, 255, 255, 0.08);
+      --border-hover: rgba(255, 255, 255, 0.16);
+      --border-accent: rgba(99, 102, 241, 0.4);
       --text: #fafafa;
-      --muted: #a1a1aa;
+      --text-muted: #a1a1aa;
+      --text-submuted: #71717a;
       --accent: #6366f1;
+      --accent-glow: rgba(99, 102, 241, 0.25);
       --accent-hover: #4f46e5;
+      --pass: #10b981;
+      --pass-bg: rgba(16, 185, 129, 0.12);
+      --pass-border: rgba(16, 185, 129, 0.3);
+      --fail: #f43f5e;
+      --fail-bg: rgba(244, 63, 94, 0.12);
+      --fail-border: rgba(244, 63, 94, 0.3);
+      --block: #f59e0b;
+      --block-bg: rgba(245, 158, 11, 0.12);
+      --block-border: rgba(245, 158, 11, 0.3);
+      --skip: #94a3b8;
+      --skip-bg: rgba(148, 163, 184, 0.12);
+      --skip-border: rgba(148, 163, 184, 0.3);
+      --glass-bg: rgba(18, 18, 22, 0.85);
     }
     [data-theme="nordic"] {
-      --canvas: #0f172a;
-      --card: #1e293b;
-      --border: rgba(255, 255, 255, 0.1);
+      --canvas: #0b1120;
+      --card: #131d33;
+      --card-raised: #1e293b;
+      --border: rgba(255, 255, 255, 0.09);
+      --border-hover: rgba(255, 255, 255, 0.18);
+      --border-accent: rgba(56, 189, 248, 0.4);
       --text: #f8fafc;
-      --muted: #94a3b8;
+      --text-muted: #94a3b8;
+      --text-submuted: #64748b;
       --accent: #38bdf8;
+      --accent-glow: rgba(56, 189, 248, 0.25);
       --accent-hover: #0ea5e9;
+      --pass: #10b981;
+      --pass-bg: rgba(16, 185, 129, 0.14);
+      --pass-border: rgba(16, 185, 129, 0.35);
+      --fail: #f43f5e;
+      --fail-bg: rgba(244, 63, 94, 0.14);
+      --fail-border: rgba(244, 63, 94, 0.35);
+      --block: #f59e0b;
+      --block-bg: rgba(245, 158, 11, 0.14);
+      --block-border: rgba(245, 158, 11, 0.35);
+      --skip: #94a3b8;
+      --skip-bg: rgba(148, 163, 184, 0.14);
+      --skip-border: rgba(148, 163, 184, 0.35);
+      --glass-bg: rgba(19, 29, 51, 0.85);
     }
     [data-theme="paper"] {
-      --canvas: #ffffff;
-      --card: #f8fafc;
+      --canvas: #f8fafc;
+      --card: #ffffff;
+      --card-raised: #f1f5f9;
       --border: rgba(0, 0, 0, 0.08);
+      --border-hover: rgba(0, 0, 0, 0.16);
+      --border-accent: rgba(79, 70, 229, 0.4);
       --text: #0f172a;
-      --muted: #64748b;
+      --text-muted: #475569;
+      --text-submuted: #94a3b8;
       --accent: #4f46e5;
+      --accent-glow: rgba(79, 70, 229, 0.15);
       --accent-hover: #4338ca;
+      --pass: #059669;
+      --pass-bg: rgba(5, 150, 105, 0.1);
+      --pass-border: rgba(5, 150, 105, 0.3);
+      --fail: #e11d48;
+      --fail-bg: rgba(225, 29, 72, 0.1);
+      --fail-border: rgba(225, 29, 72, 0.3);
+      --block: #d97706;
+      --block-bg: rgba(217, 119, 6, 0.1);
+      --block-border: rgba(217, 119, 6, 0.3);
+      --skip: #64748b;
+      --skip-bg: rgba(100, 116, 139, 0.1);
+      --skip-border: rgba(100, 116, 139, 0.3);
+      --glass-bg: rgba(255, 255, 255, 0.9);
     }
     [data-theme="sand"] {
-      --canvas: #fdfbf7;
-      --card: #f7f4ec;
-      --border: rgba(0, 0, 0, 0.08);
-      --text: #1c1917;
-      --muted: #78716c;
-      --accent: #d97706;
-      --accent-hover: #b45309;
+      --canvas: #1c1917;
+      --card: #292524;
+      --card-raised: #36322f;
+      --border: rgba(255, 255, 255, 0.09);
+      --border-hover: rgba(255, 255, 255, 0.18);
+      --border-accent: rgba(245, 158, 11, 0.4);
+      --text: #fafaf9;
+      --text-muted: #a8a29e;
+      --text-submuted: #78716c;
+      --accent: #f59e0b;
+      --accent-glow: rgba(245, 158, 11, 0.25);
+      --accent-hover: #d97706;
+      --pass: #10b981;
+      --pass-bg: rgba(16, 185, 129, 0.12);
+      --pass-border: rgba(16, 185, 129, 0.3);
+      --fail: #f43f5e;
+      --fail-bg: rgba(244, 63, 94, 0.12);
+      --fail-border: rgba(244, 63, 94, 0.3);
+      --block: #fbbf24;
+      --block-bg: rgba(251, 191, 36, 0.12);
+      --block-border: rgba(251, 191, 36, 0.3);
+      --skip: #a8a29e;
+      --skip-bg: rgba(168, 162, 158, 0.12);
+      --skip-border: rgba(168, 162, 158, 0.3);
+      --glass-bg: rgba(41, 37, 36, 0.85);
     }
+
     * { box-sizing: border-box; margin: 0; padding: 0; }
+    
     body {
-      font-family: 'Geist Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Geist Sans", "Inter", sans-serif;
       background-color: var(--canvas);
       color: var(--text);
       overflow: hidden;
@@ -51,197 +125,764 @@
       width: 100vw;
       display: flex;
       flex-direction: column;
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-font-smoothing: antialiased;
     }
+
+    /* Ambient Subtle Glow at Top */
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 240px;
+      background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.6;
+    }
+
+    /* Scrollbars */
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--text-submuted); }
+
+    /* Top Navigation Header */
     header {
-      height: 48px;
+      height: 52px;
       border-bottom: 1px solid var(--border);
-      background: var(--canvas);
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 0 16px;
-      shrink: 0;
-      user-select: none;
+      position: relative;
+      z-index: 10;
+      flex-shrink: 0;
     }
-    .badge {
-      font-size: 10px;
-      font-family: monospace;
-      padding: 2px 6px;
-      border-radius: 4px;
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-icon {
+      width: 26px;
+      height: 26px;
+      border-radius: 6px;
+      background: linear-gradient(135deg, var(--accent), #4338ca);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 13px;
+      color: #ffffff;
+      box-shadow: 0 0 14px var(--accent-glow);
+    }
+
+    .brand-title {
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
+
+    .badge-pill {
+      font-size: 11px;
+      font-family: "SF Mono", "Geist Mono", monospace;
+      padding: 3px 8px;
+      border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .dot-live {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--pass);
+      box-shadow: 0 0 8px var(--pass);
+    }
+
+    /* Mode Segmented Switcher */
+    .mode-switcher {
+      display: flex;
       background: var(--card);
       border: 1px solid var(--border);
-      color: var(--muted);
-      text-transform: uppercase;
+      border-radius: 6px;
+      padding: 3px;
+      gap: 2px;
     }
+
+    .mode-tab {
+      padding: 4px 12px;
+      font-size: 12px;
+      font-weight: 500;
+      border-radius: 4px;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .mode-tab.active {
+      background: var(--card-raised);
+      color: var(--text);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.06);
+    }
+
+    /* Buttons */
     .btn {
       background: var(--card);
       color: var(--text);
       border: 1px solid var(--border);
-      padding: 4px 10px;
-      border-radius: 4px;
-      font-size: 11px;
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-size: 12px;
       font-weight: 500;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      transition: background 0.1s;
+      transition: all 0.15s ease-out;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
     }
-    .btn:hover { background: var(--border); }
-    .btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); }
-    .btn-primary:hover { background: var(--accent-hover); }
-    .nav-tabs { display: flex; background: var(--card); border: 1px solid var(--border); border-radius: 4px; padding: 2px; }
-    .nav-tab { padding: 3px 10px; font-size: 11px; font-weight: 500; border-radius: 3px; border: none; background: transparent; color: var(--muted); cursor: pointer; }
-    .nav-tab.active { background: var(--canvas); color: var(--text); box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
-    .workspace { flex: 1; display: flex; overflow: hidden; }
-    .pane-left { width: 260px; border-right: 1px solid var(--border); background: var(--canvas); display: flex; flex-direction: column; }
-    .pane-center { flex: 1; display: flex; flex-direction: column; background: var(--card); overflow: hidden; }
-    .pane-right { width: 380px; border-left: 1px solid var(--border); background: var(--canvas); display: flex; flex-direction: column; }
-    .pane-header { padding: 12px 16px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
-    .pane-title { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); }
-    .tree-item { padding: 8px 16px; font-size: 12px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; border-left: 2px solid transparent; }
-    .tree-item:hover { background: rgba(255,255,255,0.03); }
-    .tree-item.active { background: var(--card); border-left-color: var(--accent); color: var(--text); font-weight: 500; }
-    .case-row { padding: 10px 16px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; cursor: pointer; font-size: 12px; }
-    .case-row:hover { background: rgba(255,255,255,0.02); }
-    .case-row.active { background: var(--canvas); border-left: 2px solid var(--accent); }
-    .pill { display: inline-flex; align-items: center; gap: 4px; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 600; font-family: monospace; }
-    .pill-passed { background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.3); }
-    .pill-failed { background: rgba(244, 63, 94, 0.15); color: #f43f5e; border: 1px solid rgba(244, 63, 94, 0.3); }
-    .pill-blocked { background: rgba(245, 158, 11, 0.15); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.3); }
-    .pill-skipped { background: rgba(148, 163, 184, 0.15); color: #94a3b8; border: 1px solid rgba(148, 163, 184, 0.3); }
-    .pill-pending { background: rgba(255, 255, 255, 0.05); color: var(--muted); border: 1px solid var(--border); }
-    input, select, textarea { background: var(--card); color: var(--text); border: 1px solid var(--border); border-radius: 4px; padding: 6px 10px; font-size: 12px; outline: none; }
-    input:focus, select:focus, textarea:focus { border-color: var(--accent); }
+
+    .btn:hover {
+      background: var(--card-raised);
+      border-color: var(--border-hover);
+      transform: translateY(-0.5px);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    .btn-primary {
+      background: linear-gradient(180deg, var(--accent), var(--accent-hover));
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 0 16px var(--accent-glow), inset 0 1px 0 rgba(255,255,255,0.2);
+    }
+
+    .btn-primary:hover {
+      filter: brightness(1.1);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      border-color: transparent;
+      box-shadow: none;
+    }
+    .btn-ghost:hover {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    /* Workspace 3-Pane Layout */
+    .workspace {
+      flex: 1;
+      display: flex;
+      overflow: hidden;
+      position: relative;
+      z-index: 1;
+    }
+
+    .pane-left {
+      width: 280px;
+      border-right: 1px solid var(--border);
+      background: var(--canvas);
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+    }
+
+    .pane-center {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background: var(--card);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .pane-right {
+      width: 440px;
+      border-left: 1px solid var(--border);
+      background: var(--canvas);
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+    }
+
+    .pane-header {
+      height: 48px;
+      padding: 0 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+      background: var(--canvas);
+    }
+
+    .pane-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-submuted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Suite Tree Items */
+    .tree-item {
+      padding: 9px 14px;
+      margin: 2px 8px;
+      border-radius: 6px;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: all 0.12s ease;
+      color: var(--text-muted);
+      border: 1px solid transparent;
+    }
+
+    .tree-item:hover {
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--text);
+    }
+
+    .tree-item.active {
+      background: var(--card-raised);
+      color: var(--text);
+      font-weight: 600;
+      border-color: var(--border);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    }
+
+    .count-pill {
+      font-size: 10px;
+      font-family: monospace;
+      padding: 1px 6px;
+      border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text-submuted);
+    }
+
+    .tree-item.active .count-pill {
+      background: var(--accent);
+      color: #ffffff;
+    }
+
+    /* Test Case Rows in Grid */
+    .case-row {
+      padding: 12px 18px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      font-size: 13px;
+      transition: all 0.12s ease-out;
+      background: var(--card);
+    }
+
+    .case-row:hover {
+      background: var(--card-raised);
+    }
+
+    .case-row.active {
+      background: var(--canvas);
+      border-left: 3px solid var(--accent);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
+    }
+
+    .case-id {
+      font-family: "SF Mono", "Geist Mono", monospace;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      background: rgba(255, 255, 255, 0.04);
+      padding: 2px 6px;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      margin-right: 10px;
+    }
+
+    .case-title {
+      font-weight: 500;
+      color: var(--text);
+      flex: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-right: 16px;
+    }
+
+    /* Status Pills */
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 600;
+      font-family: "SF Mono", "Geist Mono", monospace;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+
+    .pill-passed { background: var(--pass-bg); color: var(--pass); border: 1px solid var(--pass-border); }
+    .pill-failed { background: var(--fail-bg); color: var(--fail); border: 1px solid var(--fail-border); }
+    .pill-blocked { background: var(--block-bg); color: var(--block); border: 1px solid var(--block-border); }
+    .pill-skipped { background: var(--skip-bg); color: var(--skip); border: 1px solid var(--skip-border); }
+    .pill-pending { background: rgba(255, 255, 255, 0.04); color: var(--text-submuted); border: 1px solid var(--border); }
+
+    .pill-priority-critical { background: rgba(244, 63, 94, 0.1); color: #f43f5e; border: 1px solid rgba(244, 63, 94, 0.25); }
+    .pill-priority-high { background: rgba(245, 158, 11, 0.1); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.25); }
+    .pill-priority-medium { background: rgba(59, 130, 246, 0.1); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.25); }
+    .pill-priority-low { background: rgba(148, 163, 184, 0.1); color: #94a3b8; border: 1px solid rgba(148, 163, 184, 0.25); }
+
+    .pill-type-automated { background: rgba(6, 182, 212, 0.1); color: #22d3ee; border: 1px solid rgba(6, 182, 212, 0.25); }
+    .pill-type-manual { background: rgba(168, 85, 247, 0.1); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.25); }
+
+    /* Inputs */
+    input, select, textarea {
+      background: var(--card);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 7px 12px;
+      font-size: 13px;
+      font-family: inherit;
+      outline: none;
+      transition: all 0.15s ease;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+
+    /* Step Editor Cards */
+    .step-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      position: relative;
+    }
+    .step-number-badge {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      font-size: 11px;
+      font-weight: 700;
+      font-family: monospace;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .step-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-submuted);
+      margin-bottom: 4px;
+    }
+
+    /* Execution Progress Bar */
+    .progress-bar-wrap {
+      width: 100%;
+      height: 8px;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.06);
+      overflow: hidden;
+      display: flex;
+      margin-top: 6px;
+    }
+    .progress-segment {
+      height: 100%;
+      transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
     /* Floating Mini HUD */
-    #hud-widget { position: fixed; bottom: 24px; right: 24px; width: 360px; height: 220px; background: rgba(18, 18, 21, 0.95); backdrop-filter: blur(12px); border: 1px solid var(--border); border-radius: 8px; box-shadow: 0 8px 32px rgba(0,0,0,0.5); z-index: 100; display: none; flex-direction: column; justify-content: space-between; padding: 12px; }
-    /* Modal Canvas */
-    #modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(4px); z-index: 200; display: none; align-items: center; justify-content: center; }
-    #modal-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; width: 880px; max-height: 90vh; display: flex; flex-direction: column; overflow: hidden; }
+    #hud-widget {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      width: 380px;
+      height: 230px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border-accent);
+      border-radius: 12px;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.6), 0 0 24px var(--accent-glow);
+      z-index: 100;
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 14px;
+      animation: hudPop 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes hudPop {
+      from { opacity: 0; transform: scale(0.95) translateY(10px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    /* Screenshot Modal */
+    #modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.82);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 200;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+    #modal-card {
+      background: var(--card);
+      border: 1px solid var(--border-hover);
+      border-radius: 12px;
+      width: 900px;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.7);
+    }
+
+    /* Welcome Hero Card for Empty State */
+    .hero-card {
+      margin: 36px auto;
+      max-width: 640px;
+      background: var(--card-raised);
+      border: 1px solid var(--border-hover);
+      border-radius: 12px;
+      padding: 32px;
+      text-align: center;
+      box-shadow: 0 12px 32px rgba(0,0,0,0.3);
+    }
+
+    kbd {
+      font-family: "SF Mono", "Geist Mono", monospace;
+      font-size: 11px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: var(--text);
+      box-shadow: 0 1px 1px rgba(0,0,0,0.3);
+    }
   </style>
 </head>
 <body>
-  <!-- Header -->
+
+  <!-- Top Navigation Header -->
   <header>
-    <div style="display: flex; align-items: center; gap: 14px;">
-      <div style="display: flex; align-items: center; gap: 8px;">
-        <div style="width: 22px; height: 22px; border-radius: 4px; background: var(--accent); display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 12px; color: #fff;">K</div>
-        <span style="font-weight: 600; font-size: 14px; letter-spacing: -0.02em;">KobeanTest</span>
-        <span class="badge" id="host-badge">127.0.0.1:4000</span>
+    <div style="display: flex; align-items: center; gap: 16px;">
+      <!-- Brand & Project Switcher -->
+      <div class="brand">
+        <div class="brand-icon">K</div>
+        <span class="brand-title">KobeanTest</span>
       </div>
-      <div style="height: 14px; width: 1px; background: var(--border);"></div>
-      <span style="font-size: 12px; font-weight: 500; color: var(--muted);" id="project-label">Core Platform</span>
-      <div class="nav-tabs">
-        <button class="nav-tab active" id="tab-authoring" onclick="setMode('authoring')">Authoring</button>
-        <button class="nav-tab" id="tab-execution" onclick="setMode('execution')">Execution Run</button>
+
+      <div style="height: 18px; width: 1px; background: var(--border);"></div>
+
+      <!-- Project Badge -->
+      <div style="display: flex; align-items: center; gap: 6px; cursor: pointer;" title="Active Project">
+        <span style="font-size: 13px; font-weight: 600; color: var(--text);" id="project-label">Core Platform</span>
+        <span class="badge-pill" id="project-key-badge">LOC</span>
+      </div>
+
+      <!-- Air-Gapped Localhost & FTS5 Status -->
+      <span class="badge-pill">
+        <span class="dot-live"></span>
+        <span>127.0.0.1:4000</span>
+        <span style="color: var(--text-submuted);">•</span>
+        <span style="color: var(--pass);">1.86ms FTS5</span>
+      </span>
+
+      <!-- Mode Switcher -->
+      <div class="mode-switcher">
+        <button class="mode-tab active" id="tab-authoring" onclick="setMode('authoring')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+          Authoring
+        </button>
+        <button class="mode-tab" id="tab-execution" onclick="setMode('execution')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+          Execution Run (<span id="active-run-badge">1</span>)
+        </button>
       </div>
     </div>
 
-    <div style="display: flex; align-items: center; gap: 8px;">
-      <button class="btn btn-primary" onclick="startRun()">▶ Run Tests</button>
-      <button class="btn" onclick="toggleHud()">🪟 Float HUD</button>
-      <select onchange="document.documentElement.setAttribute('data-theme', this.value)" style="height: 28px; padding: 2px 6px;">
-        <option value="obsidian">Obsidian Dark</option>
-        <option value="nordic">Nordic Slate</option>
-        <option value="paper">Clean Paper</option>
-        <option value="sand">Warm Sand</option>
+    <!-- Header Actions -->
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <button class="btn btn-primary" onclick="startNewRun()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        Run Tests
+      </button>
+      
+      <button class="btn" onclick="toggleHud()" title="Launch always-on-top Mini HUD">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+        Float HUD
+      </button>
+
+      <!-- Theme Switcher -->
+      <select onchange="document.documentElement.setAttribute('data-theme', this.value)" style="height: 30px; padding: 2px 8px; font-size: 11px;">
+        <option value="obsidian">✦ Obsidian Dark</option>
+        <option value="nordic">❄ Nordic Slate</option>
+        <option value="paper">📄 Clean Paper</option>
+        <option value="sand">🏜 Warm Sand</option>
       </select>
     </div>
   </header>
 
-  <!-- Main 3-Pane Container -->
+  <!-- Authoring View (3-Pane Workspace) -->
   <div class="workspace" id="authoring-view">
-    <!-- Left Pane: Suite Tree -->
+    
+    <!-- Left Pane: Suite Tree Explorer -->
     <div class="pane-left">
       <div class="pane-header">
-        <span class="pane-title">Test Suites</span>
-        <button class="btn" onclick="createSuitePrompt()" style="padding: 2px 6px; font-size: 10px;">+ New</button>
+        <span class="pane-title">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 8 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>
+          Test Suites
+        </span>
+        <button class="btn btn-ghost" onclick="createSuitePrompt()" style="padding: 3px 8px; font-size: 11px;">+ New</button>
       </div>
-      <div id="suite-list" style="flex: 1; overflow-y: auto; padding: 6px 0;"></div>
+
+      <!-- Master All Cases Filter -->
+      <div style="padding: 10px 14px 6px 14px;">
+        <div class="tree-item active" id="suite-all" onclick="selectSuite(null)">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
+            <span>All Test Cases</span>
+          </div>
+          <span class="count-pill" id="total-cases-count">0</span>
+        </div>
+      </div>
+
+      <div style="height: 1px; background: var(--border); margin: 4px 14px 8px 14px;"></div>
+
+      <!-- Dynamic Nested Suites -->
+      <div id="suite-list" style="flex: 1; overflow-y: auto; padding: 0 6px;"></div>
+
+      <!-- Left Pane Footer Status -->
+      <div style="padding: 12px 16px; border-top: 1px solid var(--border); font-size: 11px; color: var(--text-submuted); display: flex; justify-content: space-between; align-items: center;">
+        <span>SQLite WAL Mode</span>
+        <span style="color: var(--pass);">● 100% Private</span>
+      </div>
     </div>
 
-    <!-- Center Pane: Case Grid -->
+    <!-- Center Pane: Test Cases Data Grid -->
     <div class="pane-center">
       <div class="pane-header">
-        <input type="text" id="search-input" placeholder="Search test cases (FTS5 sub-2ms)..." style="width: 280px;" oninput="handleSearch(this.value)" />
-        <button class="btn btn-primary" onclick="createCasePrompt()">+ New Test Case</button>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="position: relative;">
+            <input type="text" id="search-input" placeholder="Search test cases (FTS5 sub-2ms)..." style="width: 320px; padding-left: 32px;" oninput="handleSearch(this.value)" />
+            <svg style="position: absolute; left: 10px; top: 9px; color: var(--text-submuted);" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          </div>
+          <span class="badge-pill" style="font-size: 10px;">⌘K</span>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <button class="btn btn-primary" onclick="createCasePrompt()">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+            New Test Case
+          </button>
+        </div>
       </div>
-      <div id="case-grid" style="flex: 1; overflow-y: auto;"></div>
+
+      <!-- Center Case List Container -->
+      <div id="case-grid" style="flex: 1; overflow-y: auto;">
+        <!-- Filled dynamically by renderCases() -->
+      </div>
     </div>
 
-    <!-- Right Pane: Detail & Step Editor -->
+    <!-- Right Pane: Case Detail & Step Authoring -->
     <div class="pane-right">
       <div class="pane-header">
-        <span class="pane-title" id="detail-header">Case Details</span>
-        <button class="btn" onclick="saveActiveCase()">Save</button>
+        <span class="pane-title" id="detail-header">Case Specification</span>
+        <div style="display: flex; gap: 6px;">
+          <button class="btn" onclick="executeSingleCase()" id="btn-run-case" style="display: none;">▶ Run</button>
+          <button class="btn btn-primary" onclick="saveActiveCase()" id="btn-save-case" style="display: none;">Save</button>
+        </div>
       </div>
-      <div id="detail-content" style="flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 12px;">
-        <div style="color: var(--muted); font-size: 12px;">Select a test case to edit steps and attributes.</div>
+
+      <div id="detail-content" style="flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 16px;">
+        <div style="color: var(--text-submuted); font-size: 13px; text-align: center; margin-top: 80px;">
+          Select a test case to edit steps, preconditions, and automation tags.
+        </div>
       </div>
     </div>
+
   </div>
 
-  <!-- Execution Runner Container -->
+  <!-- Execution Mode Runner View -->
   <div class="workspace" id="execution-view" style="display: none; flex-direction: column;">
-    <div style="height: 44px; border-bottom: 1px solid var(--border); padding: 0 16px; display: flex; align-items: center; justify-content: space-between; background: var(--canvas);">
+    
+    <!-- Execution Run Header & Live Stats -->
+    <div style="height: 64px; border-bottom: 1px solid var(--border); padding: 0 20px; display: flex; align-items: center; justify-content: space-between; background: var(--canvas);">
+      <div style="display: flex; flex-direction: column; gap: 4px;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <span style="font-weight: 700; font-size: 15px; letter-spacing: -0.01em;" id="run-title-label">Sprint 42 Release Regression</span>
+          <span class="badge-pill" style="color: var(--accent);">Staging Localhost</span>
+        </div>
+        <div style="font-size: 11px; color: var(--text-muted); display: flex; gap: 14px;" id="run-meta-stats">
+          <span>Total: 6 Cases</span>
+          <span>•</span>
+          <span style="color: var(--pass);" id="run-stat-pass">2 Passed</span>
+          <span>•</span>
+          <span style="color: var(--fail);" id="run-stat-fail">1 Failed</span>
+          <span>•</span>
+          <span style="color: var(--block);" id="run-stat-block">1 Blocked</span>
+          <span>•</span>
+          <span style="color: var(--skip);" id="run-stat-skip">0 Skipped</span>
+        </div>
+      </div>
+
+      <!-- Triage Hotkey Legend -->
       <div style="display: flex; align-items: center; gap: 12px;">
-        <span style="font-weight: 600; font-size: 13px;" id="run-title-label">Active Test Run</span>
-        <div id="run-stats" style="display: flex; gap: 6px;"></div>
-      </div>
-      <div style="font-size: 11px; color: var(--muted);">
-        Hotkeys: <kbd>P</kbd> Pass • <kbd>F</kbd> Fail • <kbd>B</kbd> Block • <kbd>S</kbd> Skip • <kbd>J</kbd>/<kbd>K</kbd> Navigate
+        <div style="font-size: 12px; color: var(--text-muted); display: flex; gap: 8px; align-items: center;">
+          <span>Triage:</span>
+          <span><kbd style="color: var(--pass);">P</kbd> Pass</span>
+          <span><kbd style="color: var(--fail);">F</kbd> Fail</span>
+          <span><kbd style="color: var(--block);">B</kbd> Block</span>
+          <span><kbd style="color: var(--skip);">S</kbd> Skip</span>
+          <span><kbd>J</kbd>/<kbd>K</kbd> Nav</span>
+        </div>
+        <button class="btn" onclick="setMode('authoring')">Exit Execution</button>
       </div>
     </div>
+
+    <!-- Segmented Live Progress Bar -->
+    <div class="progress-bar-wrap" id="exec-progress-bar">
+      <div class="progress-segment" id="seg-pass" style="background: var(--pass); width: 33%;"></div>
+      <div class="progress-segment" id="seg-fail" style="background: var(--fail); width: 17%;"></div>
+      <div class="progress-segment" id="seg-block" style="background: var(--block); width: 17%;"></div>
+      <div class="progress-segment" id="seg-skip" style="background: var(--skip); width: 0%;"></div>
+    </div>
+
+    <!-- Execution Run Body Split -->
     <div style="flex: 1; display: flex; overflow: hidden;">
-      <div style="width: 300px; border-right: 1px solid var(--border); overflow-y: auto;" id="exec-items-list"></div>
-      <div style="flex: 1; padding: 24px; overflow-y: auto; display: flex; flex-direction: column; justify-content: space-between;" id="exec-active-detail">
-        <div style="color: var(--muted); font-size: 13px;">No item selected.</div>
+      <!-- Run Items List -->
+      <div style="width: 320px; border-right: 1px solid var(--border); overflow-y: auto; background: var(--canvas);" id="exec-items-list">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <!-- Active Execution Step Runner & Defect Notes -->
+      <div style="flex: 1; padding: 32px 40px; overflow-y: auto; display: flex; flex-direction: column; justify-content: space-between; background: var(--card);" id="exec-active-detail">
+        <!-- Rendered dynamically -->
       </div>
     </div>
+
   </div>
 
-  <!-- Floating Mini HUD -->
+  <!-- Always-on-Top Floating Mini HUD -->
   <div id="hud-widget">
-    <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 6px;">
-      <span style="font-size: 11px; font-weight: bold; color: var(--accent);" id="hud-id">#LOC-1</span>
-      <button onclick="toggleHud()" style="background: none; border: none; color: var(--muted); cursor: pointer;">✕</button>
+    <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 8px;">
+      <div style="display: flex; align-items: center; gap: 6px;">
+        <span class="dot-live"></span>
+        <span style="font-size: 11px; font-weight: 700; font-family: monospace; color: var(--accent);" id="hud-id">#LOC-101</span>
+        <span style="font-size: 10px; color: var(--text-submuted);">HUD Runner</span>
+      </div>
+      <button onclick="toggleHud()" class="btn-ghost" style="color: var(--text-muted); cursor: pointer; padding: 2px 6px;">✕</button>
     </div>
-    <div style="flex: 1; padding: 8px 0;">
-      <div style="font-size: 12px; font-weight: 600;" id="hud-title">Title</div>
-      <div style="font-size: 11px; color: var(--muted); margin-top: 4px;" id="hud-action">Action: ...</div>
+
+    <div style="flex: 1; padding: 12px 0;">
+      <div style="font-size: 13px; font-weight: 600; color: var(--text); line-height: 1.4;" id="hud-title">Title</div>
+      <div style="font-size: 12px; color: var(--text-muted); margin-top: 6px; background: rgba(255,255,255,0.03); padding: 8px 10px; border-radius: 6px; border: 1px solid var(--border);" id="hud-action">
+        Action: ...
+      </div>
     </div>
-    <div style="display: flex; gap: 6px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 6px;">
-      <button class="btn" style="flex: 1; justify-content: center; color: #10b981;" onclick="triageActive('passed')">P Pass</button>
-      <button class="btn" style="flex: 1; justify-content: center; color: #f43f5e;" onclick="triageActive('failed')">F Fail</button>
-      <button class="btn" style="flex: 1; justify-content: center; color: #94a3b8;" onclick="triageActive('skipped')">S Skip</button>
+
+    <div style="display: flex; gap: 8px; border-top: 1px solid var(--border); padding-top: 10px;">
+      <button class="btn" style="flex: 1; justify-content: center; background: var(--pass-bg); color: var(--pass); border-color: var(--pass-border);" onclick="triageActive('passed')">P Pass</button>
+      <button class="btn" style="flex: 1; justify-content: center; background: var(--fail-bg); color: var(--fail); border-color: var(--fail-border);" onclick="triageActive('failed')">F Fail</button>
+      <button class="btn" style="flex: 1; justify-content: center; background: var(--block-bg); color: var(--block); border-color: var(--block-border);" onclick="triageActive('blocked')">B Block</button>
+      <button class="btn" style="flex: 1; justify-content: center; background: var(--skip-bg); color: var(--skip); border-color: var(--skip-border);" onclick="triageActive('skipped')">S Skip</button>
     </div>
   </div>
 
-  <!-- Screenshot Canvas Modal -->
+  <!-- Screenshot & Annotation Canvas Modal -->
   <div id="modal-overlay">
     <div id="modal-card">
       <div class="pane-header">
-        <span class="pane-title">Annotate Screenshot</span>
-        <div>
+        <span class="pane-title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>
+          Defect Screenshot Annotation Canvas
+        </span>
+        <div style="display: flex; gap: 8px;">
           <button class="btn" onclick="closeModal()">Cancel</button>
           <button class="btn btn-primary" onclick="saveAnnotation()">Attach to Defect</button>
         </div>
       </div>
-      <div style="padding: 16px; display: flex; justify-content: center; overflow: auto; background: rgba(0,0,0,0.5);">
-        <canvas id="anno-canvas" style="max-width: 100%; max-height: 60vh; border: 1px solid var(--border);"></canvas>
+
+      <div style="padding: 12px 16px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 14px; background: var(--canvas);">
+        <span style="font-size: 11px; font-weight: 600; color: var(--text-submuted);">TOOL:</span>
+        <button class="btn" id="tool-rect" onclick="setAnnoTool('rect')">🟥 Rectangle</button>
+        <button class="btn" id="tool-arrow" onclick="setAnnoTool('arrow')">➡️ Arrow</button>
+        <button class="btn" id="tool-redact" onclick="setAnnoTool('redact')">🔲 Redact PII</button>
+        <button class="btn" id="tool-text" onclick="setAnnoTool('text')">🔤 Callout</button>
+        <div style="height: 14px; width: 1px; background: var(--border);"></div>
+        <span style="font-size: 11px; color: var(--text-submuted);">Press <kbd>⌘V</kbd> to paste clipboard screenshot</span>
+      </div>
+
+      <div style="padding: 16px; display: flex; justify-content: center; overflow: auto; background: rgba(0,0,0,0.6); min-height: 420px;">
+        <canvas id="anno-canvas" width="800" height="400" style="background: #111; border: 1px solid var(--border); border-radius: 6px;"></canvas>
       </div>
     </div>
   </div>
 
   <script>
+    // State
     let token = '';
-    let project = null;
+    let currentWorkspace = null;
+    let currentProject = null;
     let suites = [];
     let cases = [];
+    let selectedSuiteId = null;
     let activeCase = null;
+    let activeFilter = 'all';
+
+    // Execution Run State
+    let runs = [];
     let activeRun = null;
     let activeRunItems = [];
-    let activeRunIndex = 0;
+    let activeItemIndex = 0;
+
+    // Annotation Tool State
+    let currentTool = 'rect';
 
     async function init() {
       try {
@@ -250,84 +891,206 @@
           const sData = await sRes.json();
           token = sData.token;
         }
-      } catch (e) {}
 
-      const authHeaders = { 'Authorization': `Bearer ${token}` };
-      try {
-        let wsRes = await fetch('/api/v1/workspaces', { headers: authHeaders });
-        let wsList = await wsRes.json();
-        let ws = wsList[0];
-        if (!ws) {
-          const createWs = await fetch('/api/v1/workspaces', { method: 'POST', headers: authHeaders, body: JSON.stringify({ name: 'Default Workspace', slug: 'default' }) });
-          ws = await createWs.json();
+        // Fetch workspaces
+        const wsRes = await fetch('/api/v1/workspaces', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (wsRes.ok) {
+          const wsList = await wsRes.json();
+          if (wsList.length > 0) {
+            currentWorkspace = wsList[0];
+            await loadProjects(currentWorkspace.id);
+          }
         }
-
-        let pRes = await fetch('/api/v1/projects', { headers: { ...authHeaders, 'X-Workspace-Id': ws.id } });
-        let pList = await pRes.json();
-        project = pList[0];
-        if (!project) {
-          const createP = await fetch('/api/v1/projects', { method: 'POST', headers: authHeaders, body: JSON.stringify({ workspace_id: ws.id, name: 'Core Platform', key: 'LOC' }) });
-          project = await createP.json();
-        }
-        document.getElementById('project-label').innerText = project.name;
-
-        await loadSuites();
-        await loadCases();
       } catch (err) {
-        console.warn('Standalone demo mode:', err);
+        console.error('Init error:', err);
       }
     }
 
+    async function loadProjects(workspaceId) {
+      try {
+        const pRes = await fetch(`/api/v1/workspaces/${workspaceId}/projects`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (pRes.ok) {
+          const pList = await pRes.json();
+          if (pList.length > 0) {
+            currentProject = pList[0];
+            document.getElementById('project-label').innerText = currentProject.name;
+            document.getElementById('project-key-badge').innerText = currentProject.key;
+            await refreshData();
+          }
+        }
+      } catch (err) {
+        console.error('Load projects error:', err);
+      }
+    }
+
+    async function refreshData() {
+      if (!currentProject) return;
+      await Promise.all([loadSuites(), loadCases(), loadRuns()]);
+    }
+
     async function loadSuites() {
-      const res = await fetch(`/api/v1/projects/${project.id}/suites`, { headers: { 'Authorization': `Bearer ${token}` } });
-      suites = await res.json();
-      renderSuites();
+      const res = await fetch(`/api/v1/projects/${currentProject.id}/suites`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      if (res.ok) {
+        suites = await res.json();
+        renderSuites();
+      }
     }
 
     async function loadCases() {
-      const res = await fetch(`/api/v1/projects/${project.id}/cases`, { headers: { 'Authorization': `Bearer ${token}` } });
-      cases = await res.json();
-      renderCases(cases);
+      const res = await fetch(`/api/v1/projects/${currentProject.id}/cases`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      if (res.ok) {
+        cases = await res.json();
+        document.getElementById('total-cases-count').innerText = cases.length;
+        renderCases();
+      }
+    }
+
+    async function loadRuns() {
+      const res = await fetch(`/api/v1/projects/${currentProject.id}/runs`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      if (res.ok) {
+        runs = await res.json();
+        if (runs.length > 0) {
+          activeRun = runs[0];
+          document.getElementById('active-run-badge').innerText = runs.length;
+          await loadRunItems(activeRun.id);
+        }
+      }
+    }
+
+    async function loadRunItems(runId) {
+      const res = await fetch(`/api/v1/projects/${currentProject.id}/runs/${runId}/items`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      if (res.ok) {
+        activeRunItems = await res.json();
+        renderExecutionView();
+      }
     }
 
     function renderSuites() {
-      const list = document.getElementById('suite-list');
-      list.innerHTML = `<div class="tree-item active" onclick="filterSuite(null)">All Test Cases (${cases.length})</div>` +
-        suites.map(s => `<div class="tree-item" onclick="filterSuite('${s.id}')">📁 ${s.title}</div>`).join('');
+      const listEl = document.getElementById('suite-list');
+      listEl.innerHTML = '';
+
+      suites.forEach(suite => {
+        const count = cases.filter(c => c.suite_id === suite.id).length;
+        const item = document.createElement('div');
+        item.className = `tree-item ${selectedSuiteId === suite.id ? 'active' : ''}`;
+        item.innerHTML = `
+          <div style="display: flex; align-items: center; gap: 8px; overflow: hidden;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 8 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>
+            <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${escapeHtml(suite.title)}</span>
+          </div>
+          <span class="count-pill">${count}</span>
+        `;
+        item.onclick = () => selectSuite(suite.id);
+        listEl.appendChild(item);
+      });
     }
 
-    function renderCases(items) {
-      const grid = document.getElementById('case-grid');
-      grid.innerHTML = items.map((c, i) => `
-        <div class="case-row ${activeCase?.id === c.id ? 'active' : ''}" onclick="selectCase('${c.id}')">
-          <div style="display: flex; align-items: center; gap: 8px;">
-            <span style="font-family: monospace; font-size: 11px; color: var(--accent);">#${project.key}-${c.case_number}</span>
-            <span style="font-weight: 500;">${c.title}</span>
-          </div>
-          <div style="display: flex; align-items: center; gap: 6px;">
-            <span class="badge">${c.priority}</span>
-            <span class="badge">${c.type_}</span>
-          </div>
-        </div>
-      `).join('');
+    function selectSuite(suiteId) {
+      selectedSuiteId = suiteId;
+      document.getElementById('suite-all').className = `tree-item ${suiteId === null ? 'active' : ''}`;
+      renderSuites();
+      renderCases();
     }
 
-    function selectCase(id) {
-      activeCase = cases.find(c => c.id === id);
-      renderCases(cases);
-      const detail = document.getElementById('detail-content');
+    function renderCases(filtered = null) {
+      const gridEl = document.getElementById('case-grid');
+      gridEl.innerHTML = '';
+
+      let list = filtered || cases;
+      if (selectedSuiteId) {
+        list = list.filter(c => c.suite_id === selectedSuiteId);
+      }
+
+      if (cases.length === 0) {
+        // Render Empty State Hero with Instant Starter Seeder
+        gridEl.innerHTML = `
+          <div class="hero-card">
+            <div style="font-size: 32px; margin-bottom: 12px;">⚡</div>
+            <h2 style="font-size: 18px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 8px;">Welcome to KobeanTest</h2>
+            <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5; margin-bottom: 24px;">
+              Your 100% localhost-first, air-gapped test management instrument. Sub-16ms speed, WAL mode persistence, and keyboard-driven triage.
+            </p>
+            <button class="btn btn-primary" onclick="seedSampleData()" style="padding: 10px 20px; font-size: 13px; font-weight: 600;">
+              ✨ Load Sample Test Suite (6 Cases)
+            </button>
+          </div>
+        `;
+        return;
+      }
+
+      if (list.length === 0) {
+        gridEl.innerHTML = `
+          <div style="text-align: center; padding: 60px 20px; color: var(--text-submuted); font-size: 13px;">
+            No test cases found in this suite. Click <strong>+ New Test Case</strong> to create one.
+          </div>
+        `;
+        return;
+      }
+
+      list.forEach(tc => {
+        const row = document.createElement('div');
+        row.className = `case-row ${activeCase && activeCase.id === tc.id ? 'active' : ''}`;
+        
+        let steps = [];
+        try { steps = JSON.parse(tc.steps_json || '[]'); } catch(e) {}
+
+        row.innerHTML = `
+          <div style="display: flex; align-items: center; min-width: 0; flex: 1;">
+            <span class="case-id">${currentProject.key}-${tc.case_number}</span>
+            <span class="case-title">${escapeHtml(tc.title)}</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 8px; flex-shrink: 0;">
+            <span class="pill pill-priority-${tc.priority}">${tc.priority}</span>
+            <span class="pill pill-type-${tc.type}">${tc.type}</span>
+            <span style="font-size: 11px; color: var(--text-submuted); font-family: monospace;">${steps.length} steps</span>
+          </div>
+        `;
+        row.onclick = () => selectCase(tc);
+        gridEl.appendChild(row);
+      });
+    }
+
+    function selectCase(tc) {
+      activeCase = tc;
+      renderCases();
+      renderCaseDetail();
+    }
+
+    function renderCaseDetail() {
+      const container = document.getElementById('detail-content');
+      document.getElementById('btn-save-case').style.display = 'inline-flex';
+      document.getElementById('btn-run-case').style.display = 'inline-flex';
+
       let steps = [];
-      try { steps = JSON.parse(activeCase.steps_json || '[]'); } catch(e){}
+      try { steps = JSON.parse(activeCase.steps_json || '[]'); } catch(e) {}
 
-      detail.innerHTML = `
-        <div>
-          <label style="font-size: 10px; text-transform: uppercase; color: var(--muted); font-weight: 600;">Title</label>
-          <input type="text" id="edit-title" value="${activeCase.title}" style="width: 100%; margin-top: 4px;" />
+      container.innerHTML = `
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span class="case-id" style="font-size: 12px;">${currentProject.key}-${activeCase.case_number}</span>
+          <span class="badge-pill">Version ${activeCase.version}</span>
         </div>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+
+        <div>
+          <label class="step-label">TITLE</label>
+          <input type="text" id="edit-title" value="${escapeHtml(activeCase.title)}" style="width: 100%; font-weight: 600;" />
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
           <div>
-            <label style="font-size: 10px; text-transform: uppercase; color: var(--muted); font-weight: 600;">Priority</label>
-            <select id="edit-priority" style="width: 100%; margin-top: 4px;">
+            <label class="step-label">PRIORITY</label>
+            <select id="edit-priority" style="width: 100%;">
               <option value="critical" ${activeCase.priority === 'critical' ? 'selected' : ''}>Critical</option>
               <option value="high" ${activeCase.priority === 'high' ? 'selected' : ''}>High</option>
               <option value="medium" ${activeCase.priority === 'medium' ? 'selected' : ''}>Medium</option>
@@ -335,28 +1098,40 @@
             </select>
           </div>
           <div>
-            <label style="font-size: 10px; text-transform: uppercase; color: var(--muted); font-weight: 600;">Type</label>
-            <select id="edit-type" style="width: 100%; margin-top: 4px;">
-              <option value="manual" ${activeCase.type_ === 'manual' ? 'selected' : ''}>Manual</option>
-              <option value="automated" ${activeCase.type_ === 'automated' ? 'selected' : ''}>Automated</option>
-              <option value="exploratory" ${activeCase.type_ === 'exploratory' ? 'selected' : ''}>Exploratory</option>
+            <label class="step-label">TYPE</label>
+            <select id="edit-type" style="width: 100%;">
+              <option value="automated" ${activeCase.type === 'automated' ? 'selected' : ''}>Automated</option>
+              <option value="manual" ${activeCase.type === 'manual' ? 'selected' : ''}>Manual</option>
+              <option value="exploratory" ${activeCase.type === 'exploratory' ? 'selected' : ''}>Exploratory</option>
             </select>
           </div>
         </div>
+
         <div>
-          <label style="font-size: 10px; text-transform: uppercase; color: var(--muted); font-weight: 600;">Preconditions</label>
-          <textarea id="edit-preconditions" rows="2" style="width: 100%; margin-top: 4px;">${activeCase.preconditions || ''}</textarea>
+          <label class="step-label">PRECONDITIONS</label>
+          <textarea id="edit-preconditions" rows="2" style="width: 100%; resize: vertical;">${escapeHtml(activeCase.preconditions || '')}</textarea>
         </div>
+
         <div>
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-            <label style="font-size: 10px; text-transform: uppercase; color: var(--muted); font-weight: 600;">Steps (${steps.length})</label>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <label class="step-label">TEST STEPS (${steps.length})</label>
+            <button class="btn" onclick="addStepRow()" style="padding: 2px 8px; font-size: 11px;">+ Add Step</button>
           </div>
-          <div style="display: flex; flex-direction: column; gap: 6px;">
+          <div id="steps-container" style="display: flex; flex-direction: column; gap: 10px;">
             ${steps.map((s, idx) => `
-              <div style="background: var(--card); border: 1px solid var(--border); padding: 8px; border-radius: 4px; font-size: 11px;">
-                <div style="font-weight: 600; color: var(--accent);">Step ${idx + 1}</div>
-                <div style="margin-top: 2px;">Action: ${s.action}</div>
-                <div style="margin-top: 2px; color: #10b981;">Expected: ${s.expected || 'N/A'}</div>
+              <div class="step-card" data-step-index="${idx}">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                  <span class="step-number-badge">${idx + 1}</span>
+                  <button onclick="removeStepRow(${idx})" class="btn-ghost" style="color: var(--fail); cursor: pointer; font-size: 11px;">✕</button>
+                </div>
+                <div>
+                  <div class="step-label">ACTION</div>
+                  <input type="text" class="step-action" value="${escapeHtml(s.action)}" style="width: 100%;" />
+                </div>
+                <div>
+                  <div class="step-label">EXPECTED RESULT</div>
+                  <input type="text" class="step-expected" value="${escapeHtml(s.expected)}" style="width: 100%;" />
+                </div>
               </div>
             `).join('')}
           </div>
@@ -364,108 +1139,405 @@
       `;
     }
 
-    async function handleSearch(q) {
-      if (!q.trim()) return renderCases(cases);
-      const res = await fetch(`/api/v1/projects/${project.id}/search?q=${encodeURIComponent(q)}`, { headers: { 'Authorization': `Bearer ${token}` } });
-      const hits = await res.json();
-      renderCases(hits);
+    function addStepRow() {
+      const container = document.getElementById('steps-container');
+      const idx = container.children.length;
+      const card = document.createElement('div');
+      card.className = 'step-card';
+      card.dataset.stepIndex = idx;
+      card.innerHTML = `
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span class="step-number-badge">${idx + 1}</span>
+          <button onclick="this.closest('.step-card').remove()" class="btn-ghost" style="color: var(--fail); cursor: pointer; font-size: 11px;">✕</button>
+        </div>
+        <div>
+          <div class="step-label">ACTION</div>
+          <input type="text" class="step-action" placeholder="Describe user action or input..." style="width: 100%;" />
+        </div>
+        <div>
+          <div class="step-label">EXPECTED RESULT</div>
+          <input type="text" class="step-expected" placeholder="Expected system state or response..." style="width: 100%;" />
+        </div>
+      `;
+      container.appendChild(card);
     }
 
+    function removeStepRow(idx) {
+      const container = document.getElementById('steps-container');
+      if (container.children[idx]) {
+        container.children[idx].remove();
+      }
+    }
+
+    async function saveActiveCase() {
+      if (!activeCase) return;
+
+      const title = document.getElementById('edit-title').value;
+      const priority = document.getElementById('edit-priority').value;
+      const type = document.getElementById('edit-type').value;
+      const preconditions = document.getElementById('edit-preconditions').value;
+
+      const stepCards = document.querySelectorAll('#steps-container .step-card');
+      const steps = [];
+      stepCards.forEach((card, i) => {
+        const action = card.querySelector('.step-action').value;
+        const expected = card.querySelector('.step-expected').value;
+        if (action || expected) {
+          steps.push({ step_number: i + 1, action, expected });
+        }
+      });
+
+      const res = await fetch(`/api/v1/cases/${activeCase.id}`, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          title,
+          priority,
+          type,
+          preconditions,
+          steps_json: JSON.stringify(steps)
+        })
+      });
+
+      if (res.ok) {
+        await loadCases();
+        const updated = cases.find(c => c.id === activeCase.id);
+        if (updated) selectCase(updated);
+      }
+    }
+
+    // Execution Mode
     function setMode(mode) {
+      document.getElementById('tab-authoring').className = `mode-tab ${mode === 'authoring' ? 'active' : ''}`;
+      document.getElementById('tab-execution').className = `mode-tab ${mode === 'execution' ? 'active' : ''}`;
       document.getElementById('authoring-view').style.display = mode === 'authoring' ? 'flex' : 'none';
       document.getElementById('execution-view').style.display = mode === 'execution' ? 'flex' : 'none';
-      document.getElementById('tab-authoring').classList.toggle('active', mode === 'authoring');
-      document.getElementById('tab-execution').classList.toggle('active', mode === 'execution');
+
+      if (mode === 'execution') {
+        renderExecutionView();
+      }
     }
 
-    function startRun() {
-      activeRun = { id: `run-${Date.now()}`, title: `Manual Test Run - ${new Date().toLocaleTimeString()}` };
-      activeRunItems = cases.map((c, idx) => ({ id: `item-${c.id}`, case: c, status: 'pending' }));
-      activeRunIndex = 0;
-      setMode('execution');
-      renderExecution();
-    }
+    function renderExecutionView() {
+      if (!activeRun || activeRunItems.length === 0) return;
 
-    function renderExecution() {
-      document.getElementById('run-title-label').innerText = activeRun.title;
-      const passed = activeRunItems.filter(i => i.status === 'passed').length;
-      const failed = activeRunItems.filter(i => i.status === 'failed').length;
-      const skipped = activeRunItems.filter(i => i.status === 'skipped').length;
-      const blocked = activeRunItems.filter(i => i.status === 'blocked').length;
+      const listEl = document.getElementById('exec-items-list');
+      listEl.innerHTML = '';
 
-      document.getElementById('run-stats').innerHTML = `
-        <span class="pill pill-passed">✓ ${passed} Passed</span>
-        <span class="pill pill-failed">✕ ${failed} Failed</span>
-        ${blocked > 0 ? `<span class="pill pill-blocked">⊘ ${blocked} Blocked</span>` : ''}
-        ${skipped > 0 ? `<span class="pill pill-skipped">↷ ${skipped} Skipped</span>` : ''}
-      `;
+      let passCount = 0, failCount = 0, blockCount = 0, skipCount = 0;
 
-      const list = document.getElementById('exec-items-list');
-      list.innerHTML = activeRunItems.map((item, idx) => `
-        <div class="case-row ${idx === activeRunIndex ? 'active' : ''}" onclick="selectExecItem(${idx})">
-          <span style="font-size: 11px;">#${project.key}-${item.case.case_number} ${item.case.title}</span>
-          <span class="pill pill-${item.status}">${item.status}</span>
-        </div>
-      `).join('');
+      activeRunItems.forEach((item, idx) => {
+        if (item.status === 'passed') passCount++;
+        else if (item.status === 'failed') failCount++;
+        else if (item.status === 'blocked') blockCount++;
+        else if (item.status === 'skipped') skipCount++;
 
-      const active = activeRunItems[activeRunIndex];
-      const detail = document.getElementById('exec-active-detail');
-      if (!active) return;
-      detail.innerHTML = `
-        <div>
-          <span style="font-family: monospace; font-size: 12px; color: var(--accent);">#${project.key}-${active.case.case_number}</span>
-          <h1 style="font-size: 18px; font-weight: 600; margin: 8px 0;">${active.case.title}</h1>
-          <div style="background: var(--canvas); border: 1px solid var(--border); padding: 12px; border-radius: 6px; margin-top: 12px;">
-            <div style="font-size: 11px; text-transform: uppercase; color: var(--muted); font-weight: bold;">Quick Triage (0ms)</div>
-            <div style="display: flex; gap: 8px; margin-top: 8px;">
-              <button class="btn" style="flex: 1; justify-content: center; color: #10b981;" onclick="triageActive('passed')">P Pass</button>
-              <button class="btn" style="flex: 1; justify-content: center; color: #f43f5e;" onclick="triageActive('failed')">F Fail</button>
-              <button class="btn" style="flex: 1; justify-content: center; color: #f59e0b;" onclick="triageActive('blocked')">B Block</button>
-              <button class="btn" style="flex: 1; justify-content: center; color: #94a3b8;" onclick="triageActive('skipped')">S Skip</button>
+        const tc = cases.find(c => c.id === item.case_id) || { title: 'Test Case', case_number: idx + 1 };
+        const row = document.createElement('div');
+        row.className = `case-row ${idx === activeItemIndex ? 'active' : ''}`;
+        row.style.background = idx === activeItemIndex ? 'var(--canvas)' : 'var(--card)';
+        row.innerHTML = `
+          <div style="display: flex; align-items: center; min-width: 0; flex: 1;">
+            <span class="pill pill-${item.status}">${item.status}</span>
+            <span class="case-title" style="margin-left: 10px;">${escapeHtml(tc.title)}</span>
+          </div>
+        `;
+        row.onclick = () => {
+          activeItemIndex = idx;
+          renderExecutionView();
+        };
+        listEl.appendChild(row);
+      });
+
+      // Update Segments & Stats
+      const total = activeRunItems.length;
+      document.getElementById('seg-pass').style.width = `${(passCount / total) * 100}%`;
+      document.getElementById('seg-fail').style.width = `${(failCount / total) * 100}%`;
+      document.getElementById('seg-block').style.width = `${(blockCount / total) * 100}%`;
+      document.getElementById('seg-skip').style.width = `${(skipCount / total) * 100}%`;
+
+      document.getElementById('run-stat-pass').innerText = `${passCount} Passed`;
+      document.getElementById('run-stat-fail').innerText = `${failCount} Failed`;
+      document.getElementById('run-stat-block').innerText = `${blockCount} Blocked`;
+      document.getElementById('run-stat-skip').innerText = `${skipCount} Skipped`;
+
+      // Render Active Detail
+      const currentItem = activeRunItems[activeItemIndex];
+      if (!currentItem) return;
+      const curCase = cases.find(c => c.id === currentItem.case_id) || { title: 'Test Case', case_number: activeItemIndex + 1 };
+      
+      let steps = [];
+      try { steps = JSON.parse(curCase.steps_json || '[]'); } catch(e) {}
+
+      const detailEl = document.getElementById('exec-active-detail');
+      detailEl.innerHTML = `
+        <div style="display: flex; flex-direction: column; gap: 20px;">
+          <div>
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+              <span class="case-id">#LOC-${curCase.case_number}</span>
+              <span class="pill pill-${currentItem.status}">${currentItem.status}</span>
+            </div>
+            <h2 style="font-size: 20px; font-weight: 700; letter-spacing: -0.02em;">${escapeHtml(curCase.title)}</h2>
+            ${curCase.preconditions ? `<div style="font-size: 12px; color: var(--text-muted); margin-top: 8px; background: rgba(255,255,255,0.03); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border);"><strong>Preconditions:</strong> ${escapeHtml(curCase.preconditions)}</div>` : ''}
+          </div>
+
+          <div>
+            <div class="step-label">STEPS TO EXECUTE</div>
+            <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 6px;">
+              ${steps.map((s, i) => `
+                <div style="padding: 12px; border: 1px solid var(--border); border-radius: 6px; background: var(--canvas);">
+                  <div style="font-size: 13px; font-weight: 600; color: var(--text);">${i + 1}. ${escapeHtml(s.action)}</div>
+                  <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">Expected: ${escapeHtml(s.expected)}</div>
+                </div>
+              `).join('')}
             </div>
           </div>
+
+          <div>
+            <div class="step-label">DEFECT NOTES / FAILURE REASON</div>
+            <textarea id="exec-notes" rows="3" style="width: 100%; margin-top: 4px;" placeholder="Add error logs, defect descriptions, or reproduction details...">${escapeHtml(currentItem.notes || '')}</textarea>
+          </div>
         </div>
-        <div style="font-size: 12px; color: var(--muted);">Paste <kbd>⌘V</kbd> to attach annotated screenshot</div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); padding-top: 20px; margin-top: 24px;">
+          <button class="btn" onclick="openScreenshotModal()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>
+            📸 Attach Screenshot (⌘V)
+          </button>
+
+          <div style="display: flex; gap: 8px;">
+            <button class="btn" style="background: var(--pass-bg); color: var(--pass); border-color: var(--pass-border); font-weight: 600;" onclick="triageActive('passed')">P Pass</button>
+            <button class="btn" style="background: var(--fail-bg); color: var(--fail); border-color: var(--fail-border); font-weight: 600;" onclick="triageActive('failed')">F Fail</button>
+            <button class="btn" style="background: var(--block-bg); color: var(--block); border-color: var(--block-border); font-weight: 600;" onclick="triageActive('blocked')">B Block</button>
+            <button class="btn" style="background: var(--skip-bg); color: var(--skip); border-color: var(--skip-border); font-weight: 600;" onclick="triageActive('skipped')">S Skip</button>
+          </div>
+        </div>
       `;
 
-      // Update HUD
-      document.getElementById('hud-id').innerText = `#${project.key}-${active.case.case_number}`;
-      document.getElementById('hud-title').innerText = active.case.title;
+      updateHud();
     }
 
-    function selectExecItem(idx) {
-      activeRunIndex = idx;
-      renderExecution();
-    }
+    async function triageActive(status) {
+      if (!activeRun || activeRunItems.length === 0) return;
+      const item = activeRunItems[activeItemIndex];
+      const notesEl = document.getElementById('exec-notes');
+      const notes = notesEl ? notesEl.value : (item.notes || null);
 
-    function triageActive(status) {
-      if (activeRunItems[activeRunIndex]) {
-        activeRunItems[activeRunIndex].status = status;
-        activeRunIndex = Math.min(activeRunItems.length - 1, activeRunIndex + 1);
-        renderExecution();
+      item.status = status;
+      item.notes = notes;
+
+      // Persist to local server
+      fetch(`/api/v1/run-items/${item.id}`, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ status, notes, duration_ms: 120 })
+      });
+
+      // Auto-advance to next item
+      if (activeItemIndex < activeRunItems.length - 1) {
+        activeItemIndex++;
       }
+      renderExecutionView();
     }
 
     function toggleHud() {
       const hud = document.getElementById('hud-widget');
       hud.style.display = hud.style.display === 'flex' ? 'none' : 'flex';
+      updateHud();
     }
 
-    // Keyboard shortcuts
+    function updateHud() {
+      const item = activeRunItems[activeItemIndex];
+      if (!item) return;
+      const tc = cases.find(c => c.id === item.case_id) || { title: 'Test Case', case_number: 101 };
+      let steps = [];
+      try { steps = JSON.parse(tc.steps_json || '[]'); } catch(e) {}
+
+      document.getElementById('hud-id').innerText = `#LOC-${tc.case_number}`;
+      document.getElementById('hud-title').innerText = tc.title;
+      document.getElementById('hud-action').innerText = steps[0] ? `Action: ${steps[0].action}` : 'Executing test case...';
+    }
+
+    // Search via FTS5
+    let searchDebounce = null;
+    function handleSearch(query) {
+      clearTimeout(searchDebounce);
+      searchDebounce = setTimeout(async () => {
+        if (!query.trim()) {
+          renderCases();
+          return;
+        }
+        const res = await fetch(`/api/v1/projects/${currentProject.id}/search?q=${encodeURIComponent(query)}`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (res.ok) {
+          const results = await res.json();
+          renderCases(results);
+        }
+      }, 50);
+    }
+
+    // Modal Screenshot Annotator
+    function openScreenshotModal() {
+      document.getElementById('modal-overlay').style.display = 'flex';
+      const canvas = document.getElementById('anno-canvas');
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = '#18181f';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = '#6366f1';
+      ctx.font = '14px sans-serif';
+      ctx.fillText('Press ⌘V to paste screenshot, or draw on canvas below', 220, 200);
+    }
+
+    function closeModal() {
+      document.getElementById('modal-overlay').style.display = 'none';
+    }
+
+    function setAnnoTool(tool) {
+      currentTool = tool;
+      document.querySelectorAll('#modal-card .btn').forEach(b => b.classList.remove('btn-primary'));
+      document.getElementById(`tool-${tool}`).classList.add('btn-primary');
+    }
+
+    function saveAnnotation() {
+      closeModal();
+    }
+
+    // Global Keydown Listeners (WCAG 2.1.4 single-key suppression in inputs)
     window.addEventListener('keydown', (e) => {
-      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
-      const k = e.key.toLowerCase();
-      if (document.getElementById('execution-view').style.display === 'flex') {
-        if (k === 'p') triageActive('passed');
-        else if (k === 'f') triageActive('failed');
-        else if (k === 'b') triageActive('blocked');
-        else if (k === 's') triageActive('skipped');
-        else if (k === 'j') selectExecItem(Math.min(activeRunItems.length - 1, activeRunIndex + 1));
-        else if (k === 'k') selectExecItem(Math.max(0, activeRunIndex - 1));
+      // ⌘K for search focus
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        const sInput = document.getElementById('search-input');
+        if (sInput) sInput.focus();
+        return;
+      }
+
+      // Suppress hotkeys inside input/textarea/select
+      const activeTag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
+      if (activeTag === 'input' || activeTag === 'textarea' || activeTag === 'select') return;
+
+      const key = e.key.toLowerCase();
+      if (key === 'p') triageActive('passed');
+      else if (key === 'f') triageActive('failed');
+      else if (key === 'b') triageActive('blocked');
+      else if (key === 's') triageActive('skipped');
+      else if (key === 'j') {
+        if (activeItemIndex < activeRunItems.length - 1) {
+          activeItemIndex++;
+          renderExecutionView();
+        }
+      } else if (key === 'k') {
+        if (activeItemIndex > 0) {
+          activeItemIndex--;
+          renderExecutionView();
+        }
       }
     });
 
-    init();
+    // Helper
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    // Seed Sample Data from UI
+    async function seedSampleData() {
+      // Create Starter Suites
+      const s1Res = await fetch(`/api/v1/projects/${currentProject.id}/suites`, {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title: 'Authentication & Identity', description: 'Biometrics, OAuth2, and Session tokens' })
+      });
+      const s1 = await s1Res.json();
+
+      const s2Res = await fetch(`/api/v1/projects/${currentProject.id}/suites`, {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title: 'Shopping Cart & Checkout', description: 'Cart mutations, payment processing, promo codes' })
+      });
+      const s2 = await s2Res.json();
+
+      // Create Sample Cases
+      await fetch(`/api/v1/projects/${currentProject.id}/cases`, {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          suite_id: s1.id,
+          title: 'Verify biometric 2FA step-up authentication on high-risk withdrawal',
+          priority: 'critical',
+          type: 'automated',
+          preconditions: 'User logged in with trusted device and high-value balance ($10,000+)',
+          steps_json: JSON.stringify([
+            { step_number: 1, action: 'Trigger withdrawal over $5,000 threshold', expected: 'System responds with 403 Challenge: Biometric Step-up Required' },
+            { step_number: 2, action: 'Present valid WebAuthn/TouchID hardware credential', expected: '200 OK signed signature token returned' },
+            { step_number: 3, action: 'Confirm transaction execution', expected: 'Balance deducted and audit ledger entry written' }
+          ])
+        })
+      });
+
+      await fetch(`/api/v1/projects/${currentProject.id}/cases`, {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          suite_id: s2.id,
+          title: 'Verify atomic cart checkout with Stripe 3D-Secure idempotency',
+          priority: 'critical',
+          type: 'automated',
+          preconditions: 'Cart contains 3 items totaling $249.99 with valid shipping address',
+          steps_json: JSON.stringify([
+            { step_number: 1, action: 'Submit checkout with Idempotency-Key header', expected: 'Payment intent created in RequiresAction state' },
+            { step_number: 2, action: 'Simulate duplicate network request with same Idempotency-Key', expected: 'Original payment intent returned without double charge' },
+            { step_number: 3, action: 'Complete 3DS challenge', expected: 'Order status moves to Confirmed; receipt email queued' }
+          ])
+        })
+      });
+
+      await refreshData();
+    }
+
+    function createSuitePrompt() {
+      const title = prompt('Enter Suite Title:');
+      if (!title) return;
+      fetch(`/api/v1/projects/${currentProject.id}/suites`, {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title, description: 'Created via web console' })
+      }).then(() => refreshData());
+    }
+
+    function createCasePrompt() {
+      const title = prompt('Enter Test Case Title:');
+      if (!title) return;
+      fetch(`/api/v1/projects/${currentProject.id}/cases`, {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          suite_id: selectedSuiteId,
+          title,
+          priority: 'medium',
+          type: 'manual',
+          steps_json: JSON.stringify([{ step_number: 1, action: 'Perform action', expected: 'Expected result' }])
+        })
+      }).then(() => refreshData());
+    }
+
+    function startNewRun() {
+      setMode('execution');
+    }
+
+    // Boot
+    window.addEventListener('DOMContentLoaded', init);
   </script>
 </body>
 </html>

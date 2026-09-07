@@ -1,0 +1,15 @@
+#!/bin/bash
+DIR="$(cd "$(dirname "$0")/../../.." && pwd)"
+BIN="$DIR/src-tauri/target/release/kobean-desktop"
+
+if [ ! -f "$BIN" ]; then
+    BIN="$DIR/src-tauri/target/debug/kobean-desktop"
+fi
+
+if [ ! -f "$BIN" ]; then
+    echo "Compiling KobeanTest desktop engine..."
+    (cd "$DIR/src-tauri" && cargo build --release)
+    BIN="$DIR/src-tauri/target/release/kobean-desktop"
+fi
+
+exec "$BIN"
