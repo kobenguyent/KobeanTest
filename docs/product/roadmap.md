@@ -7,19 +7,19 @@ This document outlines the product delivery roadmap, organized into structured S
 ## Epic Overview
 
 ```text
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                       KOBEANTEST DELIVERY ROADMAP                           │
-├────────────┬─────────────────────────────────────────────────┬──────────────┤
-│ Sprint     │ Epic & Focus Area                               │ Target Story │
-├────────────┼─────────────────────────────────────────────────┼──────────────┤
-│ Sprint 0   │ Governance, AI Harness & Monorepo Scaffold      │ 21 pts       │
-│ Sprint 1   │ Core Domain Contracts & Linear Design System    │ 34 pts       │
-│ Sprint 2   │ Local SQLite Engine & Tauri v2 Shell            │ 34 pts       │
-│ Sprint 3   │ Interactive UI & Test Case Management           │ 55 pts       │
-│ Sprint 4   │ Exploratory Testing & Floating Mini-HUD         │ 34 pts       │
-│ Sprint 5   │ Localhost Web Server & CI/CD Ingestion CLI      │ 34 pts       │
-│ Sprint 6   │ Hardening, Benchmarking & Multi-OS Packaging    │ 21 pts       │
-└────────────┴─────────────────────────────────────────────────┴──────────────┘
+┌────────────────────────────────────────────────────────────────────────────────────────┐
+│                              KOBEANTEST DELIVERY ROADMAP                               │
+├────────────┬─────────────────────────────────────────────────┬──────────────┬──────────┤
+│ Sprint     │ Epic & Focus Area                               │ Target Story │ Status   │
+├────────────┼─────────────────────────────────────────────────┼──────────────┼──────────┤
+│ Sprint 0   │ Governance, AI Harness & Monorepo Scaffold      │ 21 pts       │ [DONE]   │
+│ Sprint 1   │ Core Domain Contracts & Linear Design System    │ 34 pts       │ [DONE]   │
+│ Sprint 2   │ Local SQLite Engine & Tauri v2 Shell            │ 34 pts       │ [DONE]   │
+│ Sprint 3   │ Interactive UI & Test Case Management           │ 55 pts       │ [DONE]   │
+│ Sprint 4   │ Localhost Web Server & CI/CD Ingestion CLI      │ 34 pts       │ [DONE]   │
+│ Sprint 5   │ Exploratory Testing & Floating Mini-HUD         │ 34 pts       │ [ACTIVE] │
+│ Sprint 6   │ Hardening, Benchmarking & Multi-OS Packaging    │ 21 pts       │ [QUEUED] │
+└────────────┴─────────────────────────────────────────────────┴──────────────┴──────────┘
 ```
 
 ---
