@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "typecheck": "echo '✓ Workspace baseline ready (typecheck will inspect packages as Phase 1 code is added)'"
+    "typecheck": "echo '✓ Workspace baseline ready (typecheck will inspect packages as Phase 1 code is added)'",
+    "test": "node --experimental-strip-types --test packages/core/tests/*.test.js"
   }
 }

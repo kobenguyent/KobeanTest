@@ -1,28 +1,35 @@
 {
   "project": "KobeanTest",
   "version": "0.1.0",
-  "active_milestone": "Phase 0 - Foundation",
+  "active_milestone": "Phase 3 - Atomic Backup, Restore & Recovery Pipeline",
   "tasks": [
     {
       "id": "KB-TASK-001",
       "title": "Establish AI harness, ADRs and docs tree",
-      "status": "in_progress",
+      "status": "completed",
       "assignee": "AI Agent",
       "blocked_by": []
     },
     {
       "id": "KB-TASK-002",
-      "title": "Define core TypeScript models and Zod schemas in packages/core",
-      "status": "pending",
+      "title": "Define core TypeScript models and schemas in packages/core",
+      "status": "completed",
       "assignee": "AI Agent",
-      "blocked_by": ["KB-TASK-001"]
+      "blocked_by": []
     },
     {
       "id": "KB-TASK-003",
       "title": "Implement SQLite schema and FTS5 search in apps/desktop",
-      "status": "pending",
+      "status": "completed",
       "assignee": "AI Agent",
-      "blocked_by": ["KB-TASK-002"]
+      "blocked_by": []
+    },
+    {
+      "id": "KB-TASK-004",
+      "title": "Implement point-in-time SQLite Online Backup API (VACUUM INTO) and recovery in Rust core",
+      "status": "completed",
+      "assignee": "AI Agent",
+      "blocked_by": []
     }
   ]
 }

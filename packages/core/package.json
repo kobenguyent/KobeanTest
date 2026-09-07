@@ -1,0 +1,17 @@
+{
+  "name": "@kobean/core",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./schemas": "./src/schemas.ts",
+    "./types": "./src/types.ts",
+    "./status": "./src/status.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  }
+}
