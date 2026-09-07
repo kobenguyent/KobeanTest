@@ -5,7 +5,7 @@ alwaysApply: false
 ---
 # Backend, Schemas & Ingestion Standards
 
-- **Contracts**: Share types between frontend and backend via Zod schemas in `packages/core/src/schemas.ts`.
-- **Localhost Only**: Bind HTTP and WebSocket servers strictly to loopback (`127.0.0.1:4000`).
-- **Batch Streaming**: CI ingestion (`/api/v1/ci/ingest`) must process JUnit XML, Cucumber, and Playwright JSON via streaming batch transactions.
-- **Auto-Provisioning**: Support automatic test suite and case creation when unmapped `automation_id`s arrive from CI runs.
+When modifying backend, core, or CLI logic, adhere to:
+- [.agents/rules/typescript.md](../../.agents/rules/typescript.md): Core Zod schemas and types.
+- [.agents/rules/security-isolation.md](../../.agents/rules/security-isolation.md): Loopback session token auth, Host and Origin validation.
+- [docs/api/openapi.yaml](../../docs/api/openapi.yaml): Unified OpenAPI REST endpoints with idempotency keys.

@@ -5,10 +5,16 @@ description: Benchmark local CI batch test result ingestion throughput against S
 
 # Benchmark Ingestion Workflow
 
-When running CI ingestion benchmarks:
-1. Generate a mock batch of 1,000 to 10,000 test execution results in JSON or JUnit XML format.
-2. Send the payload to the local ingestion endpoint (`POST http://127.0.0.1:4000/api/v1/ci/ingest`).
+## Prerequisites (Must Verify Before Running)
+1. **Running Daemon**: Verify that the local daemon is active on `http://127.0.0.1:4000/api/v1/health`.
+2. **Authentication Token**: Read the session token from `~/.kobean/session.json` to supply `Authorization: Bearer <token>`.
+3. **Disposable Target Project**: Always execute benchmarks against an isolated, disposable project (e.g. `project_id: "benchmarks-temp"`), NEVER production or user test repositories. Clean up the disposable project post-benchmark.
+
+## Execution Steps
+1. Generate synthetic batch payloads:
+   - 1,000 cases (Small regression batch)
+   - 10,000 cases (Large monolithic CI suite)
+2. Submit batch payload to `POST http://127.0.0.1:4000/api/v1/projects/benchmarks-temp/ci/ingest` with an `idempotency_key`.
 3. Measure:
-   - Wall-clock time to parse and persist.
-   - Target SLA: `< 500ms` for 1,000 results, `< 2,000ms` for 10,000 results.
-   - Verify SQLite WAL journal growth and commit integrity.
+   - Wall-clock response time (SLA: `< 2,000ms` for 10k cases).
+   - Checkpoint integrity and WAL file size.

@@ -2,12 +2,12 @@
   "mcpServers": {
     "sqlite": {
       "command": "uvx",
-      "args": ["mcp-server-sqlite", "--db-path", "apps/desktop/src-tauri/kobean_dev.db"],
+      "args": ["mcp-server-sqlite@0.1.0", "--db-path", "target/mcp/kobean_dev.db"],
       "description": "Inspect and query local desktop SQLite FTS5 tables"
     },
     "chrome-devtools": {
       "command": "npx",
-      "args": ["-y", "chrome-devtools-mcp@latest"],
+      "args": ["-y", "chrome-devtools-mcp@0.4.0"],
       "description": "Inspect web UI layout, console logs, network requests, and run accessibility audits"
     }
   }

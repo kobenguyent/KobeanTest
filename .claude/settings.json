@@ -2,23 +2,23 @@
   "$schema": "https://json.schemastore.org/partial-claude-settings.json",
   "permissions": {
     "allow": [
-      "pnpm test",
-      "pnpm build",
-      "pnpm typecheck",
-      "pnpm lint",
-      "cargo check",
-      "cargo test",
-      "git status",
-      "git diff",
-      "git log",
-      "betterleaks scan"
+      "Bash(pnpm test*)",
+      "Bash(pnpm build*)",
+      "Bash(pnpm typecheck*)",
+      "Bash(pnpm lint*)",
+      "Bash(cargo check*)",
+      "Bash(cargo test*)",
+      "Bash(cargo clippy*)",
+      "Bash(git status*)",
+      "Bash(git diff*)",
+      "Bash(git log*)",
+      "Bash(betterleaks git*)"
     ],
     "deny": [
-      "rm -rf /",
-      "rm -rf ~",
-      "git push --force",
-      "npm publish",
-      "cargo publish"
+      "Bash(rm -rf /*)",
+      "Bash(git push --force*)",
+      "Bash(npm publish*)",
+      "Bash(cargo publish*)"
     ]
   },
   "env": {

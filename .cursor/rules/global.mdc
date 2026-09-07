@@ -3,10 +3,10 @@ description: Global architectural constraints and standards for KobeanTest
 globs: ["*"]
 alwaysApply: true
 ---
-# KobeanTest Global Constraints
+# Global Constraints
 
-- **100% Localhost First**: All data is stored locally in SQLite (`kobean.db`). Zero external cloud calls.
-- **Speed is #1**: Perceived latency < 16ms. Optimistic UI updates. Sub-5ms SQLite search.
-- **Ponytail Minimalism**: Write the least code necessary. Standard library first. No overengineering.
-- **Zero License Cost**: 100% Free & Open Source (MIT, Apache 2.0). Never introduce commercial or paywalled packages.
-- **Linear-Grade Elegance**: 1px subtle borders, Geist/Inter typography, tabular numbers, 1.75px Lucide icons.
+All code must adhere to the canonical rules in `.agents/rules/`:
+- **Core Principles**: See [.agents/rules/core-principles.md](../../.agents/rules/core-principles.md) (100% Localhost, 16ms SLA, $0 FOSS).
+- **Anti-Overengineering**: See [.agents/rules/ponytail-minimalism.md](../../.agents/rules/ponytail-minimalism.md) (YAGNI, standard library first).
+- **Process & TDD**: See [.agents/rules/superpowers-tdd.md](../../.agents/rules/superpowers-tdd.md) (Spec-first, red-green-refactor).
+- **Visual Taste**: See [.agents/rules/ui-taste-principles.md](../../.agents/rules/ui-taste-principles.md) (1px borders, tight tracking, no blurry shadows).

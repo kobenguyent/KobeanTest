@@ -3,9 +3,6 @@ title = "KobeanTest Betterleaks Configuration"
 [extend]
 useDefault = true
 
-[rules]
-description = "Enforce zero credential and token leaks across the repository"
-
 [allowlist]
 description = "Permit mock tokens only in explicit mock fixture directories"
 paths = [

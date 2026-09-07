@@ -1,19 +1,13 @@
-# Claude Code Quickstart — KobeanTest
+# Claude Code Configuration — KobeanTest
 
-You are working in the **KobeanTest** repository.
-KobeanTest is a high-performance, 100% localhost-first test management desktop and web application (Tauri v2 + Rust + React 19 + SQLite FTS5).
+@AGENTS.md
 
-## Authoritative Documentation & Rules
-- **Universal Standards**: See `AGENTS.md`
-- **Architecture & System Design**: See `docs/architecture/system-overview.md`
-- **ADRs**: See `docs/architecture/adr/`
-- **Domain Rules**: See `.agents/rules/`
-- **Agent Workflows & Skills**: See `.agents/skills/`
+## Claude Code Specific Notes
+- Project MCP servers are configured in root `.mcp.json`.
+- Tool permissions are scoped in `.claude/settings.json`.
+- Canonical skills live in `.agents/skills/` with Claude adapters in `.claude/skills/`.
 
-## Key Commands
-- Install dependencies: `pnpm install`
-- Typecheck all packages: `pnpm typecheck`
-- Run desktop app in development: `pnpm desktop:dev`
-- Run web client in development: `pnpm web:dev`
-- Run Rust checks: `cd apps/desktop/src-tauri && cargo check`
-- Scan for secret leaks: `betterleaks scan --config .betterleaks.toml`
+## Essential Commands
+- Typecheck: `pnpm run typecheck`
+- Secret scan: `betterleaks git --staged --validation=false --config .betterleaks.toml`
+- Rust check: `cd apps/desktop/src-tauri && cargo check` (once Phase 2 is scaffolded)

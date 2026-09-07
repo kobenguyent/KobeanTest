@@ -1,0 +1,8 @@
+{
+  "name": "kobeantest-monorepo",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "typecheck": "echo '✓ Workspace baseline ready (typecheck will inspect packages as Phase 1 code is added)'"
+  }
+}

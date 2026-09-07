@@ -4,30 +4,30 @@ This directory is the tool-agnostic, single source of truth for all AI coding ag
 
 ```text
 .agents/
-├── rules/         # Modular domain rules (auto-attached or referenced by context)
-├── personas/      # Specialized engineering personas for multi-agent delegation
-├── skills/        # Reusable agent skills and automated slash-workflows
-└── workflows/     # Standard operating procedures for release, migration & adapters
+├── rules/         # Canonical modular domain rules
+├── personas/      # Human/AI role reference profiles for review framing
+└── skills/        # Canonical reusable workflows (/slash-commands)
 ```
 
 ## Directory Registry
 
-### 1. `rules/`
-- `core-principles.md`: 100% Localhost, 16ms performance, zero-license open-source.
+### 1. `rules/` (Canonical Domain Rules)
+- `core-principles.md`: 100% Localhost, 16ms SLA, $0 FOSS permissive licensing.
 - `ponytail-minimalism.md`: The "lazy senior developer" decision ladder (anti-overengineering).
-- `superpowers-tdd.md`: Disciplined development lifecycle (brainstorm -> plan -> TDD -> execute -> review).
+- `superpowers-tdd.md`: Disciplined development lifecycle (spec-first -> TDD -> minimal code -> review).
 - `ui-taste-principles.md`: Eliminating AI UI slop; 1px borders, typography, optical balance.
-- `rust-tauri.md`: Tauri v2 Rust safety, zero-unwrap, capabilities allowlist.
+- `rust-tauri.md`: Tauri v2 Rust safety, `#![deny(clippy::unwrap_used)]`, capability allowlists.
 - `typescript.md`: Strict mode, zero `any`, Zod schema-first contracts.
 - `security-isolation.md`: IPC capability sandboxing, local SQLite security, DOMPurify.
 
-### 2. `personas/`
-- `cto-architect.md`: Architectural decision enforcement and trade-off analysis.
-- `principal-sdet.md`: CI/CD ingestion, Playwright/JUnit runner integrations.
+### 2. `personas/` (Reference Personas)
+These documents serve as reference persona definitions for prompt framing and specialized domain reviews:
+- `cto-architect.md`: Architecture trade-offs, ADR compliance, system maintainability.
+- `principal-sdet.md`: CI/CD ingestion, Playwright/JUnit runner integrations, test data integrity.
 - `security-auditor.md`: Secret audits, local storage permissions, input sanitization.
-- `ui-ux-designer.md`: Information density, keyboard workflows, theme accessibility.
+- `ui-ux-designer.md`: Information density, keyboard workflows, WCAG AAA accessibility.
 
-### 3. `skills/`
+### 3. `skills/` (Canonical Reusable Skills)
 - `new-adr/`: Automates drafting and numbering new ADRs in `docs/architecture/adr/`.
 - `taste-skill/`: Runs the 7-point visual taste self-audit on new UI components.
-- `benchmark-ingest/`: Validates that CI batch ingestion meets the < 500ms throughput SLA.
+- `benchmark-ingest/`: Validates that CI batch ingestion meets the < 2.0s throughput SLA over disposable datasets.

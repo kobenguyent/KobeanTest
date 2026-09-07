@@ -1,14 +1,11 @@
 ---
-description: React 19, Tailwind v4, Shadcn, and UI taste standards
+description: React 19, Tailwind v4, Shadcn, and UI standards
 globs: ["apps/web/**", "apps/desktop/src/**", "packages/ui/**"]
 alwaysApply: false
 ---
 # Frontend & Design System Standards
 
-- **Framework**: React 19 + TypeScript (Strict Mode).
-- **Styling**: Tailwind CSS v4 + Radix Primitives / Shadcn UI.
-- **Icons**: `lucide-react` with `strokeWidth={1.75}`.
-- **Data Grids & Lists**: Use `TanStack Virtual` or `Glide Data Grid` for lists > 50 items.
-- **Typography**: Geist/Inter Sans for body; Geist/JetBrains Mono with `tabular-nums` for test IDs, durations, and counts.
-- **Borders & Shadows**: Crisp 1px borders (`border-border/40`); avoid heavy blurry shadows.
-- **Accessibility**: Support keyboard navigation (`J`/`K`, `P`/`F`, `Cmd+K`); full WCAG AAA contrast across all 4 themes.
+When modifying frontend components, adhere to:
+- [.agents/rules/typescript.md](../../.agents/rules/typescript.md): Strict mode, zero `any`, Zod schemas.
+- [.agents/rules/ui-taste-principles.md](../../.agents/rules/ui-taste-principles.md): Linear aesthetics, 1px borders, tabular numbers.
+- [docs/design-system/tokens.md](../../docs/design-system/tokens.md): WCAG AAA color tokens, window-scoped hotkey scoping.

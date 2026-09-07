@@ -2,7 +2,7 @@ pre-commit:
   parallel: true
   commands:
     betterleaks:
-      run: betterleaks scan --staged --config .betterleaks.toml
+      run: betterleaks git --staged --validation=false --config .betterleaks.toml
       tags: security
     typecheck:
       run: pnpm typecheck

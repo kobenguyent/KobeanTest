@@ -5,8 +5,8 @@ Rules for the desktop native runtime (`apps/desktop/src-tauri`).
 ## 1. Rust Safety & Error Handling
 - Rust Edition 2021+.
 - **Zero `.unwrap()` or `.expect()` in production code paths**:
-  - Enforce `#![deny(clippy::unwrap_used)]` in `main.rs` and `lib.rs`.
-  - CI and pre-commit check with `cargo clippy -- -D clippy::unwrap_used -D warnings`.
+  - Enforce `#![deny(clippy::unwrap_used, clippy::expect_used)]` in `main.rs` and `lib.rs`.
+  - CI and pre-commit check with `cargo clippy -- -D clippy::unwrap_used -D clippy::expect_used -D warnings`.
 - Use `Result<T, AppError>` for all IPC commands where `AppError` implements `serde::Serialize` and `thiserror::Error`.
 - Never panic inside an IPC command; return a structured error message to the webview.
 
@@ -16,6 +16,8 @@ Rules for the desktop native runtime (`apps/desktop/src-tauri`).
   - `main-window.json`: Full application capabilities.
   - `hud-window.json`: Restricted strictly to `record_execution` and `capture_screen_clip`.
 - Local SQLite file path must be restricted to the OS user app data directory:
+  - Directory permissions: `0700` (POSIX) / User SID ACL (Windows).
+  - Database file permissions: `0600` (POSIX).
   - macOS: `~/Library/Application Support/KobeanTest/kobean.db`
   - Windows: `%APPDATA%/KobeanTest/kobean.db`
   - Linux: `~/.local/share/kobean-test/kobean.db`
