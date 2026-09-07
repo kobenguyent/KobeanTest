@@ -19,35 +19,42 @@ All test data, media attachments, full-text indexes, and credentials live strict
 
 ## 2. Quick Start: Launching KobeanTest
 
-### Option A: One Command Launch — Web Console & Localhost Daemon (Recommended)
+### Option A: Launch the Desktop Application (Recommended)
 
-To compile and boot the complete application with a single command:
+To compile and launch the complete application with a single command:
 
 ```bash
 pnpm start
+# or
+pnpm run desktop
 ```
-
-*(Alternatively: `pnpm run dev:daemon` or `cargo run --manifest-path apps/desktop/src-tauri/Cargo.toml`)*
-
-Then open your browser to:
-👉 **`http://127.0.0.1:4000`**
 
 When started, KobeanTest automatically:
 1. Initializes SQLite in Write-Ahead Logging (WAL) mode under `~/.kobean/kobean.db` (file permissions `0600`).
 2. Generates the FTS5 Porter stemmer full-text search indexes.
 3. Creates the local media storage directory `~/.kobean/media/` (directory permissions `0700`).
 4. Generates a secure loopback session token in `~/.kobean/session.json` (permissions `0600`).
-5. Serves the self-contained interactive web console on `GET /` and `GET /index.html`.
-6. Exposes the REST API and session discovery on `http://127.0.0.1:4000/api/v1` and `/session`.
+5. Binds the embedded daemon to `http://127.0.0.1:4000`.
+6. Automatically launches the KobeanTest UI at **`http://127.0.0.1:4000`** in your desktop environment.
 
-### Option B: Compiling the Native Production Binary
+### Option B: Compiling & Running the Standalone Native Binary (2.7 MB)
 
-To build the optimized, release desktop binary:
+To build the self-contained, optimized native release binary:
 
 ```bash
+# Build the native release binary:
 pnpm run build:rust
-# Binary output:
+
+# Run the compiled native executable directly:
 ./apps/desktop/src-tauri/target/release/kobean-desktop
+```
+
+### Option C: Headless Mode (Background CI / Automation)
+
+If running in automated CI/CD pipelines or headless servers where a desktop browser should not open automatically:
+
+```bash
+cd apps/desktop/src-tauri && cargo run -- --headless
 ```
 
 ---

@@ -26,16 +26,18 @@
 
 ## 🚀 Quick Start — One Command to Launch
 
-Launch the entire application (Rust SQLite core, WAL mode, FTS5 engine, and localhost daemon):
+Launch the KobeanTest desktop application (Rust SQLite core, WAL mode, FTS5 engine, and interactive UI):
 
 ```bash
 pnpm start
+# or
+pnpm run desktop
 ```
 
-Then open your browser to:
-👉 **`http://127.0.0.1:4000`**
-
-That's it! KobeanTest will instantly open with the full three-pane test suite authoring interface, sub-2ms FTS5 live search, keyboard execution runner, and floating Mini-HUD.
+When run, KobeanTest automatically:
+1. Boots the high-performance local SQLite database in **WAL mode** with **FTS5 full-text indexing**.
+2. Secures local permissions (`0600` for SQLite and tokens, `0700` for media attachments).
+3. Automatically opens the KobeanTest UI at **`http://127.0.0.1:4000`** in your desktop environment.
 
 ---
 
@@ -46,25 +48,23 @@ That's it! KobeanTest will instantly open with the full three-pane test suite au
 * **pnpm**: `v10+` or `v11+`
 * **Rust**: `1.85+` stable with Cargo
 
-### 1. Launch Localhost Web Console & Daemon
+### 1. Launch the Desktop Application / Dev Mode
 ```bash
-# Single command (alias to cargo run in apps/desktop/src-tauri)
+# Launch application (auto-opens the interface)
 pnpm start
+# or
+pnpm run desktop
 
-# Or using pnpm dev:daemon
-pnpm run dev:daemon
-
-# Or directly with Cargo:
-cd apps/desktop/src-tauri && cargo run
+# Run headless without auto-launching UI (e.g. for background CI daemons):
+cd apps/desktop/src-tauri && cargo run -- --headless
 ```
-*Creates `~/.kobean/kobean.db` (`0600`), `~/.kobean/media/` (`0700`), and session token in `~/.kobean/session.json` (`0600`).*
 
-### 2. Compile the Production Native Binary
+### 2. Compile & Run the Native Release Binary (2.7 MB)
 ```bash
-# Build the optimized release binary (zero .unwrap() or .expect())
+# Build the ultra-compact, optimized native release binary:
 pnpm run build:rust
 
-# Binary location:
+# Run the compiled native desktop executable directly:
 ./apps/desktop/src-tauri/target/release/kobean-desktop
 ```
 

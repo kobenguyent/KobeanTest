@@ -67,8 +67,32 @@ fn main() {
     println!("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
     println!("Ready for local browser & CI test result ingestion.\n");
 
+    let should_open = !std::env::args().any(|arg| arg == "--headless" || arg == "--no-open")
+        && std::env::var("CI").is_err();
+
+    if should_open {
+        let url = format!("http://127.0.0.1:{}", bound_port);
+        println!("🚀 Launching KobeanTest at {}...", url);
+        open_in_browser(&url);
+    }
+
     // Keep daemon running
     loop {
         std::thread::park();
+    }
+}
+
+fn open_in_browser(url: &str) {
+    #[cfg(target_os = "macos")]
+    {
+        let _ = std::process::Command::new("open").arg(url).spawn();
+    }
+    #[cfg(target_os = "windows")]
+    {
+        let _ = std::process::Command::new("cmd").args(["/C", "start", url]).spawn();
+    }
+    #[cfg(target_os = "linux")]
+    {
+        let _ = std::process::Command::new("xdg-open").arg(url).spawn();
     }
 }
