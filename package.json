@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "typecheck": "echo '✓ Workspace baseline ready'",
-    "test": "node --experimental-strip-types --test packages/*/tests/*.test.js",
+    "test": "node --experimental-strip-types --test packages/*/tests/*.test.js apps/*/tests/*.test.js",
     "test:rust": "cd apps/desktop/src-tauri && cargo test"
   }
 }

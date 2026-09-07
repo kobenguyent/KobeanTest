@@ -1,5 +1,5 @@
 use crate::error::AppError;
-use crate::models::{TestExecution, TestRun, TestRunItem};
+use crate::models::{ExecutionAttachment, TestExecution, TestRun, TestRunItem};
 use rusqlite::{params, Connection, OptionalExtension};
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
@@ -392,3 +392,86 @@ pub fn record_execution(conn: &mut Connection, input: RecordExecutionInput) -> R
     .optional()?
     .ok_or_else(|| AppError::NotFound(format!("Execution not found: {exec_id}")))
 }
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct AddAttachmentInput {
+    #[serde(default)]
+    pub execution_id: String,
+    pub step_number: Option<i64>,
+    pub file_name: String,
+    pub file_path: String,
+    pub file_size_bytes: i64,
+    pub mime_type: String,
+}
+
+pub fn add_attachment(
+    conn: &Connection,
+    input: AddAttachmentInput,
+) -> Result<ExecutionAttachment, AppError> {
+    let id = Uuid::new_v4().to_string();
+    conn.execute(
+        "INSERT INTO execution_attachments (
+            id, execution_id, step_number, file_name, file_path, file_size_bytes, mime_type
+        ) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7)",
+        params![
+            id,
+            input.execution_id,
+            input.step_number,
+            input.file_name,
+            input.file_path,
+            input.file_size_bytes,
+            input.mime_type,
+        ],
+    )?;
+
+    conn.query_row(
+        "SELECT id, execution_id, step_number, file_name, file_path, file_size_bytes, mime_type, created_at
+         FROM execution_attachments WHERE id = ?1",
+        params![id],
+        |row| {
+            Ok(ExecutionAttachment {
+                id: row.get(0)?,
+                execution_id: row.get(1)?,
+                step_number: row.get(2)?,
+                file_name: row.get(3)?,
+                file_path: row.get(4)?,
+                file_size_bytes: row.get(5)?,
+                mime_type: row.get(6)?,
+                created_at: row.get(7)?,
+            })
+        },
+    )
+    .optional()?
+    .ok_or_else(|| AppError::NotFound(format!("Attachment not found: {id}")))
+}
+
+pub fn list_attachments(
+    conn: &Connection,
+    execution_id: &str,
+) -> Result<Vec<ExecutionAttachment>, AppError> {
+    let mut stmt = conn.prepare(
+        "SELECT id, execution_id, step_number, file_name, file_path, file_size_bytes, mime_type, created_at
+         FROM execution_attachments
+         WHERE execution_id = ?1
+         ORDER BY created_at ASC",
+    )?;
+    let rows = stmt.query_map(params![execution_id], |row| {
+        Ok(ExecutionAttachment {
+            id: row.get(0)?,
+            execution_id: row.get(1)?,
+            step_number: row.get(2)?,
+            file_name: row.get(3)?,
+            file_path: row.get(4)?,
+            file_size_bytes: row.get(5)?,
+            mime_type: row.get(6)?,
+            created_at: row.get(7)?,
+        })
+    })?;
+
+    let mut list = Vec::new();
+    for r in rows {
+        list.push(r?);
+    }
+    Ok(list)
+}
+

@@ -1,8 +1,8 @@
 use crate::db::{
-    create_case, create_project, create_run, create_suite, create_workspace, get_run,
-    get_run_items, ingest_batch, list_cases, list_projects, list_suites, list_workspaces,
-    record_execution, search_cases, CreateCaseInput, CreateRunInput, IngestBatchInput,
-    ListCasesFilter, RecordExecutionInput,
+    add_attachment, create_case, create_project, create_run, create_suite, create_workspace,
+    get_run, get_run_items, ingest_batch, list_attachments, list_cases, list_projects,
+    list_suites, list_workspaces, record_execution, search_cases, AddAttachmentInput,
+    CreateCaseInput, CreateRunInput, IngestBatchInput, ListCasesFilter, RecordExecutionInput,
 };
 use crate::error::AppError;
 use crate::session::validate_token;
@@ -355,6 +355,21 @@ pub fn dispatch_request<W: Write>(
         let input: RecordExecutionInput = serde_json::from_slice(&req.body)?;
         let exec = record_execution(&mut conn, input)?;
         return send_response(stream, 201, "Created", json!(exec));
+    }
+
+    if req.path.starts_with("/api/v1/executions/") && req.path.ends_with("/attachments") {
+        let remainder = &req.path["/api/v1/executions/".len()..];
+        if let Some((exec_id, _)) = remainder.split_once('/') {
+            if req.method == "GET" {
+                let list = list_attachments(&conn, exec_id)?;
+                return send_response(stream, 200, "OK", json!(list));
+            } else if req.method == "POST" {
+                let mut input: AddAttachmentInput = serde_json::from_slice(&req.body)?;
+                input.execution_id = exec_id.to_string();
+                let att = add_attachment(&conn, input)?;
+                return send_response(stream, 201, "Created", json!(att));
+            }
+        }
     }
 
     send_response(stream, 404, "Not Found", json!({"error": "Endpoint not found"}))

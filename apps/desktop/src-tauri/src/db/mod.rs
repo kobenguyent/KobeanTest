@@ -21,8 +21,9 @@ pub use projects::{
     list_workspaces,
 };
 pub use runs::{
-    create_run, get_run, get_run_items, list_runs, record_execution, CreateRunInput,
-    RecordExecutionInput, RecordStepResultInput, RunItemDetail,
+    add_attachment, create_run, get_run, get_run_items, list_attachments, list_runs,
+    record_execution, AddAttachmentInput, CreateRunInput, RecordExecutionInput,
+    RecordStepResultInput, RunItemDetail,
 };
 pub use suites::{create_suite, delete_suite, get_suite, list_suites, update_suite};
 
