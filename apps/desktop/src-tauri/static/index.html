@@ -205,6 +205,8 @@
       display: inline-flex;
       align-items: center;
       gap: 5px;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
 
     .dot-live {
@@ -223,6 +225,7 @@
       border-radius: 6px;
       padding: 3px;
       gap: 2px;
+      flex-shrink: 0;
     }
 
     .mode-tab {
@@ -237,6 +240,7 @@
       display: flex;
       align-items: center;
       gap: 6px;
+      white-space: nowrap;
       transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
@@ -246,19 +250,24 @@
       box-shadow: 0 1px 3px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.06);
     }
 
-    /* Buttons */
+    /* Buttons - CRITICAL: white-space nowrap & flex-shrink 0 */
     .btn {
       background: var(--card);
       color: var(--text);
       border: 1px solid var(--border);
-      padding: 5px 12px;
+      padding: 6px 13px;
       border-radius: 6px;
       font-size: 12px;
       font-weight: 500;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 6px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      line-height: 1;
+      height: 32px;
       transition: all 0.15s ease-out;
       box-shadow: 0 1px 2px rgba(0,0,0,0.1);
     }
@@ -289,6 +298,8 @@
       background: transparent;
       border-color: transparent;
       box-shadow: none;
+      height: auto;
+      padding: 4px 8px;
     }
     .btn-ghost:hover {
       background: rgba(255, 255, 255, 0.05);
@@ -304,7 +315,7 @@
     }
 
     .pane-left {
-      width: 280px;
+      width: 260px;
       border-right: 1px solid var(--border);
       background: var(--canvas);
       display: flex;
@@ -314,6 +325,7 @@
 
     .pane-center {
       flex: 1;
+      min-width: 380px;
       display: flex;
       flex-direction: column;
       background: var(--card);
@@ -322,7 +334,7 @@
     }
 
     .pane-right {
-      width: 440px;
+      width: 400px;
       border-left: 1px solid var(--border);
       background: var(--canvas);
       display: flex;
@@ -339,6 +351,7 @@
       justify-content: space-between;
       flex-shrink: 0;
       background: var(--canvas);
+      gap: 12px;
     }
 
     .pane-title {
@@ -350,6 +363,8 @@
       display: flex;
       align-items: center;
       gap: 6px;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
 
     /* Suite Tree Items */
@@ -387,6 +402,7 @@
       border-radius: 9999px;
       background: rgba(255, 255, 255, 0.06);
       color: var(--text-submuted);
+      flex-shrink: 0;
     }
 
     .tree-item.active .count-pill {
@@ -427,6 +443,8 @@
       border-radius: 4px;
       border: 1px solid var(--border);
       margin-right: 10px;
+      flex-shrink: 0;
+      white-space: nowrap;
     }
 
     .case-title {
@@ -451,6 +469,8 @@
       font-family: "SF Mono", "Geist Mono", monospace;
       letter-spacing: 0.02em;
       text-transform: uppercase;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
 
     .pill-passed { background: var(--pass-bg); color: var(--pass); border: 1px solid var(--pass-border); }
@@ -584,8 +604,8 @@
 
     /* Welcome Hero Card for Empty State */
     .hero-card {
-      margin: 36px auto;
-      max-width: 640px;
+      margin: 40px auto;
+      max-width: 600px;
       background: var(--card-raised);
       border: 1px solid var(--border-hover);
       border-radius: 12px;
@@ -603,6 +623,7 @@
       border: 1px solid rgba(255, 255, 255, 0.15);
       color: var(--text);
       box-shadow: 0 1px 1px rgba(0,0,0,0.3);
+      white-space: nowrap;
     }
   </style>
 </head>
@@ -610,7 +631,7 @@
 
   <!-- Top Navigation Header -->
   <header>
-    <div style="display: flex; align-items: center; gap: 16px;">
+    <div style="display: flex; align-items: center; gap: 14px;">
       <!-- Brand & Project Switcher -->
       <div class="brand">
         <div class="brand-icon">K</div>
@@ -659,7 +680,7 @@
       </button>
 
       <!-- Theme Switcher -->
-      <select onchange="document.documentElement.setAttribute('data-theme', this.value)" style="height: 30px; padding: 2px 8px; font-size: 11px;">
+      <select onchange="document.documentElement.setAttribute('data-theme', this.value)" style="height: 32px; padding: 2px 8px; font-size: 11px;">
         <option value="obsidian">✦ Obsidian Dark</option>
         <option value="nordic">❄ Nordic Slate</option>
         <option value="paper">📄 Clean Paper</option>
@@ -682,7 +703,7 @@
       </div>
 
       <!-- Master All Cases Filter -->
-      <div style="padding: 10px 14px 6px 14px;">
+      <div style="padding: 10px 12px 6px 12px;">
         <div class="tree-item active" id="suite-all" onclick="selectSuite(null)">
           <div style="display: flex; align-items: center; gap: 8px;">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
@@ -692,14 +713,14 @@
         </div>
       </div>
 
-      <div style="height: 1px; background: var(--border); margin: 4px 14px 8px 14px;"></div>
+      <div style="height: 1px; background: var(--border); margin: 4px 12px 8px 12px;"></div>
 
       <!-- Dynamic Nested Suites -->
-      <div id="suite-list" style="flex: 1; overflow-y: auto; padding: 0 6px;"></div>
+      <div id="suite-list" style="flex: 1; overflow-y: auto; padding: 0 4px;"></div>
 
       <!-- Left Pane Footer Status -->
       <div style="padding: 12px 16px; border-top: 1px solid var(--border); font-size: 11px; color: var(--text-submuted); display: flex; justify-content: space-between; align-items: center;">
-        <span>SQLite WAL Mode</span>
+        <span>SQLite WAL Active</span>
         <span style="color: var(--pass);">● 100% Private</span>
       </div>
     </div>
@@ -707,15 +728,17 @@
     <!-- Center Pane: Test Cases Data Grid -->
     <div class="pane-center">
       <div class="pane-header">
-        <div style="display: flex; align-items: center; gap: 10px;">
-          <div style="position: relative;">
-            <input type="text" id="search-input" placeholder="Search test cases (FTS5 sub-2ms)..." style="width: 320px; padding-left: 32px;" oninput="handleSearch(this.value)" />
+        <!-- Search bar input with flexible width -->
+        <div style="display: flex; align-items: center; gap: 8px; flex: 1; max-width: 420px;">
+          <div style="position: relative; flex: 1;">
+            <input type="text" id="search-input" placeholder="Search test cases (FTS5 sub-2ms)..." style="width: 100%; padding-left: 32px;" oninput="handleSearch(this.value)" />
             <svg style="position: absolute; left: 10px; top: 9px; color: var(--text-submuted);" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
           </div>
-          <span class="badge-pill" style="font-size: 10px;">⌘K</span>
+          <span class="badge-pill" style="font-size: 10px; flex-shrink: 0;">⌘K</span>
         </div>
 
-        <div style="display: flex; align-items: center; gap: 8px;">
+        <!-- Action Button: Guaranteed single-line non-wrapping -->
+        <div style="display: flex; align-items: center; gap: 8px; flex-shrink: 0;">
           <button class="btn btn-primary" onclick="createCasePrompt()">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
             New Test Case
@@ -850,7 +873,7 @@
 
       <div style="padding: 12px 16px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 14px; background: var(--canvas);">
         <span style="font-size: 11px; font-weight: 600; color: var(--text-submuted);">TOOL:</span>
-        <button class="btn" id="tool-rect" onclick="setAnnoTool('rect')">🟥 Rectangle</button>
+        <button class="btn btn-primary" id="tool-rect" onclick="setAnnoTool('rect')">🟥 Rectangle</button>
         <button class="btn" id="tool-arrow" onclick="setAnnoTool('arrow')">➡️ Arrow</button>
         <button class="btn" id="tool-redact" onclick="setAnnoTool('redact')">🔲 Redact PII</button>
         <button class="btn" id="tool-text" onclick="setAnnoTool('text')">🔤 Callout</button>
@@ -873,7 +896,6 @@
     let cases = [];
     let selectedSuiteId = null;
     let activeCase = null;
-    let activeFilter = 'all';
 
     // Execution Run State
     let runs = [];
@@ -892,25 +914,8 @@
           token = sData.token;
         }
 
-        // Fetch workspaces
-        const wsRes = await fetch('/api/v1/workspaces', {
-          headers: { 'Authorization': `Bearer ${token}` }
-        });
-        if (wsRes.ok) {
-          const wsList = await wsRes.json();
-          if (wsList.length > 0) {
-            currentWorkspace = wsList[0];
-            await loadProjects(currentWorkspace.id);
-          }
-        }
-      } catch (err) {
-        console.error('Init error:', err);
-      }
-    }
-
-    async function loadProjects(workspaceId) {
-      try {
-        const pRes = await fetch(`/api/v1/workspaces/${workspaceId}/projects`, {
+        // Fetch projects directly
+        const pRes = await fetch('/api/v1/projects', {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         if (pRes.ok) {
@@ -923,7 +928,7 @@
           }
         }
       } catch (err) {
-        console.error('Load projects error:', err);
+        console.error('Init error:', err);
       }
     }
 
@@ -950,6 +955,11 @@
         cases = await res.json();
         document.getElementById('total-cases-count').innerText = cases.length;
         renderCases();
+
+        // Auto-select first case if none active
+        if (cases.length > 0 && !activeCase) {
+          selectCase(cases[0]);
+        }
       }
     }
 
@@ -968,11 +978,13 @@
     }
 
     async function loadRunItems(runId) {
-      const res = await fetch(`/api/v1/projects/${currentProject.id}/runs/${runId}/items`, {
+      const res = await fetch(`/api/v1/runs/${runId}`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (res.ok) {
-        activeRunItems = await res.json();
+        const data = await res.json();
+        activeRun = data.run;
+        activeRunItems = data.items;
         renderExecutionView();
       }
     }
@@ -1014,7 +1026,6 @@
       }
 
       if (cases.length === 0) {
-        // Render Empty State Hero with Instant Starter Seeder
         gridEl.innerHTML = `
           <div class="hero-card">
             <div style="font-size: 32px; margin-bottom: 12px;">⚡</div>
@@ -1048,7 +1059,7 @@
 
         row.innerHTML = `
           <div style="display: flex; align-items: center; min-width: 0; flex: 1;">
-            <span class="case-id">${currentProject.key}-${tc.case_number}</span>
+            <span class="case-id">${currentProject ? currentProject.key : 'LOC'}-${tc.case_number}</span>
             <span class="case-title">${escapeHtml(tc.title)}</span>
           </div>
           <div style="display: flex; align-items: center; gap: 8px; flex-shrink: 0;">
@@ -1069,6 +1080,7 @@
     }
 
     function renderCaseDetail() {
+      if (!activeCase) return;
       const container = document.getElementById('detail-content');
       document.getElementById('btn-save-case').style.display = 'inline-flex';
       document.getElementById('btn-run-case').style.display = 'inline-flex';
@@ -1078,8 +1090,8 @@
 
       container.innerHTML = `
         <div style="display: flex; justify-content: space-between; align-items: center;">
-          <span class="case-id" style="font-size: 12px;">${currentProject.key}-${activeCase.case_number}</span>
-          <span class="badge-pill">Version ${activeCase.version}</span>
+          <span class="case-id" style="font-size: 12px;">${currentProject ? currentProject.key : 'LOC'}-${activeCase.case_number}</span>
+          <span class="badge-pill">Version ${activeCase.version || 1}</span>
         </div>
 
         <div>
@@ -1122,7 +1134,7 @@
               <div class="step-card" data-step-index="${idx}">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                   <span class="step-number-badge">${idx + 1}</span>
-                  <button onclick="removeStepRow(${idx})" class="btn-ghost" style="color: var(--fail); cursor: pointer; font-size: 11px;">✕</button>
+                  <button onclick="this.closest('.step-card').remove()" class="btn-ghost" style="color: var(--fail); cursor: pointer; font-size: 11px;">✕</button>
                 </div>
                 <div>
                   <div class="step-label">ACTION</div>
@@ -1160,13 +1172,6 @@
         </div>
       `;
       container.appendChild(card);
-    }
-
-    function removeStepRow(idx) {
-      const container = document.getElementById('steps-container');
-      if (container.children[idx]) {
-        container.children[idx].remove();
-      }
     }
 
     async function saveActiveCase() {
@@ -1277,7 +1282,7 @@
         <div style="display: flex; flex-direction: column; gap: 20px;">
           <div>
             <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
-              <span class="case-id">#LOC-${curCase.case_number}</span>
+              <span class="case-id">#${currentProject ? currentProject.key : 'LOC'}-${curCase.case_number}</span>
               <span class="pill pill-${currentItem.status}">${currentItem.status}</span>
             </div>
             <h2 style="font-size: 20px; font-weight: 700; letter-spacing: -0.02em;">${escapeHtml(curCase.title)}</h2>
@@ -1402,14 +1407,15 @@
     function setAnnoTool(tool) {
       currentTool = tool;
       document.querySelectorAll('#modal-card .btn').forEach(b => b.classList.remove('btn-primary'));
-      document.getElementById(`tool-${tool}`).classList.add('btn-primary');
+      const activeBtn = document.getElementById(`tool-${tool}`);
+      if (activeBtn) activeBtn.classList.add('btn-primary');
     }
 
     function saveAnnotation() {
       closeModal();
     }
 
-    // Global Keydown Listeners (WCAG 2.1.4 single-key suppression in inputs)
+    // Global Keydown Listeners
     window.addEventListener('keydown', (e) => {
       // ⌘K for search focus
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
@@ -1453,7 +1459,6 @@
 
     // Seed Sample Data from UI
     async function seedSampleData() {
-      // Create Starter Suites
       const s1Res = await fetch(`/api/v1/projects/${currentProject.id}/suites`, {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
@@ -1468,7 +1473,6 @@
       });
       const s2 = await s2Res.json();
 
-      // Create Sample Cases
       await fetch(`/api/v1/projects/${currentProject.id}/cases`, {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
@@ -1512,7 +1516,7 @@
       fetch(`/api/v1/projects/${currentProject.id}/suites`, {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title, description: 'Created via web console' })
+        body: JSON.stringify({ title, description: 'Created via console' })
       }).then(() => refreshData());
     }
 
@@ -1533,6 +1537,10 @@
     }
 
     function startNewRun() {
+      setMode('execution');
+    }
+
+    function executeSingleCase() {
       setMode('execution');
     }
 

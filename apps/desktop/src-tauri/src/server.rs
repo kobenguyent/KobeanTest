@@ -1,7 +1,7 @@
 use crate::db::{
     add_attachment, create_case, create_project, create_run, create_suite, create_workspace,
     get_run, get_run_items, ingest_batch, list_attachments, list_cases, list_projects,
-    list_suites, list_workspaces, record_execution, search_cases, AddAttachmentInput,
+    list_runs, list_suites, list_workspaces, record_execution, search_cases, AddAttachmentInput,
     CreateCaseInput, CreateRunInput, IngestBatchInput, ListCasesFilter, RecordExecutionInput,
 };
 use crate::error::AppError;
@@ -260,6 +260,15 @@ pub fn dispatch_request<W: Write>(
         }
     }
 
+    if req.path.starts_with("/api/v1/workspaces/") && req.path.ends_with("/projects") && req.method == "GET" {
+        let ws_id = req.path.strip_prefix("/api/v1/workspaces/")
+            .unwrap_or("")
+            .strip_suffix("/projects")
+            .unwrap_or("ws-default");
+        let list = list_projects(&conn, ws_id)?;
+        return send_response(stream, 200, "OK", json!(list));
+    }
+
     if req.path == "/api/v1/projects" {
         if req.method == "GET" {
             let ws_id = req.get_header("X-Workspace-Id").unwrap_or("ws-default");
@@ -359,11 +368,16 @@ pub fn dispatch_request<W: Write>(
                 return send_response(stream, 200, "OK", json!(resp));
             }
 
-            if resource == "runs" && req.method == "POST" {
-                let mut input: CreateRunInput = serde_json::from_slice(&req.body)?;
-                input.project_id = project_id.to_string();
-                let run = create_run(&mut conn, input)?;
-                return send_response(stream, 201, "Created", json!(run));
+            if resource == "runs" {
+                if req.method == "GET" {
+                    let runs = list_runs(&conn, project_id)?;
+                    return send_response(stream, 200, "OK", json!(runs));
+                } else if req.method == "POST" {
+                    let mut input: CreateRunInput = serde_json::from_slice(&req.body)?;
+                    input.project_id = project_id.to_string();
+                    let run = create_run(&mut conn, input)?;
+                    return send_response(stream, 201, "Created", json!(run));
+                }
             }
         }
     }
