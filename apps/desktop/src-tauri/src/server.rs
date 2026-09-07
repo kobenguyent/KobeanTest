@@ -1,8 +1,9 @@
 use crate::db::{
     add_attachment, create_case, create_project, create_run, create_suite, create_workspace,
     get_run, get_run_items, ingest_batch, list_attachments, list_cases, list_projects,
-    list_runs, list_suites, list_workspaces, record_execution, search_cases, AddAttachmentInput,
-    CreateCaseInput, CreateRunInput, IngestBatchInput, ListCasesFilter, RecordExecutionInput,
+    list_runs, list_suites, list_workspaces, record_execution, search_cases, seed_starter_data,
+    AddAttachmentInput, CreateCaseInput, CreateRunInput, IngestBatchInput, ListCasesFilter,
+    RecordExecutionInput,
 };
 use crate::error::AppError;
 use crate::media::{
@@ -247,6 +248,14 @@ pub fn dispatch_request<W: Write>(
         Err(_) => return send_response(stream, 500, "Internal Server Error", json!({"error": "Database lock poisoned"})),
     };
 
+    if req.path == "/api/v1/seed" && req.method == "POST" {
+        seed_starter_data(&mut conn)?;
+        return send_response(stream, 200, "OK", json!({
+            "status": "ok",
+            "message": "Starter data seeded successfully"
+        }));
+    }
+
     if req.path == "/api/v1/workspaces" {
         if req.method == "GET" {
             let list = list_workspaces(&conn)?;
@@ -265,14 +274,22 @@ pub fn dispatch_request<W: Write>(
             .unwrap_or("")
             .strip_suffix("/projects")
             .unwrap_or("ws-default");
-        let list = list_projects(&conn, ws_id)?;
+        let mut list = list_projects(&conn, ws_id)?;
+        if list.is_empty() {
+            let _ = seed_starter_data(&mut conn);
+            list = list_projects(&conn, ws_id)?;
+        }
         return send_response(stream, 200, "OK", json!(list));
     }
 
     if req.path == "/api/v1/projects" {
         if req.method == "GET" {
             let ws_id = req.get_header("X-Workspace-Id").unwrap_or("ws-default");
-            let list = list_projects(&conn, ws_id)?;
+            let mut list = list_projects(&conn, ws_id)?;
+            if list.is_empty() {
+                let _ = seed_starter_data(&mut conn);
+                list = list_projects(&conn, ws_id)?;
+            }
             return send_response(stream, 200, "OK", json!(list));
         } else if req.method == "POST" {
             let body: Value = serde_json::from_slice(&req.body)?;
@@ -389,6 +406,28 @@ pub fn dispatch_request<W: Write>(
             let items = get_run_items(&conn, run_id)?;
             return send_response(stream, 200, "OK", json!({ "run": run, "items": items }));
         }
+    }
+
+    if req.path.starts_with("/api/v1/run-items/") && req.method == "PUT" {
+        let item_id = &req.path["/api/v1/run-items/".len()..];
+        let body: Value = serde_json::from_slice(&req.body)?;
+        let status = body["status"].as_str().unwrap_or("passed");
+        let notes = body["notes"].as_str().map(|s| s.to_string());
+        let duration_ms = body["duration_ms"].as_i64();
+        let exec = record_execution(
+            &mut conn,
+            RecordExecutionInput {
+                run_item_id: item_id.to_string(),
+                status: status.to_string(),
+                duration_ms,
+                error_message: None,
+                stack_trace: None,
+                notes,
+                executed_by: Some("Tester".to_string()),
+                step_results: None,
+            },
+        )?;
+        return send_response(stream, 200, "OK", json!(exec));
     }
 
     if req.path == "/api/v1/executions" && req.method == "POST" {

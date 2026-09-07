@@ -292,4 +292,34 @@ fn test_http_server_endpoints_and_security() {
     let (status, sess) = run_request(Arc::clone(&db), secret_token, "GET", "/session", "", None, None);
     assert_eq!(status, 200);
     assert_eq!(sess["token"], secret_token);
+
+    // 12. Seed Endpoint -> 200 OK
+    let (status, seed_res) = run_request(
+        Arc::clone(&db),
+        secret_token,
+        "POST",
+        "/api/v1/seed",
+        "",
+        Some(secret_token),
+        None,
+    );
+    assert_eq!(status, 200);
+    assert_eq!(seed_res["status"], "ok");
+
+    // 13. Triage Run Item via PUT /api/v1/run-items/:id -> 200 OK
+    let (status, triage_res) = run_request(
+        Arc::clone(&db),
+        secret_token,
+        "PUT",
+        &format!("/api/v1/run-items/{run_item_id}"),
+        "",
+        Some(secret_token),
+        Some(&json!({
+            "status": "passed",
+            "notes": "Verified passing on retry",
+            "duration_ms": 95
+        })),
+    );
+    assert_eq!(status, 200);
+    assert_eq!(triage_res["status"], "passed");
 }

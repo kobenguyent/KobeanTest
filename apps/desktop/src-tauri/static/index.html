@@ -625,6 +625,32 @@
       box-shadow: 0 1px 1px rgba(0,0,0,0.3);
       white-space: nowrap;
     }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .toast-pill {
+      pointer-events: auto;
+      padding: 8px 16px;
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 500;
+      background: var(--card-raised);
+      border: 1px solid var(--border-hover);
+      color: var(--text);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      animation: slideUp 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+    }
   </style>
 </head>
 <body>
@@ -699,7 +725,19 @@
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 8 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>
           Test Suites
         </span>
-        <button class="btn btn-ghost" onclick="createSuitePrompt()" style="padding: 3px 8px; font-size: 11px;">+ New</button>
+        <button class="btn btn-ghost" onclick="toggleNewSuiteInput()" style="padding: 3px 8px; font-size: 11px;">+ New</button>
+      </div>
+
+      <!-- Inline Suite Creator -->
+      <div id="new-suite-form" style="display: none; padding: 10px 12px; background: var(--card-raised); border-bottom: 1px solid var(--border); animation: fadeIn 0.15s ease-out;">
+        <input type="text" id="new-suite-title" placeholder="Suite name..." style="width: 100%; height: 28px; font-size: 12px; margin-bottom: 8px;" onkeydown="handleNewSuiteKey(event)" />
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span style="font-size: 10px; color: var(--text-submuted);"><kbd>↵</kbd> save <kbd>Esc</kbd></span>
+          <div style="display: flex; gap: 6px;">
+            <button class="btn btn-ghost" onclick="toggleNewSuiteInput(false)" style="padding: 2px 6px; font-size: 11px;">Cancel</button>
+            <button class="btn btn-primary" onclick="submitNewSuite()" style="padding: 2px 8px; font-size: 11px;">Save</button>
+          </div>
+        </div>
       </div>
 
       <!-- Master All Cases Filter -->
@@ -739,10 +777,38 @@
 
         <!-- Action Button: Guaranteed single-line non-wrapping -->
         <div style="display: flex; align-items: center; gap: 8px; flex-shrink: 0;">
-          <button class="btn btn-primary" onclick="createCasePrompt()">
+          <button class="btn btn-primary" onclick="toggleNewCaseInput()">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
             New Test Case
           </button>
+        </div>
+      </div>
+
+      <!-- Inline Case Creator Card -->
+      <div id="new-case-form" style="display: none; padding: 12px 16px; background: var(--card-raised); border-bottom: 1px solid var(--border); animation: fadeIn 0.15s ease-out;">
+        <div style="font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;">
+          <span>Create New Test Case</span>
+          <span style="font-size: 10px; color: var(--text-submuted);">Press <kbd>↵</kbd> to save, <kbd>Esc</kbd> to cancel</span>
+        </div>
+        <input type="text" id="new-case-title" placeholder="Verify expected system behavior..." style="width: 100%; height: 32px; font-size: 13px; font-weight: 500; margin-bottom: 10px;" onkeydown="handleNewCaseKey(event)" />
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div style="display: flex; gap: 8px;">
+            <select id="new-case-priority" style="height: 28px; padding: 2px 8px; font-size: 11px;">
+              <option value="critical">Critical</option>
+              <option value="high">High</option>
+              <option value="medium" selected>Medium</option>
+              <option value="low">Low</option>
+            </select>
+            <select id="new-case-type" style="height: 28px; padding: 2px 8px; font-size: 11px;">
+              <option value="automated" selected>Automated</option>
+              <option value="manual">Manual</option>
+              <option value="exploratory">Exploratory</option>
+            </select>
+          </div>
+          <div style="display: flex; gap: 6px;">
+            <button class="btn btn-ghost" onclick="toggleNewCaseInput(false)" style="padding: 4px 10px; font-size: 12px;">Cancel</button>
+            <button class="btn btn-primary" onclick="submitNewCase()" style="padding: 4px 12px; font-size: 12px; font-weight: 600;">Create Case</button>
+          </div>
         </div>
       </div>
 
@@ -779,7 +845,7 @@
       <div style="display: flex; flex-direction: column; gap: 4px;">
         <div style="display: flex; align-items: center; gap: 12px;">
           <span style="font-weight: 700; font-size: 15px; letter-spacing: -0.01em;" id="run-title-label">Sprint 42 Release Regression</span>
-          <span class="badge-pill" style="color: var(--accent);">Staging Localhost</span>
+          <span class="badge-pill" style="color: var(--accent);" id="run-env-badge">Staging Localhost</span>
         </div>
         <div style="font-size: 11px; color: var(--text-muted); display: flex; gap: 14px;" id="run-meta-stats">
           <span>Total: 6 Cases</span>
@@ -810,9 +876,9 @@
 
     <!-- Segmented Live Progress Bar -->
     <div class="progress-bar-wrap" id="exec-progress-bar">
-      <div class="progress-segment" id="seg-pass" style="background: var(--pass); width: 33%;"></div>
-      <div class="progress-segment" id="seg-fail" style="background: var(--fail); width: 17%;"></div>
-      <div class="progress-segment" id="seg-block" style="background: var(--block); width: 17%;"></div>
+      <div class="progress-segment" id="seg-pass" style="background: var(--pass); width: 0%;"></div>
+      <div class="progress-segment" id="seg-fail" style="background: var(--fail); width: 0%;"></div>
+      <div class="progress-segment" id="seg-block" style="background: var(--block); width: 0%;"></div>
       <div class="progress-segment" id="seg-skip" style="background: var(--skip); width: 0%;"></div>
     </div>
 
@@ -886,6 +952,9 @@
       </div>
     </div>
   </div>
+
+  <!-- Toast Container -->
+  <div id="toast-container" style="position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); z-index: 9999; pointer-events: none; display: flex; flex-direction: column; gap: 8px; align-items: center;"></div>
 
   <script>
     // State
@@ -964,28 +1033,61 @@
     }
 
     async function loadRuns() {
-      const res = await fetch(`/api/v1/projects/${currentProject.id}/runs`, {
-        headers: { 'Authorization': `Bearer ${token}` }
-      });
-      if (res.ok) {
-        runs = await res.json();
-        if (runs.length > 0) {
-          activeRun = runs[0];
+      if (!currentProject) return;
+      try {
+        const res = await fetch(`/api/v1/projects/${currentProject.id}/runs`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (res.ok) {
+          runs = await res.json();
           document.getElementById('active-run-badge').innerText = runs.length;
-          await loadRunItems(activeRun.id);
+          if (runs.length > 0) {
+            activeRun = runs[0];
+            await loadRunItems(activeRun.id);
+          } else {
+            activeRun = null;
+            activeRunItems = [];
+            renderExecutionView();
+          }
         }
+      } catch (err) {
+        console.error('Failed to load runs:', err);
       }
     }
 
     async function loadRunItems(runId) {
-      const res = await fetch(`/api/v1/runs/${runId}`, {
-        headers: { 'Authorization': `Bearer ${token}` }
-      });
-      if (res.ok) {
-        const data = await res.json();
-        activeRun = data.run;
-        activeRunItems = data.items;
-        renderExecutionView();
+      try {
+        const res = await fetch(`/api/v1/runs/${runId}`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (res.ok) {
+          const data = await res.json();
+          activeRun = data.run;
+          activeRunItems = (data.items || []).map(detail => {
+            const it = detail.item || {};
+            const exec = detail.latest_execution;
+            return {
+              id: it.id,
+              test_run_id: it.test_run_id,
+              test_case_id: it.test_case_id,
+              case_id: it.test_case_id,
+              case_revision_id: it.case_revision_id,
+              status: it.status || 'pending',
+              assigned_to: it.assigned_to,
+              title: detail.case_title || 'Untitled Test Case',
+              case_number: detail.case_number || 1,
+              priority: detail.priority || 'medium',
+              duration_ms: exec ? exec.duration_ms : 0,
+              notes: exec ? (exec.notes || '') : ''
+            };
+          });
+          if (activeItemIndex >= activeRunItems.length) {
+            activeItemIndex = 0;
+          }
+          renderExecutionView();
+        }
+      } catch (err) {
+        console.error('Failed to load run items:', err);
       }
     }
 
@@ -1033,7 +1135,7 @@
             <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5; margin-bottom: 24px;">
               Your 100% localhost-first, air-gapped test management instrument. Sub-16ms speed, WAL mode persistence, and keyboard-driven triage.
             </p>
-            <button class="btn btn-primary" onclick="seedSampleData()" style="padding: 10px 20px; font-size: 13px; font-weight: 600;">
+            <button class="btn btn-primary" id="btn-seed-starter" onclick="seedSampleData()" style="padding: 10px 20px; font-size: 13px; font-weight: 600;">
               ✨ Load Sample Test Suite (6 Cases)
             </button>
           </div>
@@ -1227,28 +1329,66 @@
     }
 
     function renderExecutionView() {
-      if (!activeRun || activeRunItems.length === 0) return;
-
       const listEl = document.getElementById('exec-items-list');
-      listEl.innerHTML = '';
+      const detailEl = document.getElementById('exec-active-detail');
+      if (!listEl || !detailEl) return;
 
-      let passCount = 0, failCount = 0, blockCount = 0, skipCount = 0;
+      if (!activeRun || activeRunItems.length === 0) {
+        listEl.innerHTML = `
+          <div style="padding: 40px 20px; text-align: center; color: var(--text-submuted); font-size: 13px;">
+            <div style="font-size: 24px; margin-bottom: 8px;">📋</div>
+            No active test runs found.<br/>
+            <button class="btn btn-primary" onclick="startNewRun()" style="margin-top: 14px; font-size: 12px;">Create Test Run</button>
+          </div>
+        `;
+        detailEl.innerHTML = `
+          <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; color: var(--text-submuted); font-size: 13px;">
+            <div style="font-size: 32px; margin-bottom: 12px;">⚡</div>
+            <h3 style="font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 4px;">Ready to Execute</h3>
+            <p>Start a new test run from authoring mode or click above to begin triage.</p>
+          </div>
+        `;
+        const titleLabel = document.getElementById('run-title-label');
+        if (titleLabel) titleLabel.innerText = 'No Active Run';
+        const envBadge = document.getElementById('run-env-badge');
+        if (envBadge) envBadge.innerText = 'Localhost';
+        const metaStats = document.getElementById('run-meta-stats');
+        if (metaStats) metaStats.innerHTML = '<span>Total: 0 Cases</span>';
+        document.getElementById('seg-pass').style.width = '0%';
+        document.getElementById('seg-fail').style.width = '0%';
+        document.getElementById('seg-block').style.width = '0%';
+        document.getElementById('seg-skip').style.width = '0%';
+        return;
+      }
+
+      const titleLabel = document.getElementById('run-title-label');
+      if (titleLabel) titleLabel.innerText = activeRun.title;
+      const envBadge = document.getElementById('run-env-badge');
+      if (envBadge) envBadge.innerText = activeRun.environment || 'Localhost';
+
+      let passCount = 0, failCount = 0, blockCount = 0, skipCount = 0, pendingCount = 0;
+      listEl.innerHTML = '';
 
       activeRunItems.forEach((item, idx) => {
         if (item.status === 'passed') passCount++;
         else if (item.status === 'failed') failCount++;
         else if (item.status === 'blocked') blockCount++;
         else if (item.status === 'skipped') skipCount++;
+        else pendingCount++;
 
-        const tc = cases.find(c => c.id === item.case_id) || { title: 'Test Case', case_number: idx + 1 };
+        const isSelected = idx === activeItemIndex;
         const row = document.createElement('div');
-        row.className = `case-row ${idx === activeItemIndex ? 'active' : ''}`;
-        row.style.background = idx === activeItemIndex ? 'var(--canvas)' : 'var(--card)';
+        row.className = `case-row ${isSelected ? 'active' : ''}`;
+        row.style.background = isSelected ? 'var(--card-raised)' : 'transparent';
+        row.style.borderLeft = isSelected ? '2px solid var(--accent)' : '2px solid transparent';
+        row.style.cursor = 'pointer';
         row.innerHTML = `
           <div style="display: flex; align-items: center; min-width: 0; flex: 1;">
-            <span class="pill pill-${item.status}">${item.status}</span>
-            <span class="case-title" style="margin-left: 10px;">${escapeHtml(tc.title)}</span>
+            <span class="pill pill-${item.status}" style="font-size: 10px; text-transform: uppercase;">${item.status}</span>
+            <span class="case-id" style="margin-left: 8px; font-size: 11px;">#${currentProject ? currentProject.key : 'LOC'}-${item.case_number}</span>
+            <span class="case-title" style="margin-left: 8px; font-size: 12px;">${escapeHtml(item.title)}</span>
           </div>
+          ${item.duration_ms ? `<span style="font-size: 10px; font-family: monospace; color: var(--text-submuted);">${item.duration_ms}ms</span>` : ''}
         `;
         row.onclick = () => {
           activeItemIndex = idx;
@@ -1264,60 +1404,93 @@
       document.getElementById('seg-block').style.width = `${(blockCount / total) * 100}%`;
       document.getElementById('seg-skip').style.width = `${(skipCount / total) * 100}%`;
 
-      document.getElementById('run-stat-pass').innerText = `${passCount} Passed`;
-      document.getElementById('run-stat-fail').innerText = `${failCount} Failed`;
-      document.getElementById('run-stat-block').innerText = `${blockCount} Blocked`;
-      document.getElementById('run-stat-skip').innerText = `${skipCount} Skipped`;
+      const metaStats = document.getElementById('run-meta-stats');
+      if (metaStats) {
+        metaStats.innerHTML = `
+          <span>Total: ${total} Cases</span>
+          <span>•</span>
+          <span style="color: var(--pass);" id="run-stat-pass">${passCount} Passed</span>
+          <span>•</span>
+          <span style="color: var(--fail);" id="run-stat-fail">${failCount} Failed</span>
+          <span>•</span>
+          <span style="color: var(--block);" id="run-stat-block">${blockCount} Blocked</span>
+          <span>•</span>
+          <span style="color: var(--skip);" id="run-stat-skip">${skipCount} Skipped</span>
+          <span>•</span>
+          <span style="color: var(--text-submuted);">${pendingCount} Pending</span>
+        `;
+      }
 
       // Render Active Detail
       const currentItem = activeRunItems[activeItemIndex];
       if (!currentItem) return;
-      const curCase = cases.find(c => c.id === currentItem.case_id) || { title: 'Test Case', case_number: activeItemIndex + 1 };
-      
-      let steps = [];
-      try { steps = JSON.parse(curCase.steps_json || '[]'); } catch(e) {}
+      const fullCase = cases.find(c => c.id === currentItem.case_id) || {};
 
-      const detailEl = document.getElementById('exec-active-detail');
+      let steps = [];
+      try { steps = JSON.parse(fullCase.steps_json || '[]'); } catch(e) {}
+      if (steps.length === 0) {
+        steps = [{ step_number: 1, action: 'Execute automated/manual test suite logic', expected: 'Assertion checks evaluate to true' }];
+      }
+
       detailEl.innerHTML = `
         <div style="display: flex; flex-direction: column; gap: 20px;">
           <div>
-            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
-              <span class="case-id">#${currentProject ? currentProject.key : 'LOC'}-${curCase.case_number}</span>
-              <span class="pill pill-${currentItem.status}">${currentItem.status}</span>
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+              <span class="case-id" style="font-size: 13px; font-weight: 700;">#${currentProject ? currentProject.key : 'LOC'}-${currentItem.case_number}</span>
+              <span class="pill pill-${currentItem.status}" style="text-transform: uppercase; font-size: 11px;">${currentItem.status}</span>
+              <span class="pill pill-priority-${currentItem.priority}" style="text-transform: uppercase; font-size: 11px;">${currentItem.priority}</span>
+              ${currentItem.duration_ms ? `<span class="badge-pill">${currentItem.duration_ms}ms</span>` : ''}
             </div>
-            <h2 style="font-size: 20px; font-weight: 700; letter-spacing: -0.02em;">${escapeHtml(curCase.title)}</h2>
-            ${curCase.preconditions ? `<div style="font-size: 12px; color: var(--text-muted); margin-top: 8px; background: rgba(255,255,255,0.03); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border);"><strong>Preconditions:</strong> ${escapeHtml(curCase.preconditions)}</div>` : ''}
+            <h2 style="font-size: 22px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.3;">${escapeHtml(currentItem.title)}</h2>
+            ${fullCase.preconditions ? `
+              <div style="font-size: 12px; color: var(--text-muted); margin-top: 10px; background: rgba(255,255,255,0.03); padding: 10px 14px; border-radius: 6px; border: 1px solid var(--border);">
+                <strong style="color: var(--text);">Preconditions:</strong> ${escapeHtml(fullCase.preconditions)}
+              </div>
+            ` : ''}
           </div>
 
           <div>
-            <div class="step-label">STEPS TO EXECUTE</div>
-            <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 6px;">
+            <div class="step-label" style="margin-bottom: 8px;">STEPS TO EXECUTE (${steps.length})</div>
+            <div style="display: flex; flex-direction: column; gap: 10px;">
               ${steps.map((s, i) => `
-                <div style="padding: 12px; border: 1px solid var(--border); border-radius: 6px; background: var(--canvas);">
-                  <div style="font-size: 13px; font-weight: 600; color: var(--text);">${i + 1}. ${escapeHtml(s.action)}</div>
-                  <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">Expected: ${escapeHtml(s.expected)}</div>
+                <div style="padding: 14px; border: 1px solid var(--border); border-radius: 6px; background: var(--canvas);">
+                  <div style="font-size: 13px; font-weight: 600; color: var(--text); display: flex; align-items: baseline; gap: 8px;">
+                    <span class="step-number-badge">${i + 1}</span>
+                    <span>${escapeHtml(s.action)}</span>
+                  </div>
+                  <div style="font-size: 12px; color: var(--text-muted); margin-top: 6px; margin-left: 28px;">
+                    <strong style="color: var(--text-submuted);">Expected:</strong> ${escapeHtml(s.expected)}
+                  </div>
                 </div>
               `).join('')}
             </div>
           </div>
 
           <div>
-            <div class="step-label">DEFECT NOTES / FAILURE REASON</div>
-            <textarea id="exec-notes" rows="3" style="width: 100%; margin-top: 4px;" placeholder="Add error logs, defect descriptions, or reproduction details...">${escapeHtml(currentItem.notes || '')}</textarea>
+            <div class="step-label" style="margin-bottom: 6px;">DEFECT NOTES / EXECUTION DETAILS</div>
+            <textarea id="exec-notes" rows="3" style="width: 100%; resize: vertical;" placeholder="Add failure logs, reproduction steps, or triage comments...">${escapeHtml(currentItem.notes || '')}</textarea>
           </div>
         </div>
 
-        <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); padding-top: 20px; margin-top: 24px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); padding-top: 20px; margin-top: 28px;">
           <button class="btn" onclick="openScreenshotModal()">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>
             📸 Attach Screenshot (⌘V)
           </button>
 
-          <div style="display: flex; gap: 8px;">
-            <button class="btn" style="background: var(--pass-bg); color: var(--pass); border-color: var(--pass-border); font-weight: 600;" onclick="triageActive('passed')">P Pass</button>
-            <button class="btn" style="background: var(--fail-bg); color: var(--fail); border-color: var(--fail-border); font-weight: 600;" onclick="triageActive('failed')">F Fail</button>
-            <button class="btn" style="background: var(--block-bg); color: var(--block); border-color: var(--block-border); font-weight: 600;" onclick="triageActive('blocked')">B Block</button>
-            <button class="btn" style="background: var(--skip-bg); color: var(--skip); border-color: var(--skip-border); font-weight: 600;" onclick="triageActive('skipped')">S Skip</button>
+          <div style="display: flex; gap: 10px;">
+            <button class="btn" style="background: var(--pass-bg); color: var(--pass); border-color: var(--pass-border); font-weight: 600; padding: 8px 16px;" onclick="triageActive('passed')">
+              <kbd style="background: rgba(16,185,129,0.2); color: var(--pass);">P</kbd> Pass
+            </button>
+            <button class="btn" style="background: var(--fail-bg); color: var(--fail); border-color: var(--fail-border); font-weight: 600; padding: 8px 16px;" onclick="triageActive('failed')">
+              <kbd style="background: rgba(244,63,94,0.2); color: var(--fail);">F</kbd> Fail
+            </button>
+            <button class="btn" style="background: var(--block-bg); color: var(--block); border-color: var(--block-border); font-weight: 600; padding: 8px 16px;" onclick="triageActive('blocked')">
+              <kbd style="background: rgba(245,158,11,0.2); color: var(--block);">B</kbd> Block
+            </button>
+            <button class="btn" style="background: var(--skip-bg); color: var(--skip); border-color: var(--skip-border); font-weight: 600; padding: 8px 16px;" onclick="triageActive('skipped')">
+              <kbd style="background: rgba(148,163,184,0.2); color: var(--skip);">S</kbd> Skip
+            </button>
           </div>
         </div>
       `;
@@ -1328,27 +1501,42 @@
     async function triageActive(status) {
       if (!activeRun || activeRunItems.length === 0) return;
       const item = activeRunItems[activeItemIndex];
+      if (!item) return;
+
       const notesEl = document.getElementById('exec-notes');
       const notes = notesEl ? notesEl.value : (item.notes || null);
 
       item.status = status;
       item.notes = notes;
+      item.duration_ms = item.duration_ms || Math.floor(Math.random() * 120) + 30;
+
+      // Optimistic update
+      renderExecutionView();
+      showToast(`Marked #${currentProject ? currentProject.key : 'LOC'}-${item.case_number} as ${status.toUpperCase()}`, status === 'failed' ? 'error' : status === 'passed' ? 'success' : 'warn');
 
       // Persist to local server
-      fetch(`/api/v1/run-items/${item.id}`, {
-        method: 'PUT',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ status, notes, duration_ms: 120 })
-      });
+      try {
+        await fetch(`/api/v1/run-items/${item.id}`, {
+          method: 'PUT',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            status,
+            notes,
+            duration_ms: item.duration_ms
+          })
+        });
+      } catch (e) {
+        console.error('Failed to persist execution triage:', e);
+      }
 
       // Auto-advance to next item
       if (activeItemIndex < activeRunItems.length - 1) {
         activeItemIndex++;
+        renderExecutionView();
       }
-      renderExecutionView();
     }
 
     function toggleHud() {
@@ -1457,90 +1645,237 @@
         .replace(/"/g, '&quot;');
     }
 
-    // Seed Sample Data from UI
+    // Toast Notification Dispatcher
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toast-container');
+      if (!container) return;
+      const toast = document.createElement('div');
+      toast.className = 'toast-pill';
+
+      let icon = '✓';
+      let color = 'var(--pass)';
+      if (type === 'error') { icon = '✕'; color = 'var(--fail)'; }
+      else if (type === 'warn') { icon = '⚠'; color = 'var(--block)'; }
+
+      toast.innerHTML = `<span style="color: ${color}; font-weight: 700;">${icon}</span> <span>${escapeHtml(message)}</span>`;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(10px)';
+        toast.style.transition = 'all 0.2s cubic-bezier(0.16, 1, 0.3, 1)';
+        setTimeout(() => toast.remove(), 200);
+      }, 2600);
+    }
+
+    // Seed Sample Data from Backend
     async function seedSampleData() {
-      const s1Res = await fetch(`/api/v1/projects/${currentProject.id}/suites`, {
-        method: 'POST',
-        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title: 'Authentication & Identity', description: 'Biometrics, OAuth2, and Session tokens' })
-      });
-      const s1 = await s1Res.json();
+      const btn = document.getElementById('btn-seed-starter');
+      if (btn) {
+        btn.disabled = true;
+        btn.innerText = '⏳ Loading Starter Suite...';
+      }
 
-      const s2Res = await fetch(`/api/v1/projects/${currentProject.id}/suites`, {
-        method: 'POST',
-        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title: 'Shopping Cart & Checkout', description: 'Cart mutations, payment processing, promo codes' })
-      });
-      const s2 = await s2Res.json();
+      try {
+        const res = await fetch('/api/v1/seed', {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
 
-      await fetch(`/api/v1/projects/${currentProject.id}/cases`, {
-        method: 'POST',
-        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          suite_id: s1.id,
-          title: 'Verify biometric 2FA step-up authentication on high-risk withdrawal',
-          priority: 'critical',
-          type: 'automated',
-          preconditions: 'User logged in with trusted device and high-value balance ($10,000+)',
-          steps_json: JSON.stringify([
-            { step_number: 1, action: 'Trigger withdrawal over $5,000 threshold', expected: 'System responds with 403 Challenge: Biometric Step-up Required' },
-            { step_number: 2, action: 'Present valid WebAuthn/TouchID hardware credential', expected: '200 OK signed signature token returned' },
-            { step_number: 3, action: 'Confirm transaction execution', expected: 'Balance deducted and audit ledger entry written' }
-          ])
-        })
-      });
+        if (!res.ok) {
+          throw new Error(`Server returned ${res.status}`);
+        }
 
-      await fetch(`/api/v1/projects/${currentProject.id}/cases`, {
-        method: 'POST',
-        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          suite_id: s2.id,
-          title: 'Verify atomic cart checkout with Stripe 3D-Secure idempotency',
-          priority: 'critical',
-          type: 'automated',
-          preconditions: 'Cart contains 3 items totaling $249.99 with valid shipping address',
-          steps_json: JSON.stringify([
-            { step_number: 1, action: 'Submit checkout with Idempotency-Key header', expected: 'Payment intent created in RequiresAction state' },
-            { step_number: 2, action: 'Simulate duplicate network request with same Idempotency-Key', expected: 'Original payment intent returned without double charge' },
-            { step_number: 3, action: 'Complete 3DS challenge', expected: 'Order status moves to Confirmed; receipt email queued' }
-          ])
-        })
-      });
+        // Re-query projects to ensure currentProject is set
+        const pRes = await fetch('/api/v1/projects', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (pRes.ok) {
+          const pList = await pRes.json();
+          if (pList.length > 0) {
+            currentProject = pList[0];
+            document.getElementById('project-label').innerText = currentProject.name;
+            document.getElementById('project-key-badge').innerText = currentProject.key;
+          }
+        }
 
-      await refreshData();
+        await refreshData();
+        showToast('Starter dataset loaded: 3 suites, 6 cases, 1 active run', 'success');
+      } catch (err) {
+        console.error('Seed error:', err);
+        showToast('Failed to seed starter dataset: ' + err.message, 'error');
+        if (btn) {
+          btn.disabled = false;
+          btn.innerText = '✨ Load Sample Test Suite (6 Cases)';
+        }
+      }
     }
 
-    function createSuitePrompt() {
-      const title = prompt('Enter Suite Title:');
-      if (!title) return;
-      fetch(`/api/v1/projects/${currentProject.id}/suites`, {
-        method: 'POST',
-        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title, description: 'Created via console' })
-      }).then(() => refreshData());
+    // Inline Suite Creator
+    function toggleNewSuiteInput(force) {
+      const form = document.getElementById('new-suite-form');
+      const input = document.getElementById('new-suite-title');
+      const show = force !== undefined ? force : form.style.display === 'none';
+      form.style.display = show ? 'block' : 'none';
+      if (show) {
+        input.value = '';
+        input.focus();
+      }
     }
 
-    function createCasePrompt() {
-      const title = prompt('Enter Test Case Title:');
-      if (!title) return;
-      fetch(`/api/v1/projects/${currentProject.id}/cases`, {
-        method: 'POST',
-        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          suite_id: selectedSuiteId,
-          title,
-          priority: 'medium',
-          type: 'manual',
-          steps_json: JSON.stringify([{ step_number: 1, action: 'Perform action', expected: 'Expected result' }])
-        })
-      }).then(() => refreshData());
+    function handleNewSuiteKey(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        submitNewSuite();
+      } else if (e.key === 'Escape') {
+        e.preventDefault();
+        toggleNewSuiteInput(false);
+      }
     }
 
-    function startNewRun() {
-      setMode('execution');
+    async function submitNewSuite() {
+      const input = document.getElementById('new-suite-title');
+      const title = input.value.trim();
+      if (!title) {
+        toggleNewSuiteInput(false);
+        return;
+      }
+      if (!currentProject) return;
+
+      try {
+        const res = await fetch(`/api/v1/projects/${currentProject.id}/suites`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ title, description: 'Created via console' })
+        });
+        if (res.ok) {
+          const created = await res.json();
+          toggleNewSuiteInput(false);
+          await loadSuites();
+          selectSuite(created.id);
+          showToast(`Created test suite "${title}"`, 'success');
+        }
+      } catch (err) {
+        console.error('Failed to create suite:', err);
+        showToast('Failed to create suite', 'error');
+      }
     }
 
-    function executeSingleCase() {
+    // Inline Case Creator
+    function toggleNewCaseInput(force) {
+      const form = document.getElementById('new-case-form');
+      const input = document.getElementById('new-case-title');
+      const show = force !== undefined ? force : form.style.display === 'none';
+      form.style.display = show ? 'block' : 'none';
+      if (show) {
+        input.value = '';
+        input.focus();
+      }
+    }
+
+    function handleNewCaseKey(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        submitNewCase();
+      } else if (e.key === 'Escape') {
+        e.preventDefault();
+        toggleNewCaseInput(false);
+      }
+    }
+
+    async function submitNewCase() {
+      const input = document.getElementById('new-case-title');
+      const title = input.value.trim();
+      if (!title) {
+        toggleNewCaseInput(false);
+        return;
+      }
+      if (!currentProject) return;
+
+      const priority = document.getElementById('new-case-priority').value || 'medium';
+      const type = document.getElementById('new-case-type').value || 'automated';
+
+      try {
+        const res = await fetch(`/api/v1/projects/${currentProject.id}/cases`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            suite_id: selectedSuiteId,
+            title,
+            priority,
+            type,
+            steps_json: JSON.stringify([
+              { step_number: 1, action: 'Perform action step', expected: 'System verifies state' }
+            ])
+          })
+        });
+
+        if (res.ok) {
+          const created = await res.json();
+          toggleNewCaseInput(false);
+          await loadCases();
+          const target = cases.find(c => c.id === created.id) || created;
+          selectCase(target);
+          showToast(`Created test case #${currentProject.key}-${created.case_number}`, 'success');
+        }
+      } catch (err) {
+        console.error('Failed to create case:', err);
+        showToast('Failed to create test case', 'error');
+      }
+    }
+
+    async function startNewRun() {
+      if (!currentProject) return;
+      if (cases.length === 0) {
+        showToast('No test cases available. Load or create test cases first.', 'warn');
+        return;
+      }
+
+      try {
+        const title = `Regression Run — ${new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}`;
+        const res = await fetch(`/api/v1/projects/${currentProject.id}/runs`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            title,
+            environment: 'Localhost',
+            source: 'manual',
+            case_ids: cases.map(c => c.id)
+          })
+        });
+
+        if (res.ok) {
+          await loadRuns();
+          activeItemIndex = 0;
+          setMode('execution');
+          showToast(`Started new test run: ${title}`, 'success');
+        } else {
+          setMode('execution');
+        }
+      } catch (err) {
+        console.error('Failed to create run:', err);
+        setMode('execution');
+      }
+    }
+
+    async function executeSingleCase() {
+      if (!activeCase || !currentProject) return;
+      if (!activeRun) {
+        await startNewRun();
+        return;
+      }
+      const targetIdx = activeRunItems.findIndex(item => item.case_id === activeCase.id);
+      if (targetIdx >= 0) {
+        activeItemIndex = targetIdx;
+      }
       setMode('execution');
     }
 

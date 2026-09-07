@@ -5,6 +5,7 @@ pub mod ingest;
 pub mod migrations;
 pub mod projects;
 pub mod runs;
+pub mod seed;
 pub mod suites;
 
 pub use backup::{create_atomic_backup, verify_backup_integrity};
@@ -25,5 +26,6 @@ pub use runs::{
     record_execution, AddAttachmentInput, CreateRunInput, RecordExecutionInput,
     RecordStepResultInput, RunItemDetail,
 };
+pub use seed::seed_starter_data;
 pub use suites::{create_suite, delete_suite, get_suite, list_suites, update_suite};
 
