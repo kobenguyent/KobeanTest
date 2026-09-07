@@ -5,7 +5,10 @@ use crate::db::{
     CreateCaseInput, CreateRunInput, IngestBatchInput, ListCasesFilter, RecordExecutionInput,
 };
 use crate::error::AppError;
-use crate::session::validate_token;
+use crate::media::{
+    get_media_dir, read_media_file, save_media_file, SaveMediaInput, DEFAULT_MAX_QUOTA_BYTES,
+};
+use crate::session::{get_kobean_dir, validate_token};
 use rusqlite::Connection;
 use serde_json::{json, Value};
 use std::io::{Read, Write};
@@ -199,11 +202,18 @@ pub fn dispatch_request<W: Write>(
     // 3. Authenticate Bearer Token for /api/v1/*
     if req.path.starts_with("/api/v1") {
         let auth_header = req.get_header("Authorization").unwrap_or("");
-        let token = if let Some(stripped) = auth_header.strip_prefix("Bearer ") {
+        let mut token = if let Some(stripped) = auth_header.strip_prefix("Bearer ") {
             stripped.trim()
         } else {
             ""
         };
+
+        // For media assets (e.g. <img> tags), permit query param token ?token=...
+        if token.is_empty() && req.path.starts_with("/api/v1/media/") {
+            if let Some(q_tok) = req.query.split('&').find(|p| p.starts_with("token=")) {
+                token = &q_tok["token=".len()..];
+            }
+        }
 
         if !validate_token(expected_token, token) {
             return send_response(
@@ -357,6 +367,18 @@ pub fn dispatch_request<W: Write>(
         return send_response(stream, 201, "Created", json!(exec));
     }
 
+    if req.path.starts_with("/api/v1/executions/") && req.path.ends_with("/attachments/upload") && req.method == "POST" {
+        let remainder = &req.path["/api/v1/executions/".len()..];
+        if let Some((exec_id, _)) = remainder.split_once('/') {
+            let mut input: SaveMediaInput = serde_json::from_slice(&req.body)?;
+            input.execution_id = exec_id.to_string();
+            let kobean_dir = get_kobean_dir();
+            let media_dir = get_media_dir(&kobean_dir);
+            let att = save_media_file(&conn, &media_dir, &input, DEFAULT_MAX_QUOTA_BYTES)?;
+            return send_response(stream, 201, "Created", json!(att));
+        }
+    }
+
     if req.path.starts_with("/api/v1/executions/") && req.path.ends_with("/attachments") {
         let remainder = &req.path["/api/v1/executions/".len()..];
         if let Some((exec_id, _)) = remainder.split_once('/') {
@@ -372,7 +394,42 @@ pub fn dispatch_request<W: Write>(
         }
     }
 
+    if req.path.starts_with("/api/v1/media/") && req.method == "GET" {
+        let filename = &req.path["/api/v1/media/".len()..];
+        let kobean_dir = get_kobean_dir();
+        let media_dir = get_media_dir(&kobean_dir);
+        let (bytes, mime) = read_media_file(&media_dir, filename)?;
+        return send_raw_response(stream, 200, "OK", &mime, &bytes);
+    }
+
     send_response(stream, 404, "Not Found", json!({"error": "Endpoint not found"}))
+}
+
+fn send_raw_response<W: Write>(
+    stream: &mut W,
+    status_code: u16,
+    status_text: &str,
+    content_type: &str,
+    bytes: &[u8],
+) -> Result<(), AppError> {
+    let response = format!(
+        "HTTP/1.1 {} {}\r\n\
+         Content-Type: {}\r\n\
+         Content-Length: {}\r\n\
+         Access-Control-Allow-Origin: *\r\n\
+         Access-Control-Allow-Methods: GET, OPTIONS\r\n\
+         Access-Control-Allow-Headers: Authorization, Content-Type\r\n\
+         Connection: close\r\n\r\n",
+        status_code,
+        status_text,
+        content_type,
+        bytes.len()
+    );
+
+    stream.write_all(response.as_bytes())?;
+    stream.write_all(bytes)?;
+    stream.flush()?;
+    Ok(())
 }
 
 fn send_response<W: Write>(

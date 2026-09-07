@@ -5,6 +5,7 @@ pub mod error;
 pub mod models;
 pub mod server;
 pub mod session;
+pub mod media;
 
 pub use error::AppError;
 

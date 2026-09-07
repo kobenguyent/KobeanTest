@@ -89,6 +89,25 @@ export function MiniHud({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [items, index, current, onRecordStatus, showNoteInput, note]);
 
+  // Intercept image paste from clipboard
+  useEffect(() => {
+    const handlePaste = (e: ClipboardEvent) => {
+      const clipItems = e.clipboardData?.items;
+      if (!clipItems) return;
+      for (let i = 0; i < clipItems.length; i++) {
+        if (clipItems[i].type.indexOf('image') !== -1) {
+          if (current && onSnapScreenshot) {
+            onSnapScreenshot(current.id);
+            e.preventDefault();
+            break;
+          }
+        }
+      }
+    };
+    window.addEventListener('paste', handlePaste);
+    return () => window.removeEventListener('paste', handlePaste);
+  }, [current, onSnapScreenshot]);
+
   // BroadcastChannel sync across multi-window
   useEffect(() => {
     if (typeof window === 'undefined' || !('BroadcastChannel' in window)) return;

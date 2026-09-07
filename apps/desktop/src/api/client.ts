@@ -151,6 +151,37 @@ export class KobeanApiClient {
       body: JSON.stringify(input),
     });
   }
+
+  // Attachments & Media
+  async uploadAttachment(
+    executionId: string,
+    input: {
+      step_number?: number;
+      file_name?: string;
+      mime_type?: string;
+      data_base64: string;
+    }
+  ): Promise<any> {
+    return this.request<any>(`/executions/${executionId}/attachments/upload`, {
+      method: 'POST',
+      body: JSON.stringify({
+        file_name: input.file_name || 'screenshot.png',
+        mime_type: input.mime_type || 'image/png',
+        step_number: input.step_number,
+        data_base64: input.data_base64,
+      }),
+    });
+  }
+
+  async listAttachments(executionId: string): Promise<any[]> {
+    return this.request<any[]>(`/executions/${executionId}/attachments`);
+  }
+
+  getMediaUrl(filePathOrName: string): string {
+    const filename = filePathOrName.split(/[/\\]/).pop() || filePathOrName;
+    const tokenQuery = this.token ? `?token=${encodeURIComponent(this.token)}` : '';
+    return `${this.baseUrl}/media/${filename}${tokenQuery}`;
+  }
 }
 
 export const api = new KobeanApiClient();

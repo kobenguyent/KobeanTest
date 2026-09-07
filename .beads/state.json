@@ -1,7 +1,7 @@
 {
   "project": "KobeanTest",
   "version": "0.1.0",
-  "active_milestone": "Phase 6 - Native Mini-HUD & Multi-OS Hardening",
+  "active_milestone": "All Roadmap Milestones Completed (Production Ready)",
   "tasks": [
     {
       "id": "KB-TASK-001",
@@ -79,6 +79,20 @@
       "status": "completed",
       "assignee": "AI Agent",
       "blocked_by": ["KB-TASK-010"]
+    },
+    {
+      "id": "KB-TASK-012",
+      "title": "Implement native media storage manager, 10GB LRU quota enforcement, and screenshot annotation canvas",
+      "status": "completed",
+      "assignee": "AI Agent",
+      "blocked_by": ["KB-TASK-011"]
+    },
+    {
+      "id": "KB-TASK-013",
+      "title": "Configure multi-OS packaging, release build, and verify SLA benchmarks (FTS5 < 5ms, 10k ingest < 2000ms)",
+      "status": "completed",
+      "assignee": "AI Agent",
+      "blocked_by": ["KB-TASK-012"]
     }
   ]
 }

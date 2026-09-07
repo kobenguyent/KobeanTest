@@ -6,12 +6,14 @@ import { SuiteTree } from './components/SuiteTree.tsx';
 import { CaseGrid } from './components/CaseGrid.tsx';
 import { CaseDetailPane } from './components/CaseDetailPane.tsx';
 import { RunExecutionView } from './components/RunExecutionView.tsx';
+import { MiniHud } from './components/MiniHud.tsx';
 
 export function App() {
   const { theme, setTheme, availableThemes } = useTheme();
 
   // Navigation & State
   const [mode, setMode] = useState<'authoring' | 'execution'>('authoring');
+  const [showFloatingHud, setShowFloatingHud] = useState(false);
   const [workspace, setWorkspace] = useState<Workspace | null>(null);
   const [project, setProject] = useState<Project | null>(null);
   const [suites, setSuites] = useState<TestSuite[]>([]);
@@ -297,6 +299,39 @@ export function App() {
     );
   };
 
+  // BroadcastChannel inter-window sync
+  useEffect(() => {
+    if (typeof window === 'undefined' || !('BroadcastChannel' in window)) return;
+    const channel = new BroadcastChannel('kobean_hud_sync');
+
+    channel.onmessage = (event) => {
+      const data = event.data;
+      if (data?.type === 'REQUEST_ITEMS') {
+        const hudItems = runItems.map((item) => ({
+          id: item.item.id,
+          caseId: item.item.test_case_id,
+          caseNumber: item.case_number,
+          title: item.case_title,
+          projectKey: project?.key || 'CASE',
+          status: item.item.status,
+          steps: (() => {
+            try {
+              const matchedCase = cases.find((c) => c.id === item.item.test_case_id);
+              return matchedCase ? JSON.parse(matchedCase.steps_json || '[]') : [];
+            } catch {
+              return [];
+            }
+          })(),
+        }));
+        channel.postMessage({ type: 'SYNC_ITEMS', items: hudItems });
+      } else if (data?.type === 'STATUS_UPDATE' && data.itemId && data.status) {
+        handleRecordStatus(data.itemId, data.status);
+      }
+    };
+
+    return () => channel.close();
+  }, [runItems, cases, project]);
+
   // Command palette items
   const commandItems: CommandItem[] = [
     {
@@ -408,6 +443,20 @@ export function App() {
             ))}
           </select>
 
+          {/* Float Mini-HUD Toggle */}
+          <button
+            type="button"
+            onClick={() => setShowFloatingHud((prev) => !prev)}
+            className={`h-7 px-2 text-[11px] font-medium border rounded flex items-center gap-1 transition-colors ${
+              showFloatingHud
+                ? 'bg-[var(--accent)] text-white border-[var(--accent)]'
+                : 'bg-[var(--card)] hover:bg-[var(--border)]/30 text-[var(--muted)] hover:text-[var(--text)] border-[var(--border)]'
+            }`}
+            title="Toggle Always-on-Top Floating Mini-HUD"
+          >
+            <span>🪟 Float HUD</span>
+          </button>
+
           {/* Command Palette Trigger */}
           <button
             type="button"
@@ -468,6 +517,34 @@ export function App() {
         onClose={() => setIsCommandOpen(false)}
         items={commandItems}
       />
+
+      {/* Floating Mini-HUD Runner */}
+      {showFloatingHud && (
+        <div className="fixed bottom-6 right-6 z-40 animate-in fade-in slide-in-from-bottom-3 duration-150">
+          <MiniHud
+            items={runItems.map((item) => ({
+              id: item.item.id,
+              caseId: item.item.test_case_id,
+              caseNumber: item.case_number,
+              title: item.case_title,
+              projectKey: project?.key || 'CASE',
+              status: item.item.status,
+              steps: (() => {
+                try {
+                  const matchedCase = cases.find((c) => c.id === item.item.test_case_id);
+                  return matchedCase ? JSON.parse(matchedCase.steps_json || '[]') : [];
+                } catch {
+                  return [];
+                }
+              })(),
+            }))}
+            onRecordStatus={(itemId, status) => {
+              handleRecordStatus(itemId, status);
+            }}
+            onClose={() => setShowFloatingHud(false)}
+          />
+        </div>
+      )}
     </div>
   );
 }

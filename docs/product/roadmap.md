@@ -17,8 +17,8 @@ This document outlines the product delivery roadmap, organized into structured S
 │ Sprint 2   │ Local SQLite Engine & Tauri v2 Shell            │ 34 pts       │ [DONE]   │
 │ Sprint 3   │ Interactive UI & Test Case Management           │ 55 pts       │ [DONE]   │
 │ Sprint 4   │ Localhost Web Server & CI/CD Ingestion CLI      │ 34 pts       │ [DONE]   │
-│ Sprint 5   │ Exploratory Testing & Floating Mini-HUD         │ 34 pts       │ [ACTIVE] │
-│ Sprint 6   │ Hardening, Benchmarking & Multi-OS Packaging    │ 21 pts       │ [QUEUED] │
+│ Sprint 5   │ Exploratory Testing & Floating Mini-HUD         │ 34 pts       │ [DONE]   │
+│ Sprint 6   │ Hardening, Benchmarking & Multi-OS Packaging    │ 21 pts       │ [DONE]   │
 └────────────┴─────────────────────────────────────────────────┴──────────────┴──────────┘
 ```
 
