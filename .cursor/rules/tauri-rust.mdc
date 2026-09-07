@@ -1,0 +1,12 @@
+---
+description: Tauri v2 and Rust core memory safety and security rules
+globs: ["apps/desktop/src-tauri/**"]
+alwaysApply: false
+---
+# Tauri v2 & Rust Core Standards
+
+- **Rust Version**: Rust 2021+.
+- **Zero Panic**: No `.unwrap()` or `.expect()` in production commands. Return `Result<T, AppError>`.
+- **Capability Isolation**: All exposed commands must be explicitly declared in `tauri.conf.json` capabilities.
+- **SQLite Optimization**: Use `rusqlite` with WAL mode and SQLite FTS5 for sub-5ms search queries.
+- **Local Paths**: Store data only in the user's sandboxed AppData directory.

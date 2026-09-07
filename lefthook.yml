@@ -1,0 +1,14 @@
+pre-commit:
+  parallel: true
+  commands:
+    betterleaks:
+      run: which betterleaks > /dev/null && betterleaks scan --staged --config .betterleaks.toml || true
+      tags: security
+    typecheck:
+      run: pnpm typecheck || true
+      tags: quality
+
+commit-msg:
+  commands:
+    conventional-commit:
+      run: npx --yes commitlint --edit {1} || true

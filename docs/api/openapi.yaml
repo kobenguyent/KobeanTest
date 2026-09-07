@@ -1,0 +1,57 @@
+openapi: 3.1.0
+info:
+  title: KobeanTest Localhost API
+  version: 0.1.0
+  description: 100% Localhost Test Management REST API running on http://127.0.0.1:4000
+servers:
+  - url: http://127.0.0.1:4000/api/v1
+    description: Localhost loopback server
+paths:
+  /suites:
+    get:
+      summary: List all test suites (tree hierarchy)
+      responses:
+        '200':
+          description: List of suites
+    post:
+      summary: Create a test suite
+      responses:
+        '201':
+          description: Suite created
+  /cases:
+    get:
+      summary: List or search test cases
+      parameters:
+        - name: q
+          in: query
+          description: Full-text search query (FTS5)
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Matching test cases
+    post:
+      summary: Create a test case
+      responses:
+        '201':
+          description: Test case created
+  /ci/ingest:
+    post:
+      summary: Batch ingest automated test results
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [run_name, results]
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: Batch ingested successfully

@@ -1,0 +1,18 @@
+title = "KobeanTest Betterleaks Configuration"
+
+[extend]
+useDefault = true
+
+[rules]
+description = "Enforce zero credential and token leaks across the repository"
+
+[allowlist]
+description = "Permit mock tokens only in explicit mock fixture directories"
+paths = [
+  '''packages/core/src/mocks/.*''',
+  '''apps/desktop/src-tauri/tests/fixtures/.*'''
+]
+regexes = [
+  '''mock_token_.*''',
+  '''dummy_api_key_.*'''
+]
