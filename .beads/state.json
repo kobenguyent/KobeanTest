@@ -72,6 +72,13 @@
       "status": "completed",
       "assignee": "AI Agent",
       "blocked_by": ["KB-TASK-008"]
+    },
+    {
+      "id": "KB-TASK-011",
+      "title": "Implement MiniHud floating always-on-top window and execution attachments persistence",
+      "status": "completed",
+      "assignee": "AI Agent",
+      "blocked_by": ["KB-TASK-010"]
     }
   ]
 }
