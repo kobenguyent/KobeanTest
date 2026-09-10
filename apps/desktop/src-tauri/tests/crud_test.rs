@@ -143,6 +143,7 @@ fn test_end_to_end_crud_and_execution_lifecycle() {
             commit_sha: Some("abcdef123456".to_string()),
             branch: Some("release/2.4".to_string()),
             case_ids: vec![case1.id.clone(), case2.id.clone()],
+            ..Default::default()
         },
     )
     .expect("Create test run");

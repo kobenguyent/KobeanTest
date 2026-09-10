@@ -1,4 +1,3 @@
-import React from 'react';
 import type { TestStep } from '@kobean/core';
 
 export interface StepEditorProps {

@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import type { TestCase, TestStep } from '@kobean/core';
-import { StepEditor } from '@kobean/ui';
+import { useState, useEffect } from 'react';
+import type { TestCase, TestStep, Priority, TestType } from '@kobean/core';
+import { StepEditor, Select } from '@kobean/ui';
 
 export interface CaseDetailPaneProps {
   caseItem: TestCase | null;
@@ -17,8 +17,8 @@ export function CaseDetailPane({
 }: CaseDetailPaneProps) {
   const [title, setTitle] = useState('');
   const [preconditions, setPreconditions] = useState('');
-  const [priority, setPriority] = useState('medium');
-  const [type_, setType] = useState('manual');
+  const [priority, setPriority] = useState<Priority>('medium');
+  const [type_, setType] = useState<TestType>('manual');
   const [automationId, setAutomationId] = useState('');
   const [steps, setSteps] = useState<TestStep[]>([]);
   const [isDirty, setIsDirty] = useState(false);
@@ -27,13 +27,17 @@ export function CaseDetailPane({
     if (caseItem) {
       setTitle(caseItem.title);
       setPreconditions(caseItem.preconditions || '');
-      setPriority(caseItem.priority);
-      setType(caseItem.type_);
+      setPriority(caseItem.priority || 'medium');
+      setType((caseItem.type || caseItem.type_ || 'manual') as TestType);
       setAutomationId(caseItem.automation_id || '');
-      try {
-        setSteps(JSON.parse(caseItem.steps_json || '[]'));
-      } catch {
-        setSteps([]);
+      if (Array.isArray(caseItem.steps)) {
+        setSteps(caseItem.steps);
+      } else {
+        try {
+          setSteps(JSON.parse(caseItem.steps_json || '[]'));
+        } catch {
+          setSteps([]);
+        }
       }
       setIsDirty(false);
     }
@@ -46,6 +50,7 @@ export function CaseDetailPane({
       title,
       preconditions,
       priority,
+      type: type_,
       type_,
       automation_id: automationId || undefined,
       steps,
@@ -108,44 +113,38 @@ export function CaseDetailPane({
 
         {/* Metadata Grid */}
         <div className="grid grid-cols-2 gap-2">
-          <div>
-            <label className="block text-[10px] uppercase font-medium tracking-wide text-[var(--muted)] mb-1">
-              Priority
-            </label>
-            <select
-              value={priority}
-              onChange={(e) => {
-                setPriority(e.target.value);
-                setIsDirty(true);
-              }}
-              aria-label="Test case priority"
-              className="w-full text-[12px] px-2 py-1 bg-[var(--card)] text-[var(--text)] border border-[var(--border)] rounded focus:outline-none"
-            >
-              <option value="critical">Critical</option>
-              <option value="high">High</option>
-              <option value="medium">Medium</option>
-              <option value="low">Low</option>
-            </select>
-          </div>
+          <Select
+            label="Priority"
+            value={priority}
+            onChange={(e) => {
+              setPriority(e.target.value as Priority);
+              setIsDirty(true);
+            }}
+            aria-label="Test case priority"
+            className="w-full"
+            containerClassName="w-full"
+          >
+            <option value="critical">Critical</option>
+            <option value="high">High</option>
+            <option value="medium">Medium</option>
+            <option value="low">Low</option>
+          </Select>
 
-          <div>
-            <label className="block text-[10px] uppercase font-medium tracking-wide text-[var(--muted)] mb-1">
-              Type
-            </label>
-            <select
-              value={type_}
-              onChange={(e) => {
-                setType(e.target.value);
-                setIsDirty(true);
-              }}
-              aria-label="Test case type"
-              className="w-full text-[12px] px-2 py-1 bg-[var(--card)] text-[var(--text)] border border-[var(--border)] rounded focus:outline-none"
-            >
-              <option value="manual">Manual</option>
-              <option value="automated">Automated</option>
-              <option value="exploratory">Exploratory</option>
-            </select>
-          </div>
+          <Select
+            label="Type"
+            value={type_}
+            onChange={(e) => {
+              setType(e.target.value as TestType);
+              setIsDirty(true);
+            }}
+            aria-label="Test case type"
+            className="w-full"
+            containerClassName="w-full"
+          >
+            <option value="manual">Manual</option>
+            <option value="automated">Automated</option>
+            <option value="exploratory">Exploratory</option>
+          </Select>
         </div>
 
         {/* Automation ID */}

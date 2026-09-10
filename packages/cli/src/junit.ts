@@ -1,24 +1,44 @@
-export interface ParsedJunitCase {
-  automation_id: string;
-  title: string;
-  status: 'passed' | 'failed' | 'skipped' | 'blocked';
-  duration_ms: number;
-  error_message?: string;
-  stack_trace?: string;
-}
+import type { IngestResultItem } from '@kobean/core';
+
+export interface ParsedJunitCase extends IngestResultItem {}
 
 /**
  * Lightweight zero-dependency JUnit XML parser adhering to Ponytail minimalism.
- * Safely extracts test cases, failures, skips, and execution times without external XML parsers.
+ * Safely extracts test suites, cases, failures, skips, tags, and execution times without external XML parsers.
  */
 export function parseJunitXml(xmlContent: string): ParsedJunitCase[] {
   const results: ParsedJunitCase[] = [];
 
-  // Match each <testcase ...> ... </testcase> or self-closing <testcase ... />
+  // Match each testsuite block if present, or fall back to matching testcases directly
+  const suiteRegex = /<testsuite\b([^>]*?)>(.*?)(?:<\/testsuite>)/gis;
+  let suiteMatch: RegExpExecArray | null;
+  let hasSuites = false;
+
+  while ((suiteMatch = suiteRegex.exec(xmlContent)) !== null) {
+    hasSuites = true;
+    const suiteAttrs = suiteMatch[1] || '';
+    const suiteBody = suiteMatch[2] || '';
+
+    const suiteNameMatch = /\bname=["']([^"']+)["']/i.exec(suiteAttrs);
+    const suiteName = suiteNameMatch?.[1]?.trim();
+    const suite_path = suiteName ? [suiteName] : undefined;
+
+    parseTestcases(suiteBody, suite_path, results);
+  }
+
+  // If no <testsuite> tag was found, parse all <testcase> tags in the document
+  if (!hasSuites) {
+    parseTestcases(xmlContent, undefined, results);
+  }
+
+  return results;
+}
+
+function parseTestcases(content: string, suite_path: string[] | undefined, results: ParsedJunitCase[]) {
   const testcaseRegex = /<testcase\b([^>]*?)>(.*?)(?:<\/testcase>)|<testcase\b([^>]*?)\/>/gis;
   let match: RegExpExecArray | null;
 
-  while ((match = testcaseRegex.exec(xmlContent)) !== null) {
+  while ((match = testcaseRegex.exec(content)) !== null) {
     const attrString = match[1] || match[3] || '';
     const body = match[2] || '';
 
@@ -33,6 +53,15 @@ export function parseJunitXml(xmlContent: string): ParsedJunitCase[] {
     const duration_ms = Math.round(timeSec * 1000);
 
     const automation_id = classname ? `${classname}#${title}` : title;
+
+    // Extract tags from title
+    const tags: string[] = [];
+    const tagMatches = title.match(/@[\w-]+/g);
+    if (tagMatches) {
+      for (const m of tagMatches) {
+        if (!tags.includes(m)) tags.push(m);
+      }
+    }
 
     // Check failure, error, or skipped
     const failureMatch = /<failure\b([^>]*?)>(.*?)(?:<\/failure>)|<failure\b([^>]*?)\/>/is.exec(body);
@@ -59,12 +88,12 @@ export function parseJunitXml(xmlContent: string): ParsedJunitCase[] {
     results.push({
       automation_id,
       title,
+      suite_path,
+      tags: tags.length > 0 ? tags : undefined,
       status,
       duration_ms,
       ...(error_message ? { error_message } : {}),
       ...(stack_trace ? { stack_trace } : {}),
     });
   }
-
-  return results;
 }

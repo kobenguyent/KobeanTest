@@ -1,6 +1,6 @@
 use crate::db::{
-    create_case, create_project, create_run, create_suite, get_run_items, record_execution,
-    CreateCaseInput, CreateRunInput, RecordExecutionInput,
+    create_case, create_run, create_suite_full, get_run_items,
+    record_execution, CreateCaseInput, CreateRunInput, CreateSuiteInput, RecordExecutionInput,
 };
 use crate::error::AppError;
 use rusqlite::{params, Connection, OptionalExtension};
@@ -19,9 +19,9 @@ pub fn seed_starter_data(conn: &mut Connection) -> Result<(), AppError> {
     let ws_id = match existing_ws {
         Some(id) => id,
         None => {
-            let id = "ws-default".to_string();
+            let id = Uuid::new_v4().to_string();
             conn.execute(
-                "INSERT OR IGNORE INTO workspaces (id, name, slug) VALUES (?1, ?2, ?3)",
+                "INSERT INTO workspaces (id, name, slug) VALUES (?1, ?2, ?3)",
                 params![id, "Default Workspace", "default"],
             )?;
             id
@@ -31,7 +31,7 @@ pub fn seed_starter_data(conn: &mut Connection) -> Result<(), AppError> {
     // 2. Ensure Default Project exists
     let existing_project: Option<String> = conn
         .query_row(
-            "SELECT id FROM projects WHERE workspace_id = ?1 LIMIT 1",
+            "SELECT id FROM projects WHERE workspace_id = ?1 ORDER BY created_at ASC LIMIT 1",
             params![ws_id],
             |r| r.get(0),
         )
@@ -40,63 +40,76 @@ pub fn seed_starter_data(conn: &mut Connection) -> Result<(), AppError> {
     let project_id = match existing_project {
         Some(id) => id,
         None => {
-            let proj = create_project(
-                conn,
-                &ws_id,
-                "Core Platform",
-                "LOC",
-                Some("Payment checkout, identity, and edge infrastructure"),
+            let id = Uuid::new_v4().to_string();
+            conn.execute(
+                "INSERT INTO projects (id, workspace_id, name, key, description) VALUES (?1, ?2, ?3, ?4, ?5)",
+                params![
+                    id,
+                    ws_id,
+                    "Core Platform",
+                    "CORE",
+                    "High-reliability desktop and localhost test management engine"
+                ],
             )?;
-            proj.id
+            id
         }
     };
 
-    // Check if test cases already exist for this project
-    let case_count: i64 = conn.query_row(
-        "SELECT count(*) FROM test_cases WHERE project_id = ?1",
-        params![project_id],
-        |r| r.get(0),
-    )?;
-
-    if case_count > 0 {
-        // Project already has cases. Check if any test runs exist; if not, create one.
-        let run_count: i64 = conn.query_row(
-            "SELECT count(*) FROM test_runs WHERE project_id = ?1",
+    // 2b. Check if already seeded
+    let existing_case_count: i64 = conn
+        .query_row(
+            "SELECT COUNT(*) FROM test_cases WHERE project_id = ?1",
             params![project_id],
             |r| r.get(0),
-        )?;
+        )
+        .unwrap_or(0);
+
+    if existing_case_count > 0 {
+        let run_count: i64 = conn
+            .query_row(
+                "SELECT COUNT(*) FROM test_runs WHERE project_id = ?1",
+                params![project_id],
+                |r| r.get(0),
+            )
+            .unwrap_or(0);
         if run_count == 0 {
             seed_run_for_project(conn, &project_id)?;
         }
         return Ok(());
     }
 
-    // 3. Create Test Suites
-    let suite_auth = create_suite(
+    // 3. Create Test Suites (cleanly without forced GitHub repository connection)
+    let suite_auth = create_suite_full(
         conn,
-        &project_id,
-        None,
-        "Authentication & Identity",
-        Some("Biometrics, OAuth2, and Session lifecycle"),
-        Some(1),
+        CreateSuiteInput {
+            project_id: project_id.clone(),
+            title: "Authentication & Identity".to_string(),
+            description: Some("Biometrics, OAuth2, and Session lifecycle".to_string()),
+            position: Some(1),
+            ..Default::default()
+        },
     )?;
 
-    let suite_checkout = create_suite(
+    let suite_checkout = create_suite_full(
         conn,
-        &project_id,
-        None,
-        "Shopping Cart & Checkout",
-        Some("Cart state mutations, payment processing, promo codes"),
-        Some(2),
+        CreateSuiteInput {
+            project_id: project_id.clone(),
+            title: "Shopping Cart & Checkout".to_string(),
+            description: Some("Cart state mutations, payment processing, promo codes".to_string()),
+            position: Some(2),
+            ..Default::default()
+        },
     )?;
 
-    let suite_edge = create_suite(
+    let suite_edge = create_suite_full(
         conn,
-        &project_id,
-        None,
-        "API Gateway & Edge",
-        Some("Rate limiting, loopback auth, and telemetry"),
-        Some(3),
+        CreateSuiteInput {
+            project_id: project_id.clone(),
+            title: "API Gateway & Edge".to_string(),
+            description: Some("Rate limiting, loopback auth, and telemetry".to_string()),
+            position: Some(3),
+            ..Default::default()
+        },
     )?;
 
     // 4. Create Test Cases
@@ -218,8 +231,12 @@ pub fn seed_starter_data(conn: &mut Connection) -> Result<(), AppError> {
         environment: Some("Staging Localhost".to_string()),
         source: Some("manual".to_string()),
         idempotency_key: Some(format!("seed-run-{}", Uuid::new_v4())),
-        commit_sha: Some("9faa2f7".to_string()),
-        branch: Some("main".to_string()),
+        commit_sha: None,
+        branch: None,
+        repo_connection_id: None,
+        github_repo: None,
+        pull_request_number: None,
+        pull_request_url: None,
         case_ids: all_case_ids,
     };
 
@@ -314,6 +331,7 @@ fn seed_run_for_project(conn: &mut Connection, project_id: &str) -> Result<(), A
         commit_sha: Some("9faa2f7".to_string()),
         branch: Some("main".to_string()),
         case_ids: case_ids.clone(),
+        ..Default::default()
     };
 
     let run = create_run(conn, run_input)?;

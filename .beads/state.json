@@ -93,6 +93,56 @@
       "status": "completed",
       "assignee": "AI Agent",
       "blocked_by": ["KB-TASK-012"]
+    },
+    {
+      "id": "KB-TASK-014",
+      "title": "Enterprise hardening: DNS rebinding/CORS isolation, CRUD & Ingest endpoints, FTS5 fuzz sanitization, and strict TypeScript verification across all packages",
+      "status": "completed",
+      "assignee": "AI Agent",
+      "blocked_by": ["KB-TASK-013"]
+    },
+    {
+      "id": "KB-TASK-015",
+      "title": "UI/UX Elegance & Minimalism Overhaul: Linear/Raycast-grade visual polish, refined typography, 1px subtle borders, uncluttered headers & execution triage layout",
+      "status": "completed",
+      "assignee": "AI Agent",
+      "blocked_by": ["KB-TASK-014"]
+    },
+    {
+      "id": "KB-TASK-016",
+      "title": "Comprehensive Test Framework Integrations: Universal CLI runner, native Playwright/Cypress/Jest reporters, Cucumber/Playwright parsers, suite hierarchy auto-provisioning, tag matching, defect screenshot ingestion, and in-app Integrations guide",
+      "status": "completed",
+      "assignee": "AI Agent",
+      "blocked_by": ["KB-TASK-015"]
+    },
+    {
+      "id": "KB-TASK-017",
+      "title": "Dropdown Controls Overhaul: Custom SVG chevrons, smooth micro-transitions, theme accent focus glow, Chrome 135+ appearance: base-select progressive enhancement, and reusable @kobean/ui Select component",
+      "status": "completed",
+      "assignee": "AI Agent",
+      "blocked_by": ["KB-TASK-016"]
+    },
+    {
+      "id": "KB-TASK-018",
+      "title": "Sidebar & Layout Toggle Manager: 4-button IDE layout control group with Customize Layout menu, left/bottom/right panel toggles, responsive panels, and local persistence",
+      "status": "completed",
+      "assignee": "AI Agent",
+      "blocked_by": ["KB-TASK-017"]
+    },
+    {
+      "id": "KB-TASK-019",
+      "title": "Implement GitHub Repository Connections linking Test Suites and Test Runs with 100% localhost privacy",
+      "status": "completed",
+      "assignee": "AI Agent",
+      "blocked_by": ["KB-TASK-018"]
+    },
+    {
+      "id": "KB-TASK-020",
+      "title": "Optional GitHub Account Authentication: Zero forced pre-seeding, PAT authentication, direct CORS validation against GitHub API, user repo picker, and air-gapped manual linking",
+      "status": "completed",
+      "assignee": "AI Agent",
+      "blocked_by": ["KB-TASK-019"]
     }
   ]
 }
+

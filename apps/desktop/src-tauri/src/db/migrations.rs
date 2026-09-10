@@ -31,6 +31,31 @@ pub fn run_migrations(conn: &Connection) -> Result<()> {
             UNIQUE(id, workspace_id)
         );
 
+        CREATE TABLE IF NOT EXISTS repo_connections (
+            id TEXT PRIMARY KEY NOT NULL,
+            project_id TEXT NOT NULL REFERENCES projects(id) ON DELETE CASCADE,
+            name TEXT NOT NULL,
+            provider TEXT NOT NULL DEFAULT 'github',
+            repo_name TEXT NOT NULL,
+            repo_url TEXT NOT NULL,
+            default_branch TEXT NOT NULL DEFAULT 'main',
+            created_at INTEGER NOT NULL DEFAULT (strftime('%s', 'now')),
+            updated_at INTEGER NOT NULL DEFAULT (strftime('%s', 'now')),
+            UNIQUE(project_id, repo_name)
+        );
+        CREATE INDEX IF NOT EXISTS idx_repo_connections_project ON repo_connections(project_id);
+
+        CREATE TABLE IF NOT EXISTS github_accounts (
+            id TEXT PRIMARY KEY NOT NULL,
+            login TEXT NOT NULL,
+            name TEXT,
+            avatar_url TEXT,
+            token_masked TEXT NOT NULL,
+            access_token TEXT NOT NULL,
+            created_at INTEGER NOT NULL DEFAULT (strftime('%s', 'now')),
+            updated_at INTEGER NOT NULL DEFAULT (strftime('%s', 'now'))
+        );
+
         CREATE TABLE IF NOT EXISTS test_suites (
             id TEXT PRIMARY KEY NOT NULL,
             project_id TEXT NOT NULL REFERENCES projects(id) ON DELETE CASCADE,
@@ -38,6 +63,9 @@ pub fn run_migrations(conn: &Connection) -> Result<()> {
             title TEXT NOT NULL,
             description TEXT,
             position INTEGER NOT NULL DEFAULT 0,
+            repo_connection_id TEXT REFERENCES repo_connections(id) ON DELETE SET NULL,
+            github_repo TEXT,
+            file_path TEXT,
             created_at INTEGER NOT NULL DEFAULT (strftime('%s', 'now')),
             updated_at INTEGER NOT NULL DEFAULT (strftime('%s', 'now')),
             CHECK(parent_id IS NULL OR parent_id != id),
@@ -124,6 +152,10 @@ pub fn run_migrations(conn: &Connection) -> Result<()> {
             idempotency_key TEXT UNIQUE,
             commit_sha TEXT,
             branch TEXT,
+            repo_connection_id TEXT REFERENCES repo_connections(id) ON DELETE SET NULL,
+            github_repo TEXT,
+            pull_request_number INTEGER,
+            pull_request_url TEXT,
             total_count INTEGER NOT NULL DEFAULT 0,
             passed_count INTEGER NOT NULL DEFAULT 0,
             failed_count INTEGER NOT NULL DEFAULT 0,
@@ -179,6 +211,16 @@ pub fn run_migrations(conn: &Connection) -> Result<()> {
             FOREIGN KEY(execution_id, step_number) REFERENCES execution_step_results(execution_id, step_number) ON DELETE SET NULL
         );",
     )?;
+
+    // Safe schema column migrations for pre-existing local databases
+    let _ = conn.execute("ALTER TABLE test_suites ADD COLUMN repo_connection_id TEXT REFERENCES repo_connections(id) ON DELETE SET NULL", []);
+    let _ = conn.execute("ALTER TABLE test_suites ADD COLUMN github_repo TEXT", []);
+    let _ = conn.execute("ALTER TABLE test_suites ADD COLUMN file_path TEXT", []);
+
+    let _ = conn.execute("ALTER TABLE test_runs ADD COLUMN repo_connection_id TEXT REFERENCES repo_connections(id) ON DELETE SET NULL", []);
+    let _ = conn.execute("ALTER TABLE test_runs ADD COLUMN github_repo TEXT", []);
+    let _ = conn.execute("ALTER TABLE test_runs ADD COLUMN pull_request_number INTEGER", []);
+    let _ = conn.execute("ALTER TABLE test_runs ADD COLUMN pull_request_url TEXT", []);
 
     Ok(())
 }

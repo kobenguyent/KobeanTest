@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { TestStep } from '@kobean/core';
-import { StatusPill } from '@kobean/ui';
 
 export interface MiniHudItem {
   id: string;
@@ -15,8 +14,9 @@ export interface MiniHudItem {
 export interface MiniHudProps {
   items: MiniHudItem[];
   currentIndex?: number;
-  onRecordStatus: (itemId: string, status: 'passed' | 'failed' | 'blocked' | 'skipped', note?: string) => void;
+  onRecordStatus: (itemId: string, status: 'passed' | 'failed' | 'blocked' | 'skipped' | 'pending', note?: string) => void;
   onClose?: () => void;
+  onPopOut?: () => void;
   onSnapScreenshot?: (itemId: string) => void;
 }
 
@@ -25,12 +25,68 @@ export function MiniHud({
   currentIndex: initialIndex = 0,
   onRecordStatus,
   onClose,
+  onPopOut,
   onSnapScreenshot,
 }: MiniHudProps) {
   const [index, setIndex] = useState(initialIndex);
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [note, setNote] = useState('');
   const [showNoteInput, setShowNoteInput] = useState(false);
+  const [pos, setPos] = useState<{ x: number; y: number } | null>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const dragRef = useRef<{ startX: number; startY: number; initialX: number; initialY: number }>({
+    startX: 0,
+    startY: 0,
+    initialX: 0,
+    initialY: 0,
+  });
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if ((e.target as HTMLElement).closest('button')) return;
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    dragRef.current = {
+      startX: e.clientX,
+      startY: e.clientY,
+      initialX: rect.left,
+      initialY: rect.top,
+    };
+    setIsDragging(true);
+    e.preventDefault();
+  };
+
+  useEffect(() => {
+    if (!isDragging) return;
+
+    const handleMouseMove = (e: MouseEvent) => {
+      const dx = e.clientX - dragRef.current.startX;
+      const dy = e.clientY - dragRef.current.startY;
+      let newX = dragRef.current.initialX + dx;
+      let newY = dragRef.current.initialY + dy;
+
+      const width = containerRef.current?.offsetWidth || 360;
+      const height = containerRef.current?.offsetHeight || 220;
+      const maxX = window.innerWidth - width - 8;
+      const maxY = window.innerHeight - height - 8;
+
+      newX = Math.max(8, Math.min(newX, maxX));
+      newY = Math.max(8, Math.min(newY, maxY));
+
+      setPos({ x: newX, y: newY });
+    };
+
+    const handleMouseUp = () => {
+      setIsDragging(false);
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mouseup', handleMouseUp);
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [isDragging]);
 
   const current = items[index];
   const steps = current?.steps || [];
@@ -72,6 +128,12 @@ export function MiniHud({
         e.preventDefault();
         if (current) {
           onRecordStatus(current.id, 'skipped');
+          setIndex((prev) => Math.min(items.length - 1, prev + 1));
+        }
+      } else if (e.key.toLowerCase() === 'u' || e.key.toLowerCase() === 'n') {
+        e.preventDefault();
+        if (current) {
+          onRecordStatus(current.id, 'pending');
           setIndex((prev) => Math.min(items.length - 1, prev + 1));
         }
       } else if (e.key === ']' || e.key === 'ArrowRight') {
@@ -138,13 +200,27 @@ export function MiniHud({
 
   return (
     <div
+      ref={containerRef}
+      style={{
+        position: 'fixed',
+        left: pos ? `${pos.x}px` : undefined,
+        top: pos ? `${pos.y}px` : undefined,
+        right: pos ? undefined : '24px',
+        bottom: pos ? undefined : '24px',
+        zIndex: 9999,
+      }}
       className="w-[360px] h-[220px] bg-[var(--card)]/95 backdrop-blur-md border border-[var(--border)] rounded-lg p-3 flex flex-col justify-between select-none shadow-2xl text-[var(--text)] font-sans overflow-hidden"
       role="region"
       aria-label="Floating Mini-HUD"
     >
       {/* Draggable Title Bar */}
-      <div className="flex items-center justify-between pb-1.5 border-b border-[var(--border)]/60 cursor-move">
-        <div className="flex items-center gap-1.5 truncate">
+      <div
+        onMouseDown={handleMouseDown}
+        className={`flex items-center justify-between pb-1.5 border-b border-[var(--border)]/60 select-none ${
+          isDragging ? 'cursor-grabbing' : 'cursor-grab'
+        }`}
+      >
+        <div className="flex items-center gap-1.5 truncate pointer-events-none">
           <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
           <span className="font-mono text-[11px] font-semibold text-[var(--accent)] tabular-nums">
             #{current.projectKey}-{current.caseNumber}
@@ -155,14 +231,25 @@ export function MiniHud({
         </div>
 
         <div className="flex items-center gap-1">
-          <span className="font-mono text-[10px] text-[var(--muted)] tabular-nums">
+          <span className="font-mono text-[10px] text-[var(--muted)] tabular-nums mr-1">
             {index + 1}/{items.length}
           </span>
+          {onPopOut && (
+            <button
+              type="button"
+              onClick={onPopOut}
+              className="p-0.5 text-[var(--muted)] hover:text-[var(--text)] rounded text-[11px] leading-none"
+              title="Pop out to Always-on-Top OS Window (Document PiP)"
+              aria-label="Pop out HUD"
+            >
+              ⧉
+            </button>
+          )}
           {onClose && (
             <button
               type="button"
               onClick={onClose}
-              className="p-0.5 text-[var(--muted)] hover:text-[var(--text)] rounded text-[10px]"
+              className="p-0.5 text-[var(--muted)] hover:text-[var(--text)] rounded text-[10px] leading-none"
               aria-label="Close HUD"
             >
               ✕
@@ -264,6 +351,18 @@ export function MiniHud({
           title="Skip (S)"
         >
           <kbd className="text-[9px] font-mono opacity-80">S</kbd>
+        </button>
+
+        <button
+          type="button"
+          onClick={() => {
+            onRecordStatus(current.id, 'pending');
+            setIndex((prev) => Math.min(items.length - 1, prev + 1));
+          }}
+          className="px-2 py-1.5 bg-slate-500/10 hover:bg-slate-500/20 text-slate-400 border border-slate-500/30 rounded text-[11px] font-medium flex items-center justify-center gap-1 transition-colors"
+          title="Not Run Yet (U)"
+        >
+          <kbd className="text-[9px] font-mono opacity-80">U</kbd>
         </button>
 
         {onSnapScreenshot && (

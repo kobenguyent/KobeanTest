@@ -4,7 +4,7 @@ use rusqlite::{params, Connection, OptionalExtension};
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, Default)]
 pub struct CreateRunInput {
     #[serde(default)]
     pub project_id: String,
@@ -14,6 +14,11 @@ pub struct CreateRunInput {
     pub idempotency_key: Option<String>,
     pub commit_sha: Option<String>,
     pub branch: Option<String>,
+    pub repo_connection_id: Option<String>,
+    pub github_repo: Option<String>,
+    pub pull_request_number: Option<i64>,
+    pub pull_request_url: Option<String>,
+    #[serde(default)]
     pub case_ids: Vec<String>,
 }
 
@@ -55,7 +60,8 @@ pub fn create_run(conn: &mut Connection, input: CreateRunInput) -> Result<TestRu
         let existing: Option<TestRun> = conn
             .query_row(
                 "SELECT id, project_id, title, environment, source, status, idempotency_key,
-                        commit_sha, branch, total_count, passed_count, failed_count,
+                        commit_sha, branch, repo_connection_id, github_repo, pull_request_number, pull_request_url,
+                        total_count, passed_count, failed_count,
                         skipped_count, blocked_count, created_at, completed_at
                  FROM test_runs WHERE idempotency_key = ?1",
                 params![ikey],
@@ -70,13 +76,17 @@ pub fn create_run(conn: &mut Connection, input: CreateRunInput) -> Result<TestRu
                         idempotency_key: row.get(6)?,
                         commit_sha: row.get(7)?,
                         branch: row.get(8)?,
-                        total_count: row.get(9)?,
-                        passed_count: row.get(10)?,
-                        failed_count: row.get(11)?,
-                        skipped_count: row.get(12)?,
-                        blocked_count: row.get(13)?,
-                        created_at: row.get(14)?,
-                        completed_at: row.get(15)?,
+                        repo_connection_id: row.get(9)?,
+                        github_repo: row.get(10)?,
+                        pull_request_number: row.get(11)?,
+                        pull_request_url: row.get(12)?,
+                        total_count: row.get(13)?,
+                        passed_count: row.get(14)?,
+                        failed_count: row.get(15)?,
+                        skipped_count: row.get(16)?,
+                        blocked_count: row.get(17)?,
+                        created_at: row.get(18)?,
+                        completed_at: row.get(19)?,
                     })
                 },
             )
@@ -90,15 +100,29 @@ pub fn create_run(conn: &mut Connection, input: CreateRunInput) -> Result<TestRu
     let run_id = Uuid::new_v4().to_string();
     let environment = input.environment.unwrap_or_else(|| "local".to_string());
     let source = input.source.unwrap_or_else(|| "manual".to_string());
-    let total_count = input.case_ids.len() as i64;
 
     let tx = conn.transaction()?;
+
+    // If case_ids not specified, automatically pull all active test cases in the project
+    let case_ids: Vec<String> = if input.case_ids.is_empty() {
+        let mut stmt = tx.prepare(
+            "SELECT id FROM test_cases WHERE project_id = ?1 AND is_archived = 0 ORDER BY case_number ASC",
+        )?;
+        let rows = stmt.query_map(params![input.project_id], |r| r.get(0))?;
+        rows.filter_map(Result::ok).collect()
+    } else {
+        input.case_ids
+    };
+
+    let total_count = case_ids.len() as i64;
 
     tx.execute(
         "INSERT INTO test_runs (
             id, project_id, title, environment, source, status,
-            idempotency_key, commit_sha, branch, total_count
-        ) VALUES (?1, ?2, ?3, ?4, ?5, 'in_progress', ?6, ?7, ?8, ?9)",
+            idempotency_key, commit_sha, branch,
+            repo_connection_id, github_repo, pull_request_number, pull_request_url,
+            total_count
+        ) VALUES (?1, ?2, ?3, ?4, ?5, 'in_progress', ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13)",
         params![
             run_id,
             input.project_id,
@@ -108,20 +132,48 @@ pub fn create_run(conn: &mut Connection, input: CreateRunInput) -> Result<TestRu
             input.idempotency_key,
             input.commit_sha,
             input.branch,
+            input.repo_connection_id,
+            input.github_repo,
+            input.pull_request_number,
+            input.pull_request_url,
             total_count,
         ],
     )?;
 
     // Link each test case to its latest revision
-    for case_id in &input.case_ids {
-        let rev_id: String = tx
+    for case_id in &case_ids {
+        let rev_id_opt: Option<String> = tx
             .query_row(
                 "SELECT id FROM test_case_revisions WHERE case_id = ?1 ORDER BY version DESC LIMIT 1",
                 params![case_id],
                 |row| row.get(0),
             )
-            .optional()?
-            .ok_or_else(|| AppError::NotFound(format!("No revision found for case: {case_id}")))?;
+            .optional()?;
+
+        let rev_id = match rev_id_opt {
+            Some(rid) => rid,
+            None => {
+                let rid = Uuid::new_v4().to_string();
+                let case_row: Option<(String, i64, String, Option<String>, String)> = tx
+                    .query_row(
+                        "SELECT project_id, version, title, preconditions, steps_json FROM test_cases WHERE id = ?1",
+                        params![case_id],
+                        |r| Ok((r.get(0)?, r.get(1)?, r.get(2)?, r.get(3)?, r.get(4)?)),
+                    )
+                    .optional()?;
+
+                if let Some((pid, ver, title, prec, steps)) = case_row {
+                    tx.execute(
+                        "INSERT INTO test_case_revisions (id, case_id, project_id, version, title, preconditions, steps_json, created_at)
+                         VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, unixepoch())",
+                        params![rid, case_id, pid, ver, title, prec, steps],
+                    )?;
+                    rid
+                } else {
+                    return Err(AppError::NotFound(format!("TestCase not found: {case_id}")));
+                }
+            }
+        };
 
         let item_id = Uuid::new_v4().to_string();
         tx.execute(
@@ -139,7 +191,8 @@ pub fn create_run(conn: &mut Connection, input: CreateRunInput) -> Result<TestRu
 pub fn get_run(conn: &Connection, id: &str) -> Result<TestRun, AppError> {
     conn.query_row(
         "SELECT id, project_id, title, environment, source, status, idempotency_key,
-                commit_sha, branch, total_count, passed_count, failed_count,
+                commit_sha, branch, repo_connection_id, github_repo, pull_request_number, pull_request_url,
+                total_count, passed_count, failed_count,
                 skipped_count, blocked_count, created_at, completed_at
          FROM test_runs WHERE id = ?1",
         params![id],
@@ -154,13 +207,17 @@ pub fn get_run(conn: &Connection, id: &str) -> Result<TestRun, AppError> {
                 idempotency_key: row.get(6)?,
                 commit_sha: row.get(7)?,
                 branch: row.get(8)?,
-                total_count: row.get(9)?,
-                passed_count: row.get(10)?,
-                failed_count: row.get(11)?,
-                skipped_count: row.get(12)?,
-                blocked_count: row.get(13)?,
-                created_at: row.get(14)?,
-                completed_at: row.get(15)?,
+                repo_connection_id: row.get(9)?,
+                github_repo: row.get(10)?,
+                pull_request_number: row.get(11)?,
+                pull_request_url: row.get(12)?,
+                total_count: row.get(13)?,
+                passed_count: row.get(14)?,
+                failed_count: row.get(15)?,
+                skipped_count: row.get(16)?,
+                blocked_count: row.get(17)?,
+                created_at: row.get(18)?,
+                completed_at: row.get(19)?,
             })
         },
     )
@@ -171,7 +228,8 @@ pub fn get_run(conn: &Connection, id: &str) -> Result<TestRun, AppError> {
 pub fn list_runs(conn: &Connection, project_id: &str) -> Result<Vec<TestRun>, AppError> {
     let mut stmt = conn.prepare(
         "SELECT id, project_id, title, environment, source, status, idempotency_key,
-                commit_sha, branch, total_count, passed_count, failed_count,
+                commit_sha, branch, repo_connection_id, github_repo, pull_request_number, pull_request_url,
+                total_count, passed_count, failed_count,
                 skipped_count, blocked_count, created_at, completed_at
          FROM test_runs
          WHERE project_id = ?1
@@ -188,13 +246,17 @@ pub fn list_runs(conn: &Connection, project_id: &str) -> Result<Vec<TestRun>, Ap
             idempotency_key: row.get(6)?,
             commit_sha: row.get(7)?,
             branch: row.get(8)?,
-            total_count: row.get(9)?,
-            passed_count: row.get(10)?,
-            failed_count: row.get(11)?,
-            skipped_count: row.get(12)?,
-            blocked_count: row.get(13)?,
-            created_at: row.get(14)?,
-            completed_at: row.get(15)?,
+            repo_connection_id: row.get(9)?,
+            github_repo: row.get(10)?,
+            pull_request_number: row.get(11)?,
+            pull_request_url: row.get(12)?,
+            total_count: row.get(13)?,
+            passed_count: row.get(14)?,
+            failed_count: row.get(15)?,
+            skipped_count: row.get(16)?,
+            blocked_count: row.get(17)?,
+            created_at: row.get(18)?,
+            completed_at: row.get(19)?,
         })
     })?;
 
@@ -391,6 +453,57 @@ pub fn record_execution(conn: &mut Connection, input: RecordExecutionInput) -> R
     )
     .optional()?
     .ok_or_else(|| AppError::NotFound(format!("Execution not found: {exec_id}")))
+}
+
+pub fn reset_run_item_status(conn: &mut Connection, run_item_id: &str) -> Result<(), AppError> {
+    let run_id: String = conn
+        .query_row(
+            "SELECT test_run_id FROM test_run_items WHERE id = ?1",
+            params![run_item_id],
+            |row| row.get(0),
+        )
+        .optional()?
+        .ok_or_else(|| AppError::NotFound(format!("TestRunItem not found: {run_item_id}")))?;
+
+    let tx = conn.transaction()?;
+
+    tx.execute(
+        "UPDATE test_run_items SET status = 'pending' WHERE id = ?1",
+        params![run_item_id],
+    )?;
+
+    // Recalculate run aggregates
+    let (passed, failed, skipped, blocked, pending): (i64, i64, i64, i64, i64) = tx.query_row(
+        "SELECT 
+            COALESCE(SUM(CASE WHEN status = 'passed' THEN 1 ELSE 0 END), 0),
+            COALESCE(SUM(CASE WHEN status = 'failed' THEN 1 ELSE 0 END), 0),
+            COALESCE(SUM(CASE WHEN status = 'skipped' THEN 1 ELSE 0 END), 0),
+            COALESCE(SUM(CASE WHEN status = 'blocked' THEN 1 ELSE 0 END), 0),
+            COALESCE(SUM(CASE WHEN status = 'pending' THEN 1 ELSE 0 END), 0)
+         FROM test_run_items WHERE test_run_id = ?1",
+        params![run_id],
+        |row| Ok((row.get(0)?, row.get(1)?, row.get(2)?, row.get(3)?, row.get(4)?)),
+    )?;
+
+    let run_status = if pending == 0 { "completed" } else { "in_progress" };
+    let completed_expr = if pending == 0 { "(strftime('%s', 'now'))" } else { "NULL" };
+
+    tx.execute(
+        &format!(
+            "UPDATE test_runs SET
+                passed_count = ?1,
+                failed_count = ?2,
+                skipped_count = ?3,
+                blocked_count = ?4,
+                status = ?5,
+                completed_at = {completed_expr}
+             WHERE id = ?6"
+        ),
+        params![passed, failed, skipped, blocked, run_status, run_id],
+    )?;
+
+    tx.commit()?;
+    Ok(())
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]

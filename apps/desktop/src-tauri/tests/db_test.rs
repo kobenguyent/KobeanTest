@@ -191,3 +191,43 @@ fn test_fts5_search_and_authoritative_repopulation() {
     assert_eq!(hits_after_repair.len(), 1, "Authoritative repopulation must restore index");
     assert_eq!(hits_after_repair[0].case_id, "case-auth");
 }
+
+#[test]
+fn test_fts5_edge_case_and_fuzz_queries() {
+    let conn = setup_test_db();
+
+    conn.execute("INSERT INTO workspaces (id, name, slug) VALUES ('ws-1', 'WS', 'ws');", []).unwrap();
+    conn.execute("INSERT INTO projects (id, workspace_id, name, key) VALUES ('proj-1', 'ws-1', 'P1', 'P1');", []).unwrap();
+    conn.execute(
+        "INSERT INTO test_cases (id, project_id, case_number, title, preconditions, steps_json)
+         VALUES ('c1', 'proj-1', 1, 'Complex \"Quote\" & (Parenthesis) Test: 100% OK', 'Pre-condition with :colon and *star', '[]');",
+        [],
+    ).unwrap();
+
+    // Problematic queries that could break unescaped FTS5
+    let test_queries = [
+        r#"""#,
+        r#""""#,
+        r#""unclosed quote"#,
+        r#"title: "exploit""#,
+        r#"foo AND (bar OR"#,
+        r#"***"#,
+        r#":::"#,
+        r#"   "#,
+        r#""Complex" & "Quote""#,
+        r#"100%"#,
+        r#"Pre-condition"#,
+        r#"Test:"#,
+    ];
+
+    for query in test_queries {
+        let res = search_cases(&conn, query, 10);
+        assert!(res.is_ok(), "Query {:?} must not fail FTS5 parsing: {:?}", query, res.err());
+    }
+
+    // "Complex" should match
+    let hits = search_cases(&conn, r#""Complex""#, 10).unwrap();
+    assert_eq!(hits.len(), 1);
+    assert_eq!(hits[0].case_id, "c1");
+}
+

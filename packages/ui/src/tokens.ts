@@ -134,7 +134,7 @@ export const STATUS_STYLES: Record<string, StatusStyle> = {
     iconName: 'MinusCircle',
   },
   pending: {
-    label: 'Pending',
+    label: 'Not Run Yet',
     bg: 'rgba(148, 163, 184, 0.10)',
     text: '#94a3b8',
     border: 'rgba(148, 163, 184, 0.20)',

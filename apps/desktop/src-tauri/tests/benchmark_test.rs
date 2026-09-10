@@ -27,6 +27,8 @@ fn test_batch_ci_ingestion_throughput_benchmark_sla() {
         results.push(IngestCaseResult {
             automation_id: format!("tests/e2e/spec_{}.ts#test_case_{}", i % 200, i),
             title: format!("Verify automated user scenario #{} with security checks", i),
+            suite_path: None,
+            tags: None,
             status: status.to_string(),
             duration_ms: Some((i % 500) as i64 + 10),
             error_message: if status == "failed" {
@@ -36,6 +38,7 @@ fn test_batch_ci_ingestion_throughput_benchmark_sla() {
             },
             stack_trace: None,
             attempt_number: Some(1),
+            attachments: None,
         });
     }
 
@@ -45,8 +48,10 @@ fn test_batch_ci_ingestion_throughput_benchmark_sla() {
         idempotency_key: "ci-bench-batch-10k".to_string(),
         commit_sha: Some("abcdef1234567890".to_string()),
         branch: Some("main".to_string()),
+        environment: None,
         auto_create_cases: Some(true),
         results,
+        ..Default::default()
     };
 
     // Benchmark ingestion

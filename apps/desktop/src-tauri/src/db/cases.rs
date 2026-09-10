@@ -125,6 +125,9 @@ pub fn update_case(conn: &Connection, id: &str, input: UpdateCaseInput) -> Resul
 
     let existing = get_case(conn, id)?;
     let new_version = existing.version + 1;
+    let suite_id = input.suite_id.or(existing.suite_id);
+    let preconditions = input.preconditions.or(existing.preconditions);
+    let automation_id = input.automation_id.or(existing.automation_id);
     let priority = input.priority.unwrap_or(existing.priority);
     let type_ = input.type_.unwrap_or(existing.type_);
     let steps_json = input.steps_json.unwrap_or(existing.steps_json);
@@ -148,13 +151,13 @@ pub fn update_case(conn: &Connection, id: &str, input: UpdateCaseInput) -> Resul
             updated_at = (strftime('%s', 'now'))
          WHERE id = ?12",
         params![
-            input.suite_id,
+            suite_id,
             input.title,
-            input.preconditions,
+            preconditions,
             steps_json,
             priority,
             type_,
-            input.automation_id,
+            automation_id,
             tags_json,
             if is_flaky { 1 } else { 0 },
             if is_archived { 1 } else { 0 },

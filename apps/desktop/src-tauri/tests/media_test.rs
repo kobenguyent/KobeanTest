@@ -67,6 +67,7 @@ fn test_media_save_and_read_with_permissions() {
             commit_sha: None,
             branch: None,
             case_ids: vec![case.id],
+            ..Default::default()
         },
     )
     .unwrap_or_else(|e| panic!("create run failed: {e}"));

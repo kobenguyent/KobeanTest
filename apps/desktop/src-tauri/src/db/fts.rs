@@ -9,14 +9,40 @@ pub struct SearchHit {
     pub rank: f64,
 }
 
+pub fn sanitize_fts5_query(query: &str) -> String {
+    let mut tokens = Vec::new();
+    let mut current = String::new();
+
+    for c in query.chars() {
+        if c.is_alphanumeric() || c == '_' {
+            current.push(c);
+        } else if !current.is_empty() {
+            tokens.push(current.clone());
+            current.clear();
+        }
+    }
+    if !current.is_empty() {
+        tokens.push(current);
+    }
+
+    if tokens.is_empty() {
+        return String::new();
+    }
+
+    tokens
+        .iter()
+        .map(|t| format!("\"{}\"*", t.replace('"', "\"\"")))
+        .collect::<Vec<_>>()
+        .join(" ")
+}
+
 pub fn search_cases(conn: &Connection, query: &str, limit: u32) -> Result<Vec<SearchHit>> {
-    let sanitized_query = query.trim().replace('"', "\"\"");
-    if sanitized_query.is_empty() {
+    let fts_query = sanitize_fts5_query(query);
+    if fts_query.is_empty() {
         return Ok(Vec::new());
     }
 
     // FTS5 MATCH with BM25 ranking
-    let fts_query = format!("\"{}\"*", sanitized_query);
     let mut stmt = conn.prepare(
         "SELECT case_id, title, preconditions, rank
          FROM fts5_cases

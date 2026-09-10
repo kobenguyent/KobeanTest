@@ -6,118 +6,138 @@
   <title>KobeanTest — 100% Localhost Test Management</title>
   <style>
     :root, [data-theme="obsidian"] {
-      --canvas: #09090b;
-      --card: #121216;
-      --card-raised: #18181f;
-      --border: rgba(255, 255, 255, 0.08);
-      --border-hover: rgba(255, 255, 255, 0.16);
+      --canvas: #090a0d;
+      --card: #111317;
+      --card-raised: #181a20;
+      --border: rgba(255, 255, 255, 0.07);
+      --border-hover: rgba(255, 255, 255, 0.14);
       --border-accent: rgba(99, 102, 241, 0.4);
-      --text: #fafafa;
-      --text-muted: #a1a1aa;
-      --text-submuted: #71717a;
+      --text: #f4f4f6;
+      --text-muted: #9496a1;
+      --text-submuted: #60626d;
       --accent: #6366f1;
-      --accent-glow: rgba(99, 102, 241, 0.25);
+      --accent-glow: rgba(99, 102, 241, 0.18);
       --accent-hover: #4f46e5;
       --pass: #10b981;
-      --pass-bg: rgba(16, 185, 129, 0.12);
-      --pass-border: rgba(16, 185, 129, 0.3);
+      --pass-bg: rgba(16, 185, 129, 0.08);
+      --pass-border: rgba(16, 185, 129, 0.25);
       --fail: #f43f5e;
-      --fail-bg: rgba(244, 63, 94, 0.12);
-      --fail-border: rgba(244, 63, 94, 0.3);
+      --fail-bg: rgba(244, 63, 94, 0.08);
+      --fail-border: rgba(244, 63, 94, 0.25);
       --block: #f59e0b;
-      --block-bg: rgba(245, 158, 11, 0.12);
-      --block-border: rgba(245, 158, 11, 0.3);
-      --skip: #94a3b8;
-      --skip-bg: rgba(148, 163, 184, 0.12);
-      --skip-border: rgba(148, 163, 184, 0.3);
-      --glass-bg: rgba(18, 18, 22, 0.85);
+      --block-bg: rgba(245, 158, 11, 0.08);
+      --block-border: rgba(245, 158, 11, 0.25);
+      --skip: #71717a;
+      --skip-bg: rgba(113, 113, 122, 0.08);
+      --skip-border: rgba(113, 113, 122, 0.25);
+      --pending: #94a3b8;
+      --pending-bg: rgba(148, 163, 184, 0.08);
+      --pending-border: rgba(148, 163, 184, 0.25);
+      --glass-bg: rgba(11, 12, 16, 0.9);
+      --select-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2371717a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      --select-chevron-focus: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236366f1' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
     }
     [data-theme="nordic"] {
-      --canvas: #0b1120;
-      --card: #131d33;
-      --card-raised: #1e293b;
-      --border: rgba(255, 255, 255, 0.09);
-      --border-hover: rgba(255, 255, 255, 0.18);
+      --canvas: #0b0f17;
+      --card: #111723;
+      --card-raised: #192233;
+      --border: rgba(255, 255, 255, 0.07);
+      --border-hover: rgba(255, 255, 255, 0.14);
       --border-accent: rgba(56, 189, 248, 0.4);
       --text: #f8fafc;
       --text-muted: #94a3b8;
       --text-submuted: #64748b;
       --accent: #38bdf8;
-      --accent-glow: rgba(56, 189, 248, 0.25);
+      --accent-glow: rgba(56, 189, 248, 0.18);
       --accent-hover: #0ea5e9;
       --pass: #10b981;
-      --pass-bg: rgba(16, 185, 129, 0.14);
-      --pass-border: rgba(16, 185, 129, 0.35);
+      --pass-bg: rgba(16, 185, 129, 0.08);
+      --pass-border: rgba(16, 185, 129, 0.25);
       --fail: #f43f5e;
-      --fail-bg: rgba(244, 63, 94, 0.14);
-      --fail-border: rgba(244, 63, 94, 0.35);
+      --fail-bg: rgba(244, 63, 94, 0.08);
+      --fail-border: rgba(244, 63, 94, 0.25);
       --block: #f59e0b;
-      --block-bg: rgba(245, 158, 11, 0.14);
-      --block-border: rgba(245, 158, 11, 0.35);
-      --skip: #94a3b8;
-      --skip-bg: rgba(148, 163, 184, 0.14);
-      --skip-border: rgba(148, 163, 184, 0.35);
-      --glass-bg: rgba(19, 29, 51, 0.85);
+      --block-bg: rgba(245, 158, 11, 0.08);
+      --block-border: rgba(245, 158, 11, 0.25);
+      --skip: #71717a;
+      --skip-bg: rgba(113, 113, 122, 0.08);
+      --skip-border: rgba(113, 113, 122, 0.25);
+      --pending: #94a3b8;
+      --pending-bg: rgba(148, 163, 184, 0.08);
+      --pending-border: rgba(148, 163, 184, 0.25);
+      --glass-bg: rgba(11, 15, 23, 0.9);
+      --select-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      --select-chevron-focus: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2338bdf8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
     }
     [data-theme="paper"] {
-      --canvas: #f8fafc;
+      --canvas: #fbfbfb;
       --card: #ffffff;
-      --card-raised: #f1f5f9;
-      --border: rgba(0, 0, 0, 0.08);
-      --border-hover: rgba(0, 0, 0, 0.16);
+      --card-raised: #f3f4f6;
+      --border: rgba(0, 0, 0, 0.07);
+      --border-hover: rgba(0, 0, 0, 0.14);
       --border-accent: rgba(79, 70, 229, 0.4);
-      --text: #0f172a;
-      --text-muted: #475569;
-      --text-submuted: #94a3b8;
+      --text: #09090b;
+      --text-muted: #52525b;
+      --text-submuted: #9ca3af;
       --accent: #4f46e5;
-      --accent-glow: rgba(79, 70, 229, 0.15);
+      --accent-glow: rgba(79, 70, 229, 0.12);
       --accent-hover: #4338ca;
       --pass: #059669;
-      --pass-bg: rgba(5, 150, 105, 0.1);
-      --pass-border: rgba(5, 150, 105, 0.3);
+      --pass-bg: rgba(5, 150, 105, 0.08);
+      --pass-border: rgba(5, 150, 105, 0.25);
       --fail: #e11d48;
-      --fail-bg: rgba(225, 29, 72, 0.1);
-      --fail-border: rgba(225, 29, 72, 0.3);
+      --fail-bg: rgba(225, 29, 72, 0.08);
+      --fail-border: rgba(225, 29, 72, 0.25);
       --block: #d97706;
-      --block-bg: rgba(217, 119, 6, 0.1);
-      --block-border: rgba(217, 119, 6, 0.3);
+      --block-bg: rgba(217, 119, 6, 0.08);
+      --block-border: rgba(217, 119, 6, 0.25);
       --skip: #64748b;
-      --skip-bg: rgba(100, 116, 139, 0.1);
-      --skip-border: rgba(100, 116, 139, 0.3);
-      --glass-bg: rgba(255, 255, 255, 0.9);
+      --skip-bg: rgba(100, 116, 139, 0.08);
+      --skip-border: rgba(100, 116, 139, 0.25);
+      --pending: #64748b;
+      --pending-bg: rgba(100, 116, 139, 0.08);
+      --pending-border: rgba(100, 116, 139, 0.25);
+      --glass-bg: rgba(255, 255, 255, 0.95);
+      --select-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2371717a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      --select-chevron-focus: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%234f46e5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
     }
     [data-theme="sand"] {
-      --canvas: #1c1917;
-      --card: #292524;
-      --card-raised: #36322f;
-      --border: rgba(255, 255, 255, 0.09);
-      --border-hover: rgba(255, 255, 255, 0.18);
+      --canvas: #151311;
+      --card: #1c1917;
+      --card-raised: #282421;
+      --border: rgba(255, 255, 255, 0.07);
+      --border-hover: rgba(255, 255, 255, 0.14);
       --border-accent: rgba(245, 158, 11, 0.4);
       --text: #fafaf9;
       --text-muted: #a8a29e;
       --text-submuted: #78716c;
-      --accent: #f59e0b;
-      --accent-glow: rgba(245, 158, 11, 0.25);
-      --accent-hover: #d97706;
+      --accent: #d97706;
+      --accent-glow: rgba(217, 119, 6, 0.18);
+      --accent-hover: #b45309;
       --pass: #10b981;
-      --pass-bg: rgba(16, 185, 129, 0.12);
-      --pass-border: rgba(16, 185, 129, 0.3);
+      --pass-bg: rgba(16, 185, 129, 0.08);
+      --pass-border: rgba(16, 185, 129, 0.25);
       --fail: #f43f5e;
-      --fail-bg: rgba(244, 63, 94, 0.12);
-      --fail-border: rgba(244, 63, 94, 0.3);
+      --fail-bg: rgba(244, 63, 94, 0.08);
+      --fail-border: rgba(244, 63, 94, 0.25);
       --block: #fbbf24;
-      --block-bg: rgba(251, 191, 36, 0.12);
-      --block-border: rgba(251, 191, 36, 0.3);
-      --skip: #a8a29e;
-      --skip-bg: rgba(168, 162, 158, 0.12);
-      --skip-border: rgba(168, 162, 158, 0.3);
-      --glass-bg: rgba(41, 37, 36, 0.85);
+      --block-bg: rgba(251, 191, 36, 0.08);
+      --block-border: rgba(251, 191, 36, 0.25);
+      --skip: #78716c;
+      --skip-bg: rgba(120, 113, 108, 0.08);
+      --skip-border: rgba(120, 113, 108, 0.25);
+      --pending: #a8a29e;
+      --pending-bg: rgba(168, 162, 158, 0.08);
+      --pending-border: rgba(168, 162, 158, 0.25);
+      --glass-bg: rgba(21, 19, 17, 0.9);
+      --select-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2378716c' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      --select-chevron-focus: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23d97706' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
     
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Geist Sans", "Inter", sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", system-ui, sans-serif;
       background-color: var(--canvas);
       color: var(--text);
       overflow: hidden;
@@ -128,21 +148,7 @@
       user-select: none;
       -webkit-user-select: none;
       -webkit-font-smoothing: antialiased;
-    }
-
-    /* Ambient Subtle Glow at Top */
-    body::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 800px;
-      height: 240px;
-      background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
-      pointer-events: none;
-      z-index: 0;
-      opacity: 0.6;
+      -moz-osx-font-smoothing: grayscale;
     }
 
     /* Scrollbars */
@@ -153,7 +159,7 @@
 
     /* Top Navigation Header */
     header {
-      height: 52px;
+      height: 48px;
       border-bottom: 1px solid var(--border);
       background: var(--glass-bg);
       backdrop-filter: blur(16px);
@@ -170,43 +176,43 @@
     .brand {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 9px;
     }
 
     .brand-icon {
-      width: 26px;
-      height: 26px;
-      border-radius: 6px;
+      width: 22px;
+      height: 22px;
+      border-radius: 5px;
       background: linear-gradient(135deg, var(--accent), #4338ca);
       display: flex;
       align-items: center;
       justify-content: center;
       font-weight: 700;
-      font-size: 13px;
+      font-size: 11.5px;
       color: #ffffff;
-      box-shadow: 0 0 14px var(--accent-glow);
     }
 
     .brand-title {
-      font-weight: 700;
-      font-size: 14px;
+      font-weight: 600;
+      font-size: 13px;
       letter-spacing: -0.02em;
       color: var(--text);
     }
 
     .badge-pill {
-      font-size: 11px;
+      font-size: 10px;
       font-family: "SF Mono", "Geist Mono", monospace;
-      padding: 3px 8px;
-      border-radius: 9999px;
+      padding: 2px 6px;
+      border-radius: 4px;
       background: rgba(255, 255, 255, 0.04);
       border: 1px solid var(--border);
       color: var(--text-muted);
       display: inline-flex;
       align-items: center;
-      gap: 5px;
+      gap: 4px;
       white-space: nowrap;
       flex-shrink: 0;
+      font-variant-numeric: tabular-nums;
     }
 
     .dot-live {
@@ -214,26 +220,25 @@
       height: 6px;
       border-radius: 50%;
       background: var(--pass);
-      box-shadow: 0 0 8px var(--pass);
     }
 
     /* Mode Segmented Switcher */
     .mode-switcher {
       display: flex;
-      background: var(--card);
+      background: rgba(255, 255, 255, 0.03);
       border: 1px solid var(--border);
       border-radius: 6px;
-      padding: 3px;
+      padding: 2px;
       gap: 2px;
       flex-shrink: 0;
     }
 
     .mode-tab {
-      padding: 4px 12px;
-      font-size: 12px;
+      padding: 3px 10px;
+      font-size: 11.5px;
       font-weight: 500;
       border-radius: 4px;
-      border: none;
+      border: 1px solid transparent;
       background: transparent;
       color: var(--text-muted);
       cursor: pointer;
@@ -241,23 +246,24 @@
       align-items: center;
       gap: 6px;
       white-space: nowrap;
-      transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: all 0.12s ease;
     }
 
     .mode-tab.active {
       background: var(--card-raised);
       color: var(--text);
-      box-shadow: 0 1px 3px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.06);
+      border-color: var(--border);
+      box-shadow: 0 1px 2px rgba(0,0,0,0.15);
     }
 
-    /* Buttons - CRITICAL: white-space nowrap & flex-shrink 0 */
+    /* Buttons */
     .btn {
       background: var(--card);
       color: var(--text);
       border: 1px solid var(--border);
-      padding: 6px 13px;
-      border-radius: 6px;
-      font-size: 12px;
+      padding: 0 10px;
+      border-radius: 5px;
+      font-size: 11.5px;
       font-weight: 500;
       cursor: pointer;
       display: inline-flex;
@@ -267,31 +273,29 @@
       white-space: nowrap;
       flex-shrink: 0;
       line-height: 1;
-      height: 32px;
-      transition: all 0.15s ease-out;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+      height: 28px;
+      transition: all 0.12s ease-out;
     }
 
     .btn:hover {
       background: var(--card-raised);
       border-color: var(--border-hover);
-      transform: translateY(-0.5px);
+      color: var(--text);
     }
 
     .btn:active {
-      transform: translateY(0);
+      transform: translateY(0.5px);
     }
 
     .btn-primary {
-      background: linear-gradient(180deg, var(--accent), var(--accent-hover));
+      background: var(--accent);
       color: #ffffff;
       border-color: rgba(255, 255, 255, 0.15);
-      box-shadow: 0 0 16px var(--accent-glow), inset 0 1px 0 rgba(255,255,255,0.2);
+      box-shadow: 0 1px 2px rgba(0,0,0,0.2);
     }
 
     .btn-primary:hover {
-      filter: brightness(1.1);
-      border-color: rgba(255, 255, 255, 0.25);
+      filter: brightness(1.08);
     }
 
     .btn-ghost {
@@ -299,10 +303,76 @@
       border-color: transparent;
       box-shadow: none;
       height: auto;
-      padding: 4px 8px;
+      padding: 3px 6px;
     }
     .btn-ghost:hover {
       background: rgba(255, 255, 255, 0.05);
+    }
+
+    /* Sidebar & Layout Toggle Controls */
+    .layout-toggle-group {
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      padding: 2px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      position: relative;
+    }
+    .layout-btn {
+      width: 26px;
+      height: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.1s ease;
+      outline: none;
+      padding: 0;
+    }
+    .layout-btn:hover {
+      background: var(--border-hover);
+      color: var(--text);
+    }
+    .layout-btn.active {
+      background: var(--card-raised);
+      border-color: var(--border);
+      color: var(--text);
+    }
+    .layout-menu-popover {
+      position: absolute;
+      top: calc(100% + 6px);
+      right: 0;
+      width: 210px;
+      background: var(--canvas);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+      z-index: 1200;
+      padding: 6px;
+    }
+    .layout-menu-item {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 5px 8px;
+      border-radius: 4px;
+      background: transparent;
+      border: none;
+      color: var(--text);
+      font-size: 11.5px;
+      cursor: pointer;
+      text-align: left;
+      transition: background 0.08s ease;
+    }
+    .layout-menu-item:hover {
+      background: var(--card-raised);
     }
 
     /* Workspace 3-Pane Layout */
@@ -477,7 +547,7 @@
     .pill-failed { background: var(--fail-bg); color: var(--fail); border: 1px solid var(--fail-border); }
     .pill-blocked { background: var(--block-bg); color: var(--block); border: 1px solid var(--block-border); }
     .pill-skipped { background: var(--skip-bg); color: var(--skip); border: 1px solid var(--skip-border); }
-    .pill-pending { background: rgba(255, 255, 255, 0.04); color: var(--text-submuted); border: 1px solid var(--border); }
+    .pill-pending { background: var(--pending-bg); color: var(--pending); border: 1px solid var(--pending-border); }
 
     .pill-priority-critical { background: rgba(244, 63, 94, 0.1); color: #f43f5e; border: 1px solid rgba(244, 63, 94, 0.25); }
     .pill-priority-high { background: rgba(245, 158, 11, 0.1); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.25); }
@@ -487,8 +557,8 @@
     .pill-type-automated { background: rgba(6, 182, 212, 0.1); color: #22d3ee; border: 1px solid rgba(6, 182, 212, 0.25); }
     .pill-type-manual { background: rgba(168, 85, 247, 0.1); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.25); }
 
-    /* Inputs */
-    input, select, textarea {
+    /* Inputs & Textareas */
+    input, textarea {
       background: var(--card);
       color: var(--text);
       border: 1px solid var(--border);
@@ -499,9 +569,107 @@
       outline: none;
       transition: all 0.15s ease;
     }
-    input:focus, select:focus, textarea:focus {
+    input:focus, textarea:focus {
       border-color: var(--accent);
       box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+
+    /* Refined Elegant Dropdown (Select) Controls */
+    select {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      background-color: var(--card);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 5px 28px 5px 10px;
+      font-size: 12px;
+      font-weight: 500;
+      font-family: inherit;
+      line-height: 1.4;
+      cursor: pointer;
+      outline: none;
+      background-image: var(--select-chevron);
+      background-repeat: no-repeat;
+      background-position: right 9px center;
+      background-size: 12px 12px;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+      transition: border-color 0.18s cubic-bezier(0.16, 1, 0.3, 1),
+                  background-color 0.18s ease,
+                  box-shadow 0.18s ease,
+                  color 0.18s ease,
+                  transform 0.08s ease;
+    }
+
+    select:hover {
+      border-color: var(--border-hover);
+      background-color: var(--card-raised);
+      color: var(--text);
+    }
+
+    select:focus {
+      border-color: var(--accent);
+      background-color: var(--card-raised);
+      box-shadow: 0 0 0 1px var(--accent), 0 0 0 3px var(--accent-glow);
+      background-image: var(--select-chevron-focus);
+    }
+
+    select:active {
+      transform: scale(0.99);
+    }
+
+    select:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      border-color: var(--border);
+    }
+
+    /* Option Items Polish */
+    select option {
+      background-color: var(--card);
+      color: var(--text);
+      padding: 8px 12px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    select option:checked {
+      background-color: var(--primary-muted, rgba(99, 102, 241, 0.15));
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    /* Modern Chrome 135+ Customizable <select> Progressive Enhancement */
+    @supports (appearance: base-select) {
+      select,
+      select::picker(select) {
+        appearance: base-select;
+      }
+      select::picker(select) {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45), 0 2px 6px rgba(0, 0, 0, 0.2);
+        padding: 4px;
+        margin-top: 4px;
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+      }
+      select option {
+        padding: 6px 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.1s ease;
+      }
+      select option:hover {
+        background: var(--card-raised);
+      }
+      select option:checked {
+        background: var(--accent-glow);
+        color: var(--accent);
+        font-weight: 600;
+      }
     }
 
     /* Step Editor Cards */
@@ -541,16 +709,14 @@
     /* Execution Progress Bar */
     .progress-bar-wrap {
       width: 100%;
-      height: 8px;
-      border-radius: 4px;
-      background: rgba(255, 255, 255, 0.06);
+      height: 3px;
+      background: var(--border);
       overflow: hidden;
       display: flex;
-      margin-top: 6px;
     }
     .progress-segment {
       height: 100%;
-      transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: width 0.25s ease-out;
     }
 
     /* Floating Mini HUD */
@@ -559,19 +725,20 @@
       bottom: 24px;
       right: 24px;
       width: 380px;
-      height: 230px;
-      background: var(--glass-bg);
+      min-height: 230px;
+      background: var(--card);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       border: 1px solid var(--border-accent);
       border-radius: 12px;
       box-shadow: 0 16px 48px rgba(0,0,0,0.6), 0 0 24px var(--accent-glow);
-      z-index: 100;
+      z-index: 9999;
       display: none;
       flex-direction: column;
       justify-content: space-between;
       padding: 14px;
       animation: hudPop 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      user-select: none;
     }
     @keyframes hudPop {
       from { opacity: 0; transform: scale(0.95) translateY(10px); }
@@ -672,14 +839,6 @@
         <span class="badge-pill" id="project-key-badge">LOC</span>
       </div>
 
-      <!-- Air-Gapped Localhost & FTS5 Status -->
-      <span class="badge-pill">
-        <span class="dot-live"></span>
-        <span>127.0.0.1:4000</span>
-        <span style="color: var(--text-submuted);">•</span>
-        <span style="color: var(--pass);">1.86ms FTS5</span>
-      </span>
-
       <!-- Mode Switcher -->
       <div class="mode-switcher">
         <button class="mode-tab active" id="tab-authoring" onclick="setMode('authoring')">
@@ -694,188 +853,367 @@
     </div>
 
     <!-- Header Actions -->
-    <div style="display: flex; align-items: center; gap: 10px;">
-      <button class="btn btn-primary" onclick="startNewRun()">
+    <div style="display: flex; align-items: center; gap: 8px;">
+      <button class="btn btn-primary" id="header-run-btn" onclick="startNewRun()">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
         Run Tests
       </button>
+
+      <button class="btn" id="header-connections-btn" onclick="openConnectionsModal()" title="GitHub Integration & Repository Connections">
+        <span id="header-conn-icon" style="display: flex; align-items: center;">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+        </span>
+        <span id="header-conn-label">GitHub</span>
+        <span class="badge-pill" id="header-conn-count" style="font-size: 9.5px; padding: 1px 5px; margin-left: 2px;">0</span>
+      </button>
+
+      <button class="btn" onclick="openIntegrationsModal()" title="Automated Framework Integrations (Playwright, Cypress, Jest, Pytest, Cucumber)">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+        Integrations
+      </button>
       
-      <button class="btn" onclick="toggleHud()" title="Launch always-on-top Mini HUD">
+      <button class="btn" id="btn-float-hud" onclick="toggleHud()" title="Toggle always-on-top Mini HUD (PiP / Floating)">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
         Float HUD
       </button>
 
       <!-- Theme Switcher -->
-      <select onchange="document.documentElement.setAttribute('data-theme', this.value)" style="height: 32px; padding: 2px 8px; font-size: 11px;">
-        <option value="obsidian">✦ Obsidian Dark</option>
-        <option value="nordic">❄ Nordic Slate</option>
-        <option value="paper">📄 Clean Paper</option>
-        <option value="sand">🏜 Warm Sand</option>
-      </select>
+      <div style="position: relative; display: inline-flex; align-items: center;">
+        <svg style="position: absolute; left: 8px; pointer-events: none; color: var(--text-submuted);" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+        <select onchange="document.documentElement.setAttribute('data-theme', this.value)" style="height: 28px; padding-left: 26px; font-size: 11.5px; border-radius: 6px;" aria-label="Switch Theme">
+          <option value="obsidian">Obsidian</option>
+          <option value="nordic">Nordic</option>
+          <option value="paper">Paper</option>
+          <option value="sand">Sand</option>
+        </select>
+      </div>
+
+      <div style="width: 1px; height: 16px; background: var(--border); margin: 0 2px;"></div>
+
+      <!-- Sidebar & Layout Toggle Manager -->
+      <div class="layout-toggle-group" id="layout-toggle-group">
+        <!-- 1. Customize Layout Button -->
+        <button class="layout-btn" id="btn-layout-menu" onclick="toggleLayoutMenu(event)" title="Customize Layout" aria-label="Customize Layout" aria-haspopup="menu">
+          <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor">
+            <rect x="2" y="2.5" width="3.5" height="11" rx="1" stroke-width="1.25"/>
+            <rect x="7.5" y="2.5" width="6.5" height="4.5" rx="1" stroke-width="1.25"/>
+            <rect x="7.5" y="9" width="6.5" height="4.5" rx="1" stroke-width="1.25"/>
+          </svg>
+        </button>
+
+        <!-- 2. Toggle Primary Side Bar (Left) -->
+        <button class="layout-btn active" id="btn-toggle-left" onclick="toggleLeftSidebar()" title="Toggle Primary Side Bar (⌘B)" aria-label="Toggle Primary Side Bar (⌘B)" aria-pressed="true">
+          <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor">
+            <rect x="2" y="2.5" width="12" height="11" rx="1.5" stroke-width="1.25"/>
+            <line x1="6.5" y1="2.5" x2="6.5" y2="13.5" stroke-width="1.25"/>
+            <path id="svg-fill-left" d="M 3.5 2.5 H 6.5 V 13.5 H 3.5 A 1.5 1.5 0 0 1 2 12 V 4 A 1.5 1.5 0 0 1 3.5 2.5 Z" fill="currentColor" stroke="none" opacity="0.9"/>
+          </svg>
+        </button>
+
+        <!-- 3. Toggle Bottom Panel -->
+        <button class="layout-btn" id="btn-toggle-bottom" onclick="toggleBottomPanel()" title="Toggle Bottom Panel (⌘J)" aria-label="Toggle Bottom Panel (⌘J)" aria-pressed="false">
+          <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor">
+            <rect x="2" y="2.5" width="12" height="11" rx="1.5" stroke-width="1.25"/>
+            <line x1="2" y1="9" x2="14" y2="9" stroke-width="1.25"/>
+            <path id="svg-fill-bottom" d="M 2 9 H 14 V 12 A 1.5 1.5 0 0 1 12.5 13.5 H 3.5 A 1.5 1.5 0 0 1 2 12 Z" fill="currentColor" stroke="none" opacity="0.9" style="display: none;"/>
+          </svg>
+        </button>
+
+        <!-- 4. Toggle Secondary Side Bar (Right) -->
+        <button class="layout-btn active" id="btn-toggle-right" onclick="toggleRightSidebar()" title="Toggle Secondary Side Bar (⌥⌘B)" aria-label="Toggle Secondary Side Bar (⌥⌘B)" aria-pressed="true">
+          <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor">
+            <rect x="2" y="2.5" width="12" height="11" rx="1.5" stroke-width="1.25"/>
+            <line x1="9.5" y1="2.5" x2="9.5" y2="13.5" stroke-width="1.25"/>
+            <path id="svg-fill-right" d="M 9.5 2.5 H 12.5 A 1.5 1.5 0 0 1 14 4 V 12 A 1.5 1.5 0 0 1 12.5 13.5 H 9.5 Z" fill="currentColor" stroke="none" opacity="0.9"/>
+          </svg>
+        </button>
+
+        <!-- Customize Layout Dropdown Popover -->
+        <div id="layout-menu-popover" class="layout-menu-popover" style="display: none;">
+          <div style="font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-submuted); padding: 4px 8px 6px 8px;">Layout Panels</div>
+          <button class="layout-menu-item" onclick="toggleLeftSidebar()">
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <span id="chk-left" style="color: var(--accent); font-weight: bold; width: 12px; text-align: center;">✓</span>
+              <span>Primary Side Bar</span>
+            </div>
+            <span style="font-size: 10px; font-family: monospace; color: var(--text-submuted);">⌘B</span>
+          </button>
+          <button class="layout-menu-item" onclick="toggleBottomPanel()">
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <span id="chk-bottom" style="color: var(--accent); font-weight: bold; width: 12px; text-align: center; opacity: 0;">✓</span>
+              <span>Bottom Panel</span>
+            </div>
+            <span style="font-size: 10px; font-family: monospace; color: var(--text-submuted);">⌘J</span>
+          </button>
+          <button class="layout-menu-item" onclick="toggleRightSidebar()">
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <span id="chk-right" style="color: var(--accent); font-weight: bold; width: 12px; text-align: center;">✓</span>
+              <span>Secondary Side Bar</span>
+            </div>
+            <span style="font-size: 10px; font-family: monospace; color: var(--text-submuted);">⌥⌘B</span>
+          </button>
+          <div style="height: 1px; background: var(--border); margin: 4px 0;"></div>
+          <div style="font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-submuted); padding: 4px 8px 6px 8px;">Layout Presets</div>
+          <button class="layout-menu-item" onclick="applyLayoutPreset('default')">
+            <span>Default (3-Pane)</span>
+          </button>
+          <button class="layout-menu-item" onclick="applyLayoutPreset('zen')">
+            <span>Focus Mode (Zen)</span>
+          </button>
+          <button class="layout-menu-item" onclick="applyLayoutPreset('triage')">
+            <span>Console & Triage</span>
+          </button>
+          <div style="height: 1px; background: var(--border); margin: 4px 0;"></div>
+          <button class="layout-menu-item" onclick="resetLayout()" style="color: var(--text-muted);">
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+              <span>Reset Layout</span>
+            </div>
+          </button>
+        </div>
+      </div>
     </div>
   </header>
 
   <!-- Authoring View (3-Pane Workspace) -->
-  <div class="workspace" id="authoring-view">
-    
-    <!-- Left Pane: Suite Tree Explorer -->
-    <div class="pane-left">
-      <div class="pane-header">
-        <span class="pane-title">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 8 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>
-          Test Suites
-        </span>
-        <button class="btn btn-ghost" onclick="toggleNewSuiteInput()" style="padding: 3px 8px; font-size: 11px;">+ New</button>
-      </div>
+  <div class="workspace" id="authoring-view" style="flex-direction: column;">
+    <div style="display: flex; flex: 1; overflow: hidden; position: relative;" id="authoring-panes-container">
+      <!-- Left Pane: Suite Tree Explorer -->
+      <div class="pane-left" id="pane-left">
+        <div class="pane-header">
+          <span class="pane-title">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 8 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>
+            Test Suites
+          </span>
+          <button class="btn btn-ghost" onclick="toggleNewSuiteInput()" style="padding: 3px 8px; font-size: 11px;">+ New</button>
+        </div>
 
-      <!-- Inline Suite Creator -->
-      <div id="new-suite-form" style="display: none; padding: 10px 12px; background: var(--card-raised); border-bottom: 1px solid var(--border); animation: fadeIn 0.15s ease-out;">
-        <input type="text" id="new-suite-title" placeholder="Suite name..." style="width: 100%; height: 28px; font-size: 12px; margin-bottom: 8px;" onkeydown="handleNewSuiteKey(event)" />
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-          <span style="font-size: 10px; color: var(--text-submuted);"><kbd>↵</kbd> save <kbd>Esc</kbd></span>
-          <div style="display: flex; gap: 6px;">
-            <button class="btn btn-ghost" onclick="toggleNewSuiteInput(false)" style="padding: 2px 6px; font-size: 11px;">Cancel</button>
-            <button class="btn btn-primary" onclick="submitNewSuite()" style="padding: 2px 8px; font-size: 11px;">Save</button>
+        <!-- Inline Suite Creator -->
+        <div id="new-suite-form" style="display: none; padding: 10px 12px; background: var(--card-raised); border-bottom: 1px solid var(--border); animation: fadeIn 0.15s ease-out;">
+          <input type="text" id="new-suite-title" placeholder="Suite name..." style="width: 100%; height: 28px; font-size: 12px; margin-bottom: 6px;" onkeydown="handleNewSuiteKey(event)" />
+          <select id="new-suite-repo" style="width: 100%; height: 26px; font-size: 11px; margin-bottom: 8px; border-radius: 4px; background: var(--card); border: 1px solid var(--border); color: var(--text);">
+            <option value="">No GitHub Repository Linked</option>
+          </select>
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-size: 10px; color: var(--text-submuted);"><kbd>↵</kbd> save <kbd>Esc</kbd></span>
+            <div style="display: flex; gap: 6px;">
+              <button class="btn btn-ghost" onclick="toggleNewSuiteInput(false)" style="padding: 2px 6px; font-size: 11px;">Cancel</button>
+              <button class="btn btn-primary" onclick="submitNewSuite()" style="padding: 2px 8px; font-size: 11px;">Save</button>
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- Master All Cases Filter -->
-      <div style="padding: 10px 12px 6px 12px;">
-        <div class="tree-item active" id="suite-all" onclick="selectSuite(null)">
-          <div style="display: flex; align-items: center; gap: 8px;">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
-            <span>All Test Cases</span>
+        <!-- Master All Cases Filter -->
+        <div style="padding: 10px 12px 6px 12px;">
+          <div class="tree-item active" id="suite-all" onclick="selectSuite(null)">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
+              <span>All Test Cases</span>
+            </div>
+            <span class="count-pill" id="total-cases-count">0</span>
           </div>
-          <span class="count-pill" id="total-cases-count">0</span>
         </div>
+
+        <div style="height: 1px; background: var(--border); margin: 4px 12px 8px 12px;"></div>
+
+        <!-- Dynamic Nested Suites -->
+        <div id="suite-list" style="flex: 1; overflow-y: auto; padding: 0 4px;"></div>
       </div>
 
-      <div style="height: 1px; background: var(--border); margin: 4px 12px 8px 12px;"></div>
-
-      <!-- Dynamic Nested Suites -->
-      <div id="suite-list" style="flex: 1; overflow-y: auto; padding: 0 4px;"></div>
-
-      <!-- Left Pane Footer Status -->
-      <div style="padding: 12px 16px; border-top: 1px solid var(--border); font-size: 11px; color: var(--text-submuted); display: flex; justify-content: space-between; align-items: center;">
-        <span>SQLite WAL Active</span>
-        <span style="color: var(--pass);">● 100% Private</span>
-      </div>
-    </div>
-
-    <!-- Center Pane: Test Cases Data Grid -->
-    <div class="pane-center">
-      <div class="pane-header">
-        <!-- Search bar input with flexible width -->
-        <div style="display: flex; align-items: center; gap: 8px; flex: 1; max-width: 420px;">
-          <div style="position: relative; flex: 1;">
-            <input type="text" id="search-input" placeholder="Search test cases (FTS5 sub-2ms)..." style="width: 100%; padding-left: 32px;" oninput="handleSearch(this.value)" />
-            <svg style="position: absolute; left: 10px; top: 9px; color: var(--text-submuted);" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      <!-- Center Pane: Test Cases Data Grid -->
+      <div class="pane-center" id="pane-center">
+        <div class="pane-header">
+          <!-- Search bar input with flexible width -->
+          <div style="display: flex; align-items: center; gap: 8px; flex: 1; max-width: 320px;">
+            <div style="position: relative; flex: 1;">
+              <input type="text" id="search-input" placeholder="Search test cases..." style="width: 100%; padding-left: 32px;" oninput="handleSearch(this.value)" />
+              <svg style="position: absolute; left: 10px; top: 9px; color: var(--text-submuted);" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            </div>
+            <span class="badge-pill" style="font-size: 10px; flex-shrink: 0;">⌘K</span>
           </div>
-          <span class="badge-pill" style="font-size: 10px; flex-shrink: 0;">⌘K</span>
-        </div>
 
-        <!-- Action Button: Guaranteed single-line non-wrapping -->
-        <div style="display: flex; align-items: center; gap: 8px; flex-shrink: 0;">
-          <button class="btn btn-primary" onclick="toggleNewCaseInput()">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
-            New Test Case
-          </button>
-        </div>
-      </div>
-
-      <!-- Inline Case Creator Card -->
-      <div id="new-case-form" style="display: none; padding: 12px 16px; background: var(--card-raised); border-bottom: 1px solid var(--border); animation: fadeIn 0.15s ease-out;">
-        <div style="font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;">
-          <span>Create New Test Case</span>
-          <span style="font-size: 10px; color: var(--text-submuted);">Press <kbd>↵</kbd> to save, <kbd>Esc</kbd> to cancel</span>
-        </div>
-        <input type="text" id="new-case-title" placeholder="Verify expected system behavior..." style="width: 100%; height: 32px; font-size: 13px; font-weight: 500; margin-bottom: 10px;" onkeydown="handleNewCaseKey(event)" />
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-          <div style="display: flex; gap: 8px;">
-            <select id="new-case-priority" style="height: 28px; padding: 2px 8px; font-size: 11px;">
+          <!-- Filter Dropdowns for Priority and Type -->
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <select id="grid-filter-priority" onchange="handleGridFilterChange()" style="height: 28px; font-size: 11.5px; border-radius: 6px;" aria-label="Filter by priority">
+              <option value="all">All Priorities</option>
               <option value="critical">Critical</option>
               <option value="high">High</option>
-              <option value="medium" selected>Medium</option>
+              <option value="medium">Medium</option>
               <option value="low">Low</option>
             </select>
-            <select id="new-case-type" style="height: 28px; padding: 2px 8px; font-size: 11px;">
-              <option value="automated" selected>Automated</option>
+            <select id="grid-filter-type" onchange="handleGridFilterChange()" style="height: 28px; font-size: 11.5px; border-radius: 6px;" aria-label="Filter by type">
+              <option value="all">All Types</option>
+              <option value="automated">Automated</option>
               <option value="manual">Manual</option>
               <option value="exploratory">Exploratory</option>
             </select>
           </div>
-          <div style="display: flex; gap: 6px;">
-            <button class="btn btn-ghost" onclick="toggleNewCaseInput(false)" style="padding: 4px 10px; font-size: 12px;">Cancel</button>
-            <button class="btn btn-primary" onclick="submitNewCase()" style="padding: 4px 12px; font-size: 12px; font-weight: 600;">Create Case</button>
+
+          <!-- Action Button: Guaranteed single-line non-wrapping -->
+          <div style="display: flex; align-items: center; gap: 8px; flex-shrink: 0;">
+            <button class="btn btn-primary" onclick="toggleNewCaseInput()">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+              New Test Case
+            </button>
+          </div>
+        </div>
+
+        <!-- Inline Case Creator Card -->
+        <div id="new-case-form" style="display: none; padding: 12px 16px; background: var(--card-raised); border-bottom: 1px solid var(--border); animation: fadeIn 0.15s ease-out;">
+          <div style="font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;">
+            <span>Create New Test Case</span>
+            <span style="font-size: 10px; color: var(--text-submuted);">Press <kbd>↵</kbd> to save, <kbd>Esc</kbd> to cancel</span>
+          </div>
+          <input type="text" id="new-case-title" placeholder="Verify expected system behavior..." style="width: 100%; height: 32px; font-size: 13px; font-weight: 500; margin-bottom: 10px;" onkeydown="handleNewCaseKey(event)" />
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div style="display: flex; gap: 8px;">
+              <select id="new-case-priority" style="height: 28px; font-size: 11.5px;">
+                <option value="critical">Critical</option>
+                <option value="high">High</option>
+                <option value="medium" selected>Medium</option>
+                <option value="low">Low</option>
+              </select>
+              <select id="new-case-type" style="height: 28px; font-size: 11.5px;">
+                <option value="automated" selected>Automated</option>
+                <option value="manual">Manual</option>
+                <option value="exploratory">Exploratory</option>
+              </select>
+            </div>
+            <div style="display: flex; gap: 6px;">
+              <button class="btn btn-ghost" onclick="toggleNewCaseInput(false)" style="padding: 4px 10px; font-size: 12px;">Cancel</button>
+              <button class="btn btn-primary" onclick="submitNewCase()" style="padding: 4px 12px; font-size: 12px; font-weight: 600;">Create Case</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Center Case List Container -->
+        <div id="case-grid" style="flex: 1; overflow-y: auto;">
+          <!-- Filled dynamically by renderCases() -->
+        </div>
+      </div>
+
+      <!-- Right Pane: Case Detail & Step Authoring -->
+      <div class="pane-right" id="pane-right">
+        <div class="pane-header">
+          <span class="pane-title" id="detail-header">Case Specification</span>
+          <div style="display: flex; gap: 6px; align-items: center;">
+            <button class="btn" onclick="executeSingleCase()" id="btn-run-case" style="display: none;">▶ Run</button>
+            <button class="btn btn-primary" onclick="saveActiveCase()" id="btn-save-case" style="display: none;">Save</button>
+            <button class="btn-ghost" onclick="toggleRightSidebar()" title="Close Panel (⌥⌘B)" style="padding: 2px 6px; color: var(--text-muted); cursor: pointer; border-radius: 4px; font-size: 11px;">✕</button>
+          </div>
+        </div>
+
+        <div id="detail-content" style="flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 16px;">
+          <div style="color: var(--text-submuted); font-size: 13px; text-align: center; margin-top: 80px;">
+            Select a test case to edit steps, preconditions, and automation tags.
           </div>
         </div>
       </div>
-
-      <!-- Center Case List Container -->
-      <div id="case-grid" style="flex: 1; overflow-y: auto;">
-        <!-- Filled dynamically by renderCases() -->
-      </div>
     </div>
 
-    <!-- Right Pane: Case Detail & Step Authoring -->
-    <div class="pane-right">
-      <div class="pane-header">
-        <span class="pane-title" id="detail-header">Case Specification</span>
-        <div style="display: flex; gap: 6px;">
-          <button class="btn" onclick="executeSingleCase()" id="btn-run-case" style="display: none;">▶ Run</button>
-          <button class="btn btn-primary" onclick="saveActiveCase()" id="btn-save-case" style="display: none;">Save</button>
+    <!-- Collapsible Bottom Developer Console Panel -->
+    <div id="pane-bottom" style="display: none; height: 180px; width: 100%; border-top: 1px solid var(--border); background: var(--canvas); flex-direction: column; flex-shrink: 0; z-index: 10;">
+      <div style="height: 32px; padding: 0 12px; border-bottom: 1px solid var(--border); background: var(--card); display: flex; align-items: center; justify-content: space-between; flex-shrink: 0;">
+        <div style="display: flex; align-items: center; gap: 4px;">
+          <button class="btn btn-ghost" id="bottom-tab-triage" onclick="switchBottomTab('triage')" style="padding: 3px 8px; font-size: 11px; font-weight: 600; color: var(--text);">⚡ Runner Triage</button>
+          <button class="btn btn-ghost" id="bottom-tab-connections" onclick="switchBottomTab('connections')" style="padding: 3px 8px; font-size: 11px; font-weight: 500; color: var(--text-muted);">🐙 <span id="bottom-conn-tab-label">GitHub Repos</span> (<span id="bottom-conn-count">0</span>)</button>
+          <button class="btn btn-ghost" id="bottom-tab-daemon" onclick="switchBottomTab('daemon')" style="padding: 3px 8px; font-size: 11px; font-weight: 500; color: var(--text-muted);">🖥 Local Daemon</button>
+          <button class="btn btn-ghost" id="bottom-tab-ingest" onclick="switchBottomTab('ingest')" style="padding: 3px 8px; font-size: 11px; font-weight: 500; color: var(--text-muted);">📥 CI Ingest</button>
+        </div>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-size: 10px; font-family: monospace; color: var(--text-submuted);">⌘J to toggle</span>
+          <button class="btn-ghost" onclick="toggleBottomPanel()" style="width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; color: var(--text-muted); cursor: pointer; border-radius: 4px;">✕</button>
         </div>
       </div>
-
-      <div id="detail-content" style="flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 16px;">
-        <div style="color: var(--text-submuted); font-size: 13px; text-align: center; margin-top: 80px;">
-          Select a test case to edit steps, preconditions, and automation tags.
+      <div id="bottom-tab-content-triage" style="flex: 1; padding: 12px 16px; overflow-y: auto;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span style="font-size: 12px; font-weight: 600; color: var(--text);" id="bottom-run-title">Active Test Run Triage</span>
+            <span style="font-size: 11px; font-family: monospace; color: var(--text-muted);" id="bottom-run-stats">All systems operational</span>
+          </div>
+          <button class="btn btn-primary" onclick="setMode('execution')" style="padding: 3px 10px; font-size: 11px;">Open Execution View →</button>
+        </div>
+        <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;" id="bottom-status-pills">
+          <span style="padding: 2px 8px; border-radius: 12px; font-size: 10.5px; font-weight: 600; background: var(--pass-bg); color: var(--pass); border: 1px solid var(--pass-border);">✓ Passed</span>
+          <span style="padding: 2px 8px; border-radius: 12px; font-size: 10.5px; font-weight: 600; background: var(--fail-bg); color: var(--fail); border: 1px solid var(--fail-border);">✕ Failed</span>
+          <span style="padding: 2px 8px; border-radius: 12px; font-size: 10.5px; font-weight: 600; background: var(--block-bg); color: var(--block); border: 1px solid var(--block-border);">⊘ Blocked</span>
+          <span style="padding: 2px 8px; border-radius: 12px; font-size: 10.5px; font-weight: 600; background: var(--skip-bg); color: var(--skip); border: 1px solid var(--skip-border);">↷ Skipped</span>
+        </div>
+      </div>
+      <div id="bottom-tab-content-connections" style="display: none; flex: 1; padding: 12px 16px; overflow-y: auto;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span style="font-size: 12px; font-weight: 600; color: var(--text);">Connected GitHub Repositories</span>
+            <span style="font-size: 11px; color: var(--text-submuted);">Link test suites and automated test runs directly to GitHub code</span>
+          </div>
+          <button class="btn btn-primary" onclick="openConnectionsModal()" style="padding: 3px 10px; font-size: 11px;">+ Manage Connections</button>
+        </div>
+        <div id="bottom-connections-list" style="display: flex; flex-direction: column; gap: 6px;">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+      <div id="bottom-tab-content-daemon" style="display: none; flex: 1; padding: 12px 16px; overflow-y: auto;">
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; font-size: 11px;">
+          <div style="padding: 8px 10px; background: var(--card); border: 1px solid var(--border); border-radius: 6px;">
+            <div style="font-size: 10px; font-weight: 600; text-transform: uppercase; color: var(--text-submuted);">Daemon Host</div>
+            <div style="font-family: monospace; color: var(--text); margin-top: 2px;">http://127.0.0.1:4000</div>
+            <div style="font-size: 10px; color: var(--pass); margin-top: 2px;">● 0600 POSIX Isolated</div>
+          </div>
+          <div style="padding: 8px 10px; background: var(--card); border: 1px solid var(--border); border-radius: 6px;">
+            <div style="font-size: 10px; font-weight: 600; text-transform: uppercase; color: var(--text-submuted);">Database Engine</div>
+            <div style="font-family: monospace; color: var(--text); margin-top: 2px;">SQLite 3 (WAL Mode)</div>
+            <div style="font-size: 10px; color: var(--text-muted); margin-top: 2px;">Online VACUUM Backup</div>
+          </div>
+          <div style="padding: 8px 10px; background: var(--card); border: 1px solid var(--border); border-radius: 6px;">
+            <div style="font-size: 10px; font-weight: 600; text-transform: uppercase; color: var(--text-submuted);">Search SLA</div>
+            <div style="font-family: monospace; color: var(--text); margin-top: 2px;">FTS5 Full-Text Search</div>
+            <div style="font-size: 10px; color: var(--pass); margin-top: 2px;">Latency: &lt; 5ms (Verified)</div>
+          </div>
+        </div>
+      </div>
+      <div id="bottom-tab-content-ingest" style="display: none; flex: 1; padding: 12px 16px; overflow-y: auto;">
+        <div style="font-size: 11px; color: var(--text); margin-bottom: 6px;">
+          Batch CI Ingestion Endpoint: <code style="font-family: monospace; background: var(--card); padding: 1px 4px; border-radius: 3px;">POST /api/v1/ingest</code>
+        </div>
+        <div style="font-family: monospace; font-size: 10.5px; background: var(--card); border: 1px solid var(--border); padding: 6px 10px; border-radius: 6px; color: var(--text);">
+          npx kobean run --playwright "npx playwright test"
         </div>
       </div>
     </div>
-
   </div>
 
   <!-- Execution Mode Runner View -->
   <div class="workspace" id="execution-view" style="display: none; flex-direction: column;">
     
     <!-- Execution Run Header & Live Stats -->
-    <div style="height: 64px; border-bottom: 1px solid var(--border); padding: 0 20px; display: flex; align-items: center; justify-content: space-between; background: var(--canvas);">
-      <div style="display: flex; flex-direction: column; gap: 4px;">
-        <div style="display: flex; align-items: center; gap: 12px;">
-          <span style="font-weight: 700; font-size: 15px; letter-spacing: -0.01em;" id="run-title-label">Sprint 42 Release Regression</span>
-          <span class="badge-pill" style="color: var(--accent);" id="run-env-badge">Staging Localhost</span>
+    <div style="height: 46px; border-bottom: 1px solid var(--border); padding: 0 16px; display: flex; align-items: center; justify-content: space-between; background: var(--canvas); flex-shrink: 0;">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-weight: 600; font-size: 13.5px; letter-spacing: -0.01em; color: var(--text);" id="run-title-label">Sprint 42 Release Regression</span>
+          <span class="badge-pill" style="font-size: 9.5px; padding: 1px 5px; text-transform: uppercase; letter-spacing: 0.04em;" id="run-env-badge">Localhost</span>
         </div>
-        <div style="font-size: 11px; color: var(--text-muted); display: flex; gap: 14px;" id="run-meta-stats">
-          <span>Total: 6 Cases</span>
-          <span>•</span>
-          <span style="color: var(--pass);" id="run-stat-pass">2 Passed</span>
-          <span>•</span>
-          <span style="color: var(--fail);" id="run-stat-fail">1 Failed</span>
-          <span>•</span>
-          <span style="color: var(--block);" id="run-stat-block">1 Blocked</span>
-          <span>•</span>
-          <span style="color: var(--skip);" id="run-stat-skip">0 Skipped</span>
+        <div style="height: 14px; width: 1px; background: var(--border);"></div>
+        <div style="font-size: 11.5px; color: var(--text-muted); display: flex; align-items: center; gap: 8px; font-variant-numeric: tabular-nums;" id="run-meta-stats">
+          <span id="run-stat-total">0 cases</span>
         </div>
       </div>
 
-      <!-- Triage Hotkey Legend -->
-      <div style="display: flex; align-items: center; gap: 12px;">
-        <div style="font-size: 12px; color: var(--text-muted); display: flex; gap: 8px; align-items: center;">
-          <span>Triage:</span>
-          <span><kbd style="color: var(--pass);">P</kbd> Pass</span>
-          <span><kbd style="color: var(--fail);">F</kbd> Fail</span>
-          <span><kbd style="color: var(--block);">B</kbd> Block</span>
-          <span><kbd style="color: var(--skip);">S</kbd> Skip</span>
-          <span><kbd>J</kbd>/<kbd>K</kbd> Nav</span>
+      <!-- Triage Hotkey Legend & Back Button -->
+      <div style="display: flex; align-items: center; gap: 14px;">
+        <div style="font-size: 10.5px; color: var(--text-submuted); display: flex; gap: 6px; align-items: center;">
+          <span>Triage <kbd>P</kbd> <kbd>F</kbd> <kbd>B</kbd> <kbd>S</kbd> <kbd>U</kbd></span>
+          <span style="color: var(--border);">·</span>
+          <span>Nav <kbd>J</kbd>/<kbd>K</kbd></span>
         </div>
-        <button class="btn" onclick="setMode('authoring')">Exit Execution</button>
+        <button class="btn btn-ghost" onclick="setMode('authoring')" style="font-size: 11px; gap: 5px; color: var(--text-muted); height: 28px; padding: 0 8px;">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><polyline points="15 18 9 12 15 6"/></svg>
+          Authoring
+        </button>
       </div>
     </div>
 
-    <!-- Segmented Live Progress Bar -->
-    <div class="progress-bar-wrap" id="exec-progress-bar">
+    <!-- Segmented Live Hairline Progress Bar -->
+    <div class="progress-bar-wrap" id="exec-progress-bar" style="height: 2px; background: rgba(255,255,255,0.05);">
       <div class="progress-segment" id="seg-pass" style="background: var(--pass); width: 0%;"></div>
       <div class="progress-segment" id="seg-fail" style="background: var(--fail); width: 0%;"></div>
       <div class="progress-segment" id="seg-block" style="background: var(--block); width: 0%;"></div>
@@ -885,12 +1223,12 @@
     <!-- Execution Run Body Split -->
     <div style="flex: 1; display: flex; overflow: hidden;">
       <!-- Run Items List -->
-      <div style="width: 320px; border-right: 1px solid var(--border); overflow-y: auto; background: var(--canvas);" id="exec-items-list">
+      <div style="width: 320px; border-right: 1px solid var(--border); overflow-y: auto; background: var(--canvas); padding: 4px 0;" id="exec-items-list">
         <!-- Rendered dynamically -->
       </div>
 
       <!-- Active Execution Step Runner & Defect Notes -->
-      <div style="flex: 1; padding: 32px 40px; overflow-y: auto; display: flex; flex-direction: column; justify-content: space-between; background: var(--card);" id="exec-active-detail">
+      <div style="flex: 1; padding: 24px 36px; overflow-y: auto; display: flex; flex-direction: column; justify-content: space-between; background: var(--card);" id="exec-active-detail">
         <!-- Rendered dynamically -->
       </div>
     </div>
@@ -899,27 +1237,37 @@
 
   <!-- Always-on-Top Floating Mini HUD -->
   <div id="hud-widget">
-    <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 8px;">
+    <div id="hud-header" style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 8px; cursor: grab;">
       <div style="display: flex; align-items: center; gap: 6px;">
         <span class="dot-live"></span>
         <span style="font-size: 11px; font-weight: 700; font-family: monospace; color: var(--accent);" id="hud-id">#LOC-101</span>
         <span style="font-size: 10px; color: var(--text-submuted);">HUD Runner</span>
+        <span style="font-size: 10px; color: var(--text-muted); font-family: monospace;" id="hud-step-counter">1/1</span>
       </div>
-      <button onclick="toggleHud()" class="btn-ghost" style="color: var(--text-muted); cursor: pointer; padding: 2px 6px;">✕</button>
+      <div style="display: flex; align-items: center; gap: 4px;">
+        <button id="hud-btn-pip" onclick="openDocumentPipHud()" class="btn-ghost" style="color: var(--text-muted); cursor: pointer; padding: 2px 6px; font-size: 11px; border-radius: 4px;" title="Pop out to Always-on-Top OS Window (Document PiP)">⧉</button>
+        <button onclick="closeInPageHud()" class="btn-ghost" style="color: var(--text-muted); cursor: pointer; padding: 2px 6px; font-size: 11px; border-radius: 4px;" title="Close HUD">✕</button>
+      </div>
     </div>
 
-    <div style="flex: 1; padding: 12px 0;">
+    <div style="flex: 1; padding: 10px 0;">
       <div style="font-size: 13px; font-weight: 600; color: var(--text); line-height: 1.4;" id="hud-title">Title</div>
-      <div style="font-size: 12px; color: var(--text-muted); margin-top: 6px; background: rgba(255,255,255,0.03); padding: 8px 10px; border-radius: 6px; border: 1px solid var(--border);" id="hud-action">
+      <div style="font-size: 12px; color: var(--text); margin-top: 6px; background: var(--canvas); padding: 8px 10px; border-radius: 6px; border: 1px solid var(--border);" id="hud-action">
         Action: ...
       </div>
+      <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 6px; background: var(--canvas); padding: 6px 10px; border-radius: 6px; border: 1px solid var(--border); border-left: 3px solid var(--accent); display: none;" id="hud-expected">
+        Expected: ...
+      </div>
+      <div id="hud-note-drawer" style="display: none; margin-top: 8px;">
+        <input id="hud-note-input" type="text" placeholder="What failed? (Press Enter to confirm failure)" style="width: 100%; box-sizing: border-box; font-size: 11.5px; padding: 6px 8px; border-radius: 5px; border: 1px solid var(--fail-border); background: var(--canvas); color: var(--text); outline: none;">
+      </div>
     </div>
 
-    <div style="display: flex; gap: 8px; border-top: 1px solid var(--border); padding-top: 10px;">
-      <button class="btn" style="flex: 1; justify-content: center; background: var(--pass-bg); color: var(--pass); border-color: var(--pass-border);" onclick="triageActive('passed')">P Pass</button>
-      <button class="btn" style="flex: 1; justify-content: center; background: var(--fail-bg); color: var(--fail); border-color: var(--fail-border);" onclick="triageActive('failed')">F Fail</button>
-      <button class="btn" style="flex: 1; justify-content: center; background: var(--block-bg); color: var(--block); border-color: var(--block-border);" onclick="triageActive('blocked')">B Block</button>
-      <button class="btn" style="flex: 1; justify-content: center; background: var(--skip-bg); color: var(--skip); border-color: var(--skip-border);" onclick="triageActive('skipped')">S Skip</button>
+    <div style="display: flex; gap: 6px; border-top: 1px solid var(--border); padding-top: 8px;">
+      <button class="btn" style="flex: 1; height: 28px; font-size: 11px; font-weight: 600; justify-content: center; background: var(--pass-bg); color: var(--pass); border: 1px solid var(--pass-border);" onclick="triageActive('passed')">P Pass</button>
+      <button class="btn" style="flex: 1; height: 28px; font-size: 11px; font-weight: 600; justify-content: center; background: var(--fail-bg); color: var(--fail); border: 1px solid var(--fail-border);" onclick="promptHudFail()">F Fail</button>
+      <button class="btn" style="flex: 1; height: 28px; font-size: 11px; font-weight: 600; justify-content: center; background: var(--block-bg); color: var(--block); border: 1px solid var(--block-border);" onclick="triageActive('blocked')">B Block</button>
+      <button class="btn" style="flex: 1; height: 28px; font-size: 11px; font-weight: 600; justify-content: center; background: var(--skip-bg); color: var(--skip); border: 1px solid var(--skip-border);" onclick="triageActive('skipped')">S Skip</button>
     </div>
   </div>
 
@@ -937,18 +1285,358 @@
         </div>
       </div>
 
-      <div style="padding: 12px 16px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 14px; background: var(--canvas);">
-        <span style="font-size: 11px; font-weight: 600; color: var(--text-submuted);">TOOL:</span>
-        <button class="btn btn-primary" id="tool-rect" onclick="setAnnoTool('rect')">🟥 Rectangle</button>
-        <button class="btn" id="tool-arrow" onclick="setAnnoTool('arrow')">➡️ Arrow</button>
-        <button class="btn" id="tool-redact" onclick="setAnnoTool('redact')">🔲 Redact PII</button>
-        <button class="btn" id="tool-text" onclick="setAnnoTool('text')">🔤 Callout</button>
+      <div style="padding: 10px 16px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; background: var(--canvas);">
+        <span style="font-size: 10.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-submuted);">Tool</span>
+        <button class="btn btn-primary" id="tool-rect" onclick="setAnnoTool('rect')" style="gap: 5px; height: 28px; font-size: 11.5px;">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+          Rectangle
+        </button>
+        <button class="btn" id="tool-arrow" onclick="setAnnoTool('arrow')" style="gap: 5px; height: 28px; font-size: 11.5px;">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          Arrow
+        </button>
+        <button class="btn" id="tool-redact" onclick="setAnnoTool('redact')" style="gap: 5px; height: 28px; font-size: 11.5px;">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" y1="2" x2="22" y2="22"/></svg>
+          Redact PII
+        </button>
+        <button class="btn" id="tool-text" onclick="setAnnoTool('text')" style="gap: 5px; height: 28px; font-size: 11.5px;">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></svg>
+          Callout
+        </button>
         <div style="height: 14px; width: 1px; background: var(--border);"></div>
-        <span style="font-size: 11px; color: var(--text-submuted);">Press <kbd>⌘V</kbd> to paste clipboard screenshot</span>
+        <span style="font-size: 11px; color: var(--text-submuted);">Press <kbd style="font-size: 9.5px; padding: 1px 4px;">⌘V</kbd> to paste clipboard screenshot</span>
       </div>
 
       <div style="padding: 16px; display: flex; justify-content: center; overflow: auto; background: rgba(0,0,0,0.6); min-height: 420px;">
         <canvas id="anno-canvas" width="800" height="400" style="background: #111; border: 1px solid var(--border); border-radius: 6px;"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Test Framework Integrations Modal -->
+  <div id="integrations-modal-overlay" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.65); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 1000; align-items: center; justify-content: center; padding: 20px;">
+    <div id="integrations-modal-card" style="width: 100%; max-width: 780px; max-height: 88vh; background: var(--card); border: 1px solid var(--border); border-radius: 10px; box-shadow: 0 20px 45px rgba(0,0,0,0.5); display: flex; flex-direction: column; overflow: hidden;">
+      
+      <!-- Modal Header -->
+      <div class="pane-header" style="padding: 12px 18px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; background: var(--card);">
+        <div style="display: flex; align-items: center; gap: 9px;">
+          <div style="width: 28px; height: 28px; border-radius: 6px; background: var(--primary-muted); color: var(--primary); display: flex; align-items: center; justify-content: center;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+          </div>
+          <div>
+            <span style="font-size: 13px; font-weight: 600; color: var(--text);">Framework Integrations & Ingest</span>
+            <div style="font-size: 11px; color: var(--text-muted);">Stream tests from Playwright, Cypress, Jest, Vitest, Pytest, or Cucumber into localhost</div>
+          </div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div id="integrations-daemon-badge" style="font-size: 11px; font-weight: 500; padding: 3px 9px; border-radius: 12px; background: var(--success-bg); color: var(--success); border: 1px solid var(--success-border); display: flex; align-items: center; gap: 5px;">
+            <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--success);"></span>
+            <span id="integrations-daemon-status-text">127.0.0.1:4000 Active</span>
+          </div>
+          <button class="btn" onclick="closeIntegrationsModal()" style="height: 28px; width: 28px; padding: 0; display: flex; align-items: center; justify-content: center; font-size: 13px;">✕</button>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <div style="display: flex; gap: 4px; padding: 8px 16px; border-bottom: 1px solid var(--border); background: var(--canvas); overflow-x: auto;">
+        <button class="btn btn-primary" id="int-tab-playwright" onclick="switchIntegrationsTab('playwright')" style="height: 28px; font-size: 11.5px; white-space: nowrap;">Playwright</button>
+        <button class="btn" id="int-tab-cypress" onclick="switchIntegrationsTab('cypress')" style="height: 28px; font-size: 11.5px; white-space: nowrap;">Cypress</button>
+        <button class="btn" id="int-tab-jest" onclick="switchIntegrationsTab('jest')" style="height: 28px; font-size: 11.5px; white-space: nowrap;">Jest / Vitest</button>
+        <button class="btn" id="int-tab-pytest" onclick="switchIntegrationsTab('pytest')" style="height: 28px; font-size: 11.5px; white-space: nowrap;">Pytest</button>
+        <button class="btn" id="int-tab-cucumber" onclick="switchIntegrationsTab('cucumber')" style="height: 28px; font-size: 11.5px; white-space: nowrap;">Cucumber (BDD)</button>
+        <button class="btn" id="int-tab-ci" onclick="switchIntegrationsTab('ci')" style="height: 28px; font-size: 11.5px; white-space: nowrap;">GitHub Actions / CI</button>
+      </div>
+
+      <!-- Tag Matching Tip Banner -->
+      <div style="padding: 10px 18px; background: rgba(59, 130, 246, 0.08); border-bottom: 1px solid rgba(59, 130, 246, 0.2); display: flex; align-items: center; justify-content: space-between; font-size: 11.5px; color: var(--text);">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          <span><strong>Automatic Case Linking:</strong> Add <code style="padding: 2px 5px; background: var(--card); border: 1px solid var(--border); border-radius: 4px; font-family: monospace;">@LOC-1</code> to any automated test title to automatically link runs to existing test cases!</span>
+        </div>
+      </div>
+
+      <!-- Tab Panes Container -->
+      <div style="padding: 18px; overflow-y: auto; flex: 1; display: flex; flex-direction: column; gap: 14px;">
+        
+        <!-- Playwright Pane -->
+        <div id="int-pane-playwright" style="display: block;">
+          <div style="font-size: 12.5px; font-weight: 600; margin-bottom: 6px; color: var(--text);">Option 1: Zero-Config CLI Runner</div>
+          <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 8px;">Executes your tests with live console output, bundles failure screenshots, and submits the batch upon exit:</div>
+          <div style="position: relative; background: var(--canvas); border: 1px solid var(--border); border-radius: 6px; padding: 10px 14px; font-family: monospace; font-size: 11.5px; color: var(--text); display: flex; align-items: center; justify-content: space-between;">
+            <code id="snippet-pw-cli">npx kobean run --playwright "npx playwright test"</code>
+            <button class="btn" onclick="copySnippet('snippet-pw-cli', this)" style="height: 24px; padding: 0 8px; font-size: 10.5px;">Copy</button>
+          </div>
+
+          <div style="font-size: 12.5px; font-weight: 600; margin-top: 18px; margin-bottom: 6px; color: var(--text);">Option 2: Native Reporter (playwright.config.ts)</div>
+          <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 8px;">Add `@kobean/cli/playwright` to your reporters list:</div>
+          <div style="position: relative; background: var(--canvas); border: 1px solid var(--border); border-radius: 6px; padding: 12px 14px; font-family: monospace; font-size: 11px; color: var(--text); white-space: pre; overflow-x: auto;">
+<button class="btn" onclick="copySnippet('snippet-pw-cfg', this)" style="position: absolute; top: 10px; right: 10px; height: 24px; padding: 0 8px; font-size: 10.5px;">Copy</button>
+<code id="snippet-pw-cfg">import { defineConfig } from '@playwright/test';
+
+export default defineConfig({
+  reporter: [
+    ['list'],
+    ['@kobean/cli/playwright', { uploadScreenshots: true }]
+  ],
+  use: {
+    screenshot: 'only-on-failure'
+  }
+});</code>
+          </div>
+        </div>
+
+        <!-- Cypress Pane -->
+        <div id="int-pane-cypress" style="display: none;">
+          <div style="font-size: 12.5px; font-weight: 600; margin-bottom: 6px; color: var(--text);">Option 1: Zero-Config CLI Runner</div>
+          <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 8px;">Run Cypress headless and automatically ingest test outcomes:</div>
+          <div style="position: relative; background: var(--canvas); border: 1px solid var(--border); border-radius: 6px; padding: 10px 14px; font-family: monospace; font-size: 11.5px; color: var(--text); display: flex; align-items: center; justify-content: space-between;">
+            <code id="snippet-cy-cli">npx kobean run --cypress "npx cypress run"</code>
+            <button class="btn" onclick="copySnippet('snippet-cy-cli', this)" style="height: 24px; padding: 0 8px; font-size: 10.5px;">Copy</button>
+          </div>
+
+          <div style="font-size: 12.5px; font-weight: 600; margin-top: 18px; margin-bottom: 6px; color: var(--text);">Option 2: Plugin Hook (cypress.config.ts)</div>
+          <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 8px;">Register in `setupNodeEvents`:</div>
+          <div style="position: relative; background: var(--canvas); border: 1px solid var(--border); border-radius: 6px; padding: 12px 14px; font-family: monospace; font-size: 11px; color: var(--text); white-space: pre; overflow-x: auto;">
+<button class="btn" onclick="copySnippet('snippet-cy-cfg', this)" style="position: absolute; top: 10px; right: 10px; height: 24px; padding: 0 8px; font-size: 10.5px;">Copy</button>
+<code id="snippet-cy-cfg">import { defineConfig } from 'cypress';
+import { kobeanCypressPlugin } from '@kobean/cli/cypress';
+
+export default defineConfig({
+  e2e: {
+    setupNodeEvents(on, config) {
+      kobeanCypressPlugin(on, config);
+    },
+  },
+});</code>
+          </div>
+        </div>
+
+        <!-- Jest / Vitest Pane -->
+        <div id="int-pane-jest" style="display: none;">
+          <div style="font-size: 12.5px; font-weight: 600; margin-bottom: 6px; color: var(--text);">Option 1: Zero-Config CLI Runner</div>
+          <div style="position: relative; background: var(--canvas); border: 1px solid var(--border); border-radius: 6px; padding: 10px 14px; font-family: monospace; font-size: 11.5px; color: var(--text); display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+            <code id="snippet-vitest-cli">npx kobean run --vitest "npx vitest run"</code>
+            <button class="btn" onclick="copySnippet('snippet-vitest-cli', this)" style="height: 24px; padding: 0 8px; font-size: 10.5px;">Copy</button>
+          </div>
+          <div style="position: relative; background: var(--canvas); border: 1px solid var(--border); border-radius: 6px; padding: 10px 14px; font-family: monospace; font-size: 11.5px; color: var(--text); display: flex; align-items: center; justify-content: space-between;">
+            <code id="snippet-jest-cli">npx kobean run --jest "npm test"</code>
+            <button class="btn" onclick="copySnippet('snippet-jest-cli', this)" style="height: 24px; padding: 0 8px; font-size: 10.5px;">Copy</button>
+          </div>
+
+          <div style="font-size: 12.5px; font-weight: 600; margin-top: 18px; margin-bottom: 6px; color: var(--text);">Option 2: Reporter Configuration</div>
+          <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 8px;">Add `@kobean/cli/jest` to `jest.config.js` or `vitest.config.ts`:</div>
+          <div style="position: relative; background: var(--canvas); border: 1px solid var(--border); border-radius: 6px; padding: 12px 14px; font-family: monospace; font-size: 11px; color: var(--text); white-space: pre; overflow-x: auto;">
+<button class="btn" onclick="copySnippet('snippet-jest-cfg', this)" style="position: absolute; top: 10px; right: 10px; height: 24px; padding: 0 8px; font-size: 10.5px;">Copy</button>
+<code id="snippet-jest-cfg">// vitest.config.ts or jest.config.js
+export default {
+  reporters: [
+    'default',
+    ['@kobean/cli/jest', { uploadScreenshots: true }]
+  ]
+};</code>
+          </div>
+        </div>
+
+        <!-- Pytest Pane -->
+        <div id="int-pane-pytest" style="display: none;">
+          <div style="font-size: 12.5px; font-weight: 600; margin-bottom: 6px; color: var(--text);">Option 1: Zero-Config CLI Runner</div>
+          <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 8px;">Runs Pytest and ingests xunit2 XML results automatically:</div>
+          <div style="position: relative; background: var(--canvas); border: 1px solid var(--border); border-radius: 6px; padding: 10px 14px; font-family: monospace; font-size: 11.5px; color: var(--text); display: flex; align-items: center; justify-content: space-between;">
+            <code id="snippet-pytest-cli">npx kobean run --pytest "pytest"</code>
+            <button class="btn" onclick="copySnippet('snippet-pytest-cli', this)" style="height: 24px; padding: 0 8px; font-size: 10.5px;">Copy</button>
+          </div>
+
+          <div style="font-size: 12.5px; font-weight: 600; margin-top: 18px; margin-bottom: 6px; color: var(--text);">Option 2: Standalone Report Ingest</div>
+          <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 8px;">Upload pre-generated JUnit XML reports:</div>
+          <div style="position: relative; background: var(--canvas); border: 1px solid var(--border); border-radius: 6px; padding: 10px 14px; font-family: monospace; font-size: 11.5px; color: var(--text); display: flex; align-items: center; justify-content: space-between;">
+            <code id="snippet-pytest-report">pytest --junitxml=results.xml && npx kobean report --file results.xml</code>
+            <button class="btn" onclick="copySnippet('snippet-pytest-report', this)" style="height: 24px; padding: 0 8px; font-size: 10.5px;">Copy</button>
+          </div>
+        </div>
+
+        <!-- Cucumber Pane -->
+        <div id="int-pane-cucumber" style="display: none;">
+          <div style="font-size: 12.5px; font-weight: 600; margin-bottom: 6px; color: var(--text);">Cucumber BDD JSON Ingestion</div>
+          <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 8px;">Cucumber exports scenarios, steps, and base64 embedded screenshot failure attachments:</div>
+          <div style="position: relative; background: var(--canvas); border: 1px solid var(--border); border-radius: 6px; padding: 10px 14px; font-family: monospace; font-size: 11.5px; color: var(--text); display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px;">
+            <code id="snippet-cucumber-cli">npx cucumber-js --format json:report.json && npx kobean report --format cucumber-json --file report.json</code>
+            <button class="btn" onclick="copySnippet('snippet-cucumber-cli', this)" style="height: 24px; padding: 0 8px; font-size: 10.5px;">Copy</button>
+          </div>
+
+          <div style="font-size: 12px; font-weight: 600; margin-bottom: 6px; color: var(--text);">Feature Tagging Example:</div>
+          <div style="position: relative; background: var(--canvas); border: 1px solid var(--border); border-radius: 6px; padding: 12px 14px; font-family: monospace; font-size: 11px; color: var(--text); white-space: pre; overflow-x: auto;">
+<code>@LOC-3
+Scenario: Customer completes checkout with saved credit card
+  Given the user has 1 item in their basket
+  When they confirm the payment modal
+  Then the receipt confirmation screen is displayed</code>
+          </div>
+        </div>
+
+        <!-- CI Pane -->
+        <div id="int-pane-ci" style="display: none;">
+          <div style="font-size: 12.5px; font-weight: 600; margin-bottom: 6px; color: var(--text);">GitHub Actions CI Workflow Step</div>
+          <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 8px;">KobeanTest CLI integrates into local CI agents and runner nodes:</div>
+          <div style="position: relative; background: var(--canvas); border: 1px solid var(--border); border-radius: 6px; padding: 12px 14px; font-family: monospace; font-size: 11px; color: var(--text); white-space: pre; overflow-x: auto;">
+<button class="btn" onclick="copySnippet('snippet-ci-gh', this)" style="position: absolute; top: 10px; right: 10px; height: 24px; padding: 0 8px; font-size: 10.5px;">Copy</button>
+<code id="snippet-ci-gh">- name: Execute Automated Tests & Ingest
+  run: |
+    npx @kobean/cli run --playwright "npx playwright test"
+  env:
+    KOBEAN_PORT: 4000
+    KOBEAN_TOKEN: ${{ secrets.KOBEAN_TOKEN }}</code>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Modal Footer -->
+      <div style="padding: 10px 18px; border-top: 1px solid var(--border); background: var(--card); display: flex; align-items: center; justify-content: space-between;">
+        <span style="font-size: 11px; color: var(--text-submuted);">100% Localhost Sovereignty • Non-blocking offline tolerance • Zero cloud dependencies</span>
+        <button class="btn btn-primary" onclick="closeIntegrationsModal()" style="height: 28px; font-size: 11.5px; padding: 0 14px;">Done</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- GitHub Repository Connections Modal -->
+  <div id="connections-modal-overlay" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.65); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 1000; align-items: center; justify-content: center; padding: 20px;">
+    <div id="connections-modal-card" style="width: 100%; max-width: 680px; max-height: 85vh; background: var(--card); border: 1px solid var(--border); border-radius: 10px; box-shadow: 0 20px 45px rgba(0,0,0,0.5); display: flex; flex-direction: column; overflow: hidden;">
+      <!-- Modal Header -->
+      <div style="padding: 14px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; background: var(--card-raised);">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="width: 28px; height: 28px; border-radius: 6px; background: rgba(255,255,255,0.08); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--text);">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          </div>
+          <div>
+            <div style="font-size: 14px; font-weight: 600; color: var(--text);">GitHub Repository Connections</div>
+            <div style="font-size: 11px; color: var(--text-submuted);">Link test suites and test runs with remote GitHub repositories</div>
+          </div>
+        </div>
+        <button class="btn" onclick="closeConnectionsModal()" style="height: 28px; width: 28px; padding: 0; display: flex; align-items: center; justify-content: center; font-size: 13px;">✕</button>
+      </div>
+
+      <!-- Modal Body -->
+      <div style="flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 16px;">
+        <!-- 1. GitHub Account Section (Unauthenticated vs Authenticated) -->
+        <div id="github-auth-container">
+          <!-- Unauthenticated Card -->
+          <div id="github-auth-unauthenticated" style="display: block; padding: 14px 16px; background: var(--canvas); border: 1px solid var(--border); border-radius: 8px;">
+            <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 10px;">
+              <div>
+                <div style="font-size: 12.5px; font-weight: 600; color: var(--text); display: flex; align-items: center; gap: 6px;">
+                  <span>🐙</span> Connect GitHub Account (Optional)
+                  <span class="badge-pill" style="font-size: 9px; padding: 1px 5px; color: var(--text-muted);">Localhost Sovereignty</span>
+                </div>
+                <div style="font-size: 11px; color: var(--text-muted); margin-top: 3px; line-height: 1.4;">
+                  Authenticate with a GitHub Personal Access Token to browse and link your repositories with one click. Your token is stored only in local SQLite and never leaves this machine.
+                </div>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 8px;">
+              <div style="position: relative; flex: 1;">
+                <input type="password" id="input-github-token" placeholder="ghp_... or github_pat_..." style="width: 100%; height: 30px; font-size: 12px; font-family: monospace; border-radius: 4px; padding: 0 32px 0 10px; background: var(--card); border: 1px solid var(--border); color: var(--text);" />
+                <button type="button" onclick="toggleTokenVisibility()" style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: var(--text-muted); font-size: 11px; padding: 0;" title="Toggle token visibility">👁</button>
+              </div>
+              <button class="btn btn-primary" id="btn-github-auth" onclick="authenticateGitHub()" style="height: 30px; font-size: 11.5px; padding: 0 14px; white-space: nowrap;">
+                Authenticate
+              </button>
+            </div>
+
+            <div style="display: flex; align-items: center; justify-content: space-between; font-size: 11px;">
+              <a href="https://github.com/settings/tokens/new?scopes=repo,read:user&description=KobeanTest%20Localhost" target="_blank" rel="noreferrer" style="color: var(--accent); text-decoration: none;">
+                Generate Token on GitHub ↗ <span style="color: var(--text-submuted);">(repo, read:user scopes)</span>
+              </a>
+              <span style="color: var(--text-submuted); font-size: 10.5px;">Classic or Fine-grained PAT</span>
+            </div>
+            <div id="github-auth-error" style="display: none; margin-top: 8px; padding: 6px 10px; background: rgba(248, 81, 73, 0.1); border: 1px solid rgba(248, 81, 73, 0.3); border-radius: 4px; color: var(--fail); font-size: 11px;"></div>
+          </div>
+
+          <!-- Authenticated Card -->
+          <div id="github-auth-authenticated" style="display: none; padding: 12px 16px; background: var(--canvas); border: 1px solid var(--border); border-radius: 8px;">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <img id="github-user-avatar" src="" alt="avatar" style="width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--border); object-fit: cover;" />
+                <div>
+                  <div style="display: flex; align-items: center; gap: 6px;">
+                    <span id="github-user-login" style="font-size: 13px; font-weight: 600; color: var(--text);"></span>
+                    <span id="github-user-name" style="font-size: 11.5px; color: var(--text-muted);"></span>
+                  </div>
+                  <div style="display: flex; align-items: center; gap: 6px; margin-top: 2px;">
+                    <span class="badge-pill" style="font-size: 9px; padding: 1px 5px; color: var(--pass);">● Authenticated</span>
+                    <span id="github-user-token" class="badge-pill" style="font-size: 9px; font-family: monospace; padding: 1px 5px; color: var(--text-submuted);"></span>
+                  </div>
+                </div>
+              </div>
+              <button class="btn btn-ghost" onclick="disconnectGitHubAccount()" style="color: var(--fail); font-size: 11px; padding: 4px 10px;" title="Disconnect GitHub Account">
+                Disconnect Account
+              </button>
+            </div>
+
+            <!-- Quick Picker for Authenticated User Repositories -->
+            <div style="padding-top: 10px; border-top: 1px solid var(--border);">
+              <div style="font-size: 11px; font-weight: 600; color: var(--text); margin-bottom: 6px;">Quick Link from Your GitHub Repositories</div>
+              <div style="display: flex; gap: 8px; align-items: center;">
+                <select id="github-user-repos-select" style="flex: 1; height: 28px; font-size: 11.5px; border-radius: 4px; padding: 0 8px; background: var(--card); border: 1px solid var(--border); color: var(--text);">
+                  <option value="">Select a repository...</option>
+                </select>
+                <button class="btn btn-primary" onclick="connectFromUserReposDropdown()" style="height: 28px; font-size: 11.5px; padding: 0 12px; white-space: nowrap;">
+                  Connect Repo
+                </button>
+                <button class="btn" onclick="refreshGitHubUserRepos()" title="Refresh your GitHub repos" style="height: 28px; width: 28px; padding: 0; display: flex; align-items: center; justify-content: center;">
+                  ↻
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Active Connections Section -->
+        <div>
+          <div style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-submuted); margin-bottom: 8px;">Active Project Connections</div>
+          <div id="modal-connections-list" style="display: flex; flex-direction: column; gap: 8px;">
+            <!-- Rendered dynamically -->
+          </div>
+        </div>
+
+        <!-- 3. Manual / Air-Gapped Connection Section -->
+        <details style="padding: 10px 14px; background: var(--canvas); border: 1px solid var(--border); border-radius: 8px;">
+          <summary style="font-size: 11.5px; font-weight: 600; color: var(--text); cursor: pointer; user-select: none;">
+            Manual / Offline Repository Link (Air-Gapped)
+          </summary>
+          <div style="margin-top: 10px;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
+              <div>
+                <label style="display: block; font-size: 10.5px; font-weight: 500; color: var(--text-muted); margin-bottom: 4px;">Friendly Name</label>
+                <input type="text" id="input-conn-name" placeholder="e.g. Core Monorepo" style="width: 100%; height: 28px; font-size: 11.5px; border-radius: 4px; padding: 0 8px; background: var(--card); border: 1px solid var(--border); color: var(--text);" />
+              </div>
+              <div>
+                <label style="display: block; font-size: 10.5px; font-weight: 500; color: var(--text-muted); margin-bottom: 4px;">GitHub Repo (owner/name)</label>
+                <input type="text" id="input-conn-repo" placeholder="e.g. facebook/react" style="width: 100%; height: 28px; font-size: 11.5px; border-radius: 4px; padding: 0 8px; background: var(--card); border: 1px solid var(--border); color: var(--text);" />
+              </div>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px;">
+              <div>
+                <label style="display: block; font-size: 10.5px; font-weight: 500; color: var(--text-muted); margin-bottom: 4px;">Default Branch</label>
+                <input type="text" id="input-conn-branch" value="main" placeholder="main" style="width: 100%; height: 28px; font-size: 11.5px; border-radius: 4px; padding: 0 8px; background: var(--card); border: 1px solid var(--border); color: var(--text);" />
+              </div>
+              <div>
+                <label style="display: block; font-size: 10.5px; font-weight: 500; color: var(--text-muted); margin-bottom: 4px;">Custom Repo URL (Optional)</label>
+                <input type="text" id="input-conn-url" placeholder="https://github.com/owner/name" style="width: 100%; height: 28px; font-size: 11.5px; border-radius: 4px; padding: 0 8px; background: var(--card); border: 1px solid var(--border); color: var(--text);" />
+              </div>
+            </div>
+            <div style="display: flex; justify-content: flex-end;">
+              <button class="btn btn-primary" onclick="submitNewConnection()" style="height: 28px; font-size: 11.5px; padding: 0 14px;">Connect Repository</button>
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- Modal Footer -->
+      <div style="padding: 10px 18px; border-top: 1px solid var(--border); background: var(--card); display: flex; align-items: center; justify-content: space-between;">
+        <span style="font-size: 11px; color: var(--text-submuted);">100% Localhost Sovereignty • No third-party tokens stored</span>
+        <button class="btn btn-primary" onclick="closeConnectionsModal()" style="height: 28px; font-size: 11.5px; padding: 0 14px;">Done</button>
       </div>
     </div>
   </div>
@@ -972,10 +1660,17 @@
     let activeRunItems = [];
     let activeItemIndex = 0;
 
+    // GitHub Repository Connections & Account State
+    let connections = [];
+    let githubAccount = null;
+    let githubUserRepos = [];
+    let githubPatToken = '';
+
     // Annotation Tool State
     let currentTool = 'rect';
 
     async function init() {
+      initLayoutState();
       try {
         const sRes = await fetch('/session');
         if (sRes.ok) {
@@ -1003,7 +1698,440 @@
 
     async function refreshData() {
       if (!currentProject) return;
-      await Promise.all([loadSuites(), loadCases(), loadRuns()]);
+      await Promise.all([loadSuites(), loadCases(), loadRuns(), loadConnections(), loadGitHubAccount()]);
+    }
+
+    async function loadConnections() {
+      if (!currentProject) return;
+      try {
+        const res = await fetch(`/api/v1/projects/${currentProject.id}/connections`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (res.ok) {
+          connections = await res.json();
+        } else {
+          connections = [];
+        }
+      } catch (err) {
+        console.warn('Failed to load connections:', err);
+        connections = [];
+      }
+      updateConnectionsUI();
+    }
+
+    function updateConnectionsUI() {
+      const headerBadge = document.getElementById('header-conn-count');
+      if (headerBadge) headerBadge.innerText = connections.length;
+      const bottomBadge = document.getElementById('bottom-conn-count');
+      if (bottomBadge) bottomBadge.innerText = connections.length;
+
+      // Update suite inline form dropdown
+      const suiteRepoSelect = document.getElementById('new-suite-repo');
+      if (suiteRepoSelect) {
+        suiteRepoSelect.innerHTML = '<option value="">No GitHub Repository Linked</option>' +
+          connections.map(c => `<option value="${c.id}">${escapeHtml(c.repo_name)} (${escapeHtml(c.name)})</option>`).join('');
+      }
+
+      // Render modal list
+      const modalList = document.getElementById('modal-connections-list');
+      if (modalList) {
+        if (connections.length === 0) {
+          modalList.innerHTML = `
+            <div style="padding: 16px; text-align: center; color: var(--text-submuted); font-size: 12px; background: var(--canvas); border-radius: 6px; border: 1px dashed var(--border);">
+              No GitHub repositories connected yet. Add one below to link your test suites and CI runs.
+            </div>
+          `;
+        } else {
+          modalList.innerHTML = connections.map(c => {
+            const linkedSuites = suites.filter(s => s.repo_connection_id === c.id || s.github_repo === c.repo_name);
+            return `
+              <div style="padding: 10px 14px; background: var(--canvas); border: 1px solid var(--border); border-radius: 6px; display: flex; align-items: center; justify-content: space-between;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="color: var(--text-muted);"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+                  <div>
+                    <div style="display: flex; align-items: center; gap: 6px;">
+                      <a href="${c.repo_url || `https://github.com/${c.repo_name}`}" target="_blank" rel="noreferrer" style="font-weight: 600; font-size: 12.5px; color: var(--text); text-decoration: none;">${escapeHtml(c.repo_name)} ↗</a>
+                      <span class="badge-pill" style="font-size: 9px; padding: 1px 5px;"> ${escapeHtml(c.default_branch || 'main')}</span>
+                    </div>
+                    <div style="font-size: 11px; color: var(--text-submuted); margin-top: 2px;">
+                      ${escapeHtml(c.name)} · <span style="color: var(--accent);">${linkedSuites.length} suite${linkedSuites.length === 1 ? '' : 's'} linked</span>
+                    </div>
+                  </div>
+                </div>
+                <button class="btn btn-ghost" onclick="deleteConnection('${c.id}')" style="color: var(--fail); font-size: 11px; padding: 3px 8px;" title="Disconnect repository">Disconnect</button>
+              </div>
+            `;
+          }).join('');
+        }
+      }
+
+      // Render bottom panel list
+      const bottomList = document.getElementById('bottom-connections-list');
+      if (bottomList) {
+        if (connections.length === 0) {
+          bottomList.innerHTML = `
+            <div style="padding: 12px; color: var(--text-submuted); font-size: 11.5px;">
+              No repositories connected yet. Click <strong>+ Manage Connections</strong> above to link GitHub.
+            </div>
+          `;
+        } else {
+          bottomList.innerHTML = connections.map(c => {
+            const linkedSuites = suites.filter(s => s.repo_connection_id === c.id || s.github_repo === c.repo_name);
+            return `
+              <div style="display: flex; align-items: center; justify-content: space-between; padding: 6px 10px; background: var(--card); border: 1px solid var(--border); border-radius: 6px; font-size: 11px;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="color: var(--pass);">●</span>
+                  <a href="${c.repo_url || `https://github.com/${c.repo_name}`}" target="_blank" rel="noreferrer" style="font-weight: 600; color: var(--text); text-decoration: none;">${escapeHtml(c.repo_name)} ↗</a>
+                  <span style="font-family: monospace; color: var(--text-submuted); background: var(--canvas); padding: 1px 4px; border-radius: 3px; border: 1px solid var(--border);"> ${escapeHtml(c.default_branch || 'main')}</span>
+                  <span style="color: var(--text-muted); font-size: 10.5px;">(${escapeHtml(c.name)} · ${linkedSuites.length} linked)</span>
+                </div>
+                <button class="btn btn-ghost" onclick="deleteConnection('${c.id}')" style="color: var(--text-submuted); padding: 2px 6px; font-size: 10.5px;">✕ Disconnect</button>
+              </div>
+            `;
+          }).join('');
+        }
+      }
+    }
+
+    async function loadGitHubAccount() {
+      try {
+        const res = await fetch('/api/v1/github/account', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (res.ok) {
+          githubAccount = await res.json();
+        } else {
+          githubAccount = null;
+        }
+      } catch (err) {
+        console.warn('Failed to load GitHub account:', err);
+        githubAccount = null;
+      }
+      updateGitHubAccountUI();
+    }
+
+    function updateGitHubAccountUI() {
+      const headerLabel = document.getElementById('header-conn-label');
+      const headerIcon = document.getElementById('header-conn-icon');
+      const bottomTabLabel = document.getElementById('bottom-conn-tab-label');
+
+      const unauthCard = document.getElementById('github-auth-unauthenticated');
+      const authCard = document.getElementById('github-auth-authenticated');
+
+      if (githubAccount) {
+        if (headerLabel) headerLabel.innerText = `@${githubAccount.login}`;
+        if (bottomTabLabel) bottomTabLabel.innerText = `@${githubAccount.login}`;
+        if (headerIcon) {
+          if (githubAccount.avatar_url) {
+            headerIcon.innerHTML = `<img src="${escapeHtml(githubAccount.avatar_url)}" alt="${escapeHtml(githubAccount.login)}" style="width: 14px; height: 14px; border-radius: 50%; object-fit: cover;" />`;
+          } else {
+            headerIcon.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" style="color: var(--pass);"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>`;
+          }
+        }
+
+        if (unauthCard) unauthCard.style.display = 'none';
+        if (authCard) {
+          authCard.style.display = 'block';
+          const avatarImg = document.getElementById('github-user-avatar');
+          if (avatarImg) {
+            if (githubAccount.avatar_url) {
+              avatarImg.src = githubAccount.avatar_url;
+              avatarImg.style.display = 'block';
+            } else {
+              avatarImg.style.display = 'none';
+            }
+          }
+          const loginEl = document.getElementById('github-user-login');
+          if (loginEl) loginEl.innerText = `@${githubAccount.login}`;
+          const nameEl = document.getElementById('github-user-name');
+          if (nameEl) nameEl.innerText = githubAccount.name ? `(${githubAccount.name})` : '';
+          const tokenEl = document.getElementById('github-user-token');
+          if (tokenEl) tokenEl.innerText = githubAccount.token_masked || '';
+        }
+      } else {
+        if (headerLabel) headerLabel.innerText = 'GitHub';
+        if (bottomTabLabel) bottomTabLabel.innerText = 'GitHub Repos';
+        if (headerIcon) {
+          headerIcon.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>`;
+        }
+        if (unauthCard) unauthCard.style.display = 'block';
+        if (authCard) authCard.style.display = 'none';
+      }
+    }
+
+    function toggleTokenVisibility() {
+      const input = document.getElementById('input-github-token');
+      if (!input) return;
+      input.type = input.type === 'password' ? 'text' : 'password';
+    }
+
+    async function authenticateGitHub() {
+      const input = document.getElementById('input-github-token');
+      const errDiv = document.getElementById('github-auth-error');
+      const pat = (input ? input.value : '').trim();
+      if (!pat) {
+        if (errDiv) {
+          errDiv.innerText = 'Please enter a valid Personal Access Token (PAT).';
+          errDiv.style.display = 'block';
+        }
+        return;
+      }
+      if (errDiv) errDiv.style.display = 'none';
+
+      const btn = document.getElementById('btn-github-auth');
+      if (btn) { btn.disabled = true; btn.innerText = 'Verifying...'; }
+
+      try {
+        // Direct verification with GitHub official API (CORS enabled)
+        const ghRes = await fetch('https://api.github.com/user', {
+          headers: {
+            'Authorization': `Bearer ${pat}`,
+            'Accept': 'application/vnd.github.v3+json'
+          }
+        });
+
+        if (!ghRes.ok) {
+          throw new Error(`GitHub token verification failed (${ghRes.status}): Please check token and scopes.`);
+        }
+
+        const ghUser = await ghRes.json();
+
+        // Save locally to SQLite
+        const saveRes = await fetch('/api/v1/github/account', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            login: ghUser.login,
+            name: ghUser.name || ghUser.login,
+            avatar_url: ghUser.avatar_url,
+            token: pat
+          })
+        });
+
+        if (!saveRes.ok) {
+          const e = await saveRes.json();
+          throw new Error(e.error || 'Failed to save account locally.');
+        }
+
+        githubAccount = await saveRes.json();
+        githubPatToken = pat;
+        if (input) input.value = '';
+        showToast(`Connected GitHub account @${githubAccount.login}`, 'success');
+
+        await fetchGitHubUserRepos(pat);
+        updateGitHubAccountUI();
+        await loadConnections();
+      } catch (err) {
+        console.error('GitHub authentication error:', err);
+        if (errDiv) {
+          errDiv.innerText = err.message || 'Authentication failed. Please verify your token.';
+          errDiv.style.display = 'block';
+        }
+      } finally {
+        if (btn) { btn.disabled = false; btn.innerText = 'Authenticate'; }
+      }
+    }
+
+    async function disconnectGitHubAccount() {
+      if (!confirm('Disconnect your GitHub account? Repository links and test suites will remain intact.')) return;
+      try {
+        const res = await fetch('/api/v1/github/account', {
+          method: 'DELETE',
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (res.ok) {
+          githubAccount = null;
+          githubPatToken = '';
+          githubUserRepos = [];
+          showToast('GitHub account disconnected', 'success');
+          updateGitHubAccountUI();
+        } else {
+          showToast('Failed to disconnect GitHub account', 'error');
+        }
+      } catch (err) {
+        console.error('Disconnect GitHub account error:', err);
+        showToast('Error disconnecting GitHub account', 'error');
+      }
+    }
+
+    async function fetchGitHubUserRepos(pat) {
+      const activePat = pat || githubPatToken;
+      const select = document.getElementById('github-user-repos-select');
+      if (select) select.innerHTML = '<option value="">Loading your repositories...</option>';
+
+      try {
+        const headers = { 'Accept': 'application/vnd.github.v3+json' };
+        if (activePat) {
+          headers['Authorization'] = `Bearer ${activePat}`;
+        }
+        const res = await fetch('https://api.github.com/user/repos?per_page=100&sort=updated&affiliation=owner,collaborator', {
+          headers
+        });
+        if (res.ok) {
+          githubUserRepos = await res.json();
+          populateUserReposDropdown();
+        } else {
+          if (select) select.innerHTML = '<option value="">Failed to load repositories (token expired or rate-limited)</option>';
+        }
+      } catch (err) {
+        console.warn('Could not fetch user repositories:', err);
+        if (select) select.innerHTML = '<option value="">Offline / Could not reach GitHub API</option>';
+      }
+    }
+
+    function refreshGitHubUserRepos() {
+      if (!githubAccount) return;
+      fetchGitHubUserRepos(githubPatToken);
+    }
+
+    function populateUserReposDropdown() {
+      const select = document.getElementById('github-user-repos-select');
+      if (!select) return;
+      if (!githubUserRepos || githubUserRepos.length === 0) {
+        select.innerHTML = '<option value="">No repositories found for account</option>';
+        return;
+      }
+
+      select.innerHTML = '<option value="">Select a repository to link...</option>' +
+        githubUserRepos.map(r => {
+          const isConnected = connections.some(c => c.repo_name.toLowerCase() === r.full_name.toLowerCase());
+          return `<option value="${escapeHtml(r.full_name)}" data-url="${escapeHtml(r.html_url)}" data-branch="${escapeHtml(r.default_branch || 'main')}" data-name="${escapeHtml(r.name)}" ${isConnected ? 'disabled' : ''}>${escapeHtml(r.full_name)} ${r.private ? '🔒' : '🌐'} ${isConnected ? '(Already Connected)' : ''}</option>`;
+        }).join('');
+    }
+
+    async function connectFromUserReposDropdown() {
+      const select = document.getElementById('github-user-repos-select');
+      if (!select || !select.value) {
+        showToast('Please select a repository from the list', 'error');
+        return;
+      }
+      const selectedOption = select.options[select.selectedIndex];
+      const repo_name = select.value;
+      const repo_url = selectedOption.getAttribute('data-url') || `https://github.com/${repo_name}`;
+      const default_branch = selectedOption.getAttribute('data-branch') || 'main';
+      const name = selectedOption.getAttribute('data-name') || repo_name;
+
+      if (!currentProject) return;
+
+      try {
+        const res = await fetch(`/api/v1/projects/${currentProject.id}/connections`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            name,
+            provider: 'github',
+            repo_name,
+            repo_url,
+            default_branch
+          })
+        });
+
+        if (res.ok) {
+          showToast(`Connected ${repo_name}`, 'success');
+          await loadConnections();
+          await loadSuites();
+          populateUserReposDropdown();
+        } else {
+          const err = await res.json();
+          showToast(err.error || 'Failed to connect repository', 'error');
+        }
+      } catch (err) {
+        console.error('Error connecting repository from dropdown:', err);
+        showToast('Error connecting repository', 'error');
+      }
+    }
+
+    function openConnectionsModal() {
+      const overlay = document.getElementById('connections-modal-overlay');
+      if (overlay) overlay.style.display = 'flex';
+      updateConnectionsUI();
+      updateGitHubAccountUI();
+      if (githubAccount && githubUserRepos.length === 0 && githubPatToken) {
+        fetchGitHubUserRepos(githubPatToken);
+      }
+    }
+
+    function closeConnectionsModal() {
+      const overlay = document.getElementById('connections-modal-overlay');
+      if (overlay) overlay.style.display = 'none';
+    }
+
+    async function submitNewConnection() {
+      const nameInput = document.getElementById('input-conn-name');
+      const repoInput = document.getElementById('input-conn-repo');
+      const branchInput = document.getElementById('input-conn-branch');
+      const urlInput = document.getElementById('input-conn-url');
+
+      const name = nameInput.value.trim();
+      const repo_name = repoInput.value.trim();
+      const default_branch = branchInput.value.trim() || 'main';
+      const repo_url = urlInput.value.trim() || `https://github.com/${repo_name}`;
+
+      if (!repo_name) {
+        showToast('Repository name is required (e.g. owner/repo)', 'error');
+        return;
+      }
+      if (!currentProject) return;
+
+      try {
+        const res = await fetch(`/api/v1/projects/${currentProject.id}/connections`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            name: name || repo_name,
+            provider: 'github',
+            repo_name,
+            repo_url,
+            default_branch
+          })
+        });
+
+        if (res.ok) {
+          showToast(`Connected ${repo_name}`, 'success');
+          nameInput.value = '';
+          repoInput.value = '';
+          urlInput.value = '';
+          branchInput.value = 'main';
+          await loadConnections();
+          await loadSuites();
+        } else {
+          const err = await res.json();
+          showToast(err.error || 'Failed to create connection', 'error');
+        }
+      } catch (err) {
+        console.error('Create connection error:', err);
+        showToast('Error connecting repository', 'error');
+      }
+    }
+
+    async function deleteConnection(connId) {
+      if (!confirm('Disconnect this GitHub repository? Linked test suites will remain intact.')) return;
+      try {
+        const res = await fetch(`/api/v1/connections/${connId}`, {
+          method: 'DELETE',
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (res.ok) {
+          showToast('GitHub connection removed', 'success');
+          await loadConnections();
+          await loadSuites();
+          await loadRuns();
+        } else {
+          showToast('Failed to disconnect repository', 'error');
+        }
+      } catch (err) {
+        console.error('Delete connection error:', err);
+        showToast('Error disconnecting repository', 'error');
+      }
     }
 
     async function loadSuites() {
@@ -1099,12 +2227,21 @@
         const count = cases.filter(c => c.suite_id === suite.id).length;
         const item = document.createElement('div');
         item.className = `tree-item ${selectedSuiteId === suite.id ? 'active' : ''}`;
+        const ghRepo = suite.github_repo;
         item.innerHTML = `
-          <div style="display: flex; align-items: center; gap: 8px; overflow: hidden;">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 8 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>
-            <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${escapeHtml(suite.title)}</span>
+          <div style="display: flex; align-items: center; gap: 7px; overflow: hidden; min-width: 0; flex: 1;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" style="flex-shrink: 0;"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 8 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>
+            <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 12.5px;">${escapeHtml(suite.title)}</span>
           </div>
-          <span class="count-pill">${count}</span>
+          <div style="display: flex; align-items: center; gap: 5px; flex-shrink: 0;">
+            ${ghRepo ? `
+              <a href="https://github.com/${escapeHtml(ghRepo)}" target="_blank" rel="noreferrer" onclick="event.stopPropagation()" title="Linked GitHub Repo: ${escapeHtml(ghRepo)}" style="display: inline-flex; align-items: center; gap: 2px; font-size: 10px; color: var(--text-muted); padding: 1px 5px; border-radius: 4px; background: rgba(255,255,255,0.06); border: 1px solid var(--border); text-decoration: none;">
+                <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+                <span>↗</span>
+              </a>
+            ` : ''}
+            <span class="count-pill">${count}</span>
+          </div>
         `;
         item.onclick = () => selectSuite(suite.id);
         listEl.appendChild(item);
@@ -1165,9 +2302,9 @@
             <span class="case-title">${escapeHtml(tc.title)}</span>
           </div>
           <div style="display: flex; align-items: center; gap: 8px; flex-shrink: 0;">
-            <span class="pill pill-priority-${tc.priority}">${tc.priority}</span>
-            <span class="pill pill-type-${tc.type}">${tc.type}</span>
-            <span style="font-size: 11px; color: var(--text-submuted); font-family: monospace;">${steps.length} steps</span>
+            <span class="pill pill-priority-${tc.priority || 'medium'}">${(tc.priority || 'medium').toUpperCase()}</span>
+            <span class="pill pill-type-${tc.type || 'automated'}">${(tc.type || 'automated').toUpperCase()}</span>
+            <span style="font-size: 11px; color: var(--text-submuted); font-family: monospace; font-variant-numeric: tabular-nums;">${steps.length} steps</span>
           </div>
         `;
         row.onclick = () => selectCase(tc);
@@ -1177,6 +2314,11 @@
 
     function selectCase(tc) {
       activeCase = tc;
+      if (!layoutState.showRightSidebar) {
+        layoutState.showRightSidebar = true;
+        applyLayoutState();
+        saveLayoutState();
+      }
       renderCases();
       renderCaseDetail();
     }
@@ -1323,8 +2465,45 @@
       document.getElementById('authoring-view').style.display = mode === 'authoring' ? 'flex' : 'none';
       document.getElementById('execution-view').style.display = mode === 'execution' ? 'flex' : 'none';
 
+      const headerRunBtn = document.getElementById('header-run-btn');
+      if (headerRunBtn) {
+        headerRunBtn.style.display = mode === 'execution' ? 'none' : 'inline-flex';
+      }
+
       if (mode === 'execution') {
         renderExecutionView();
+      }
+    }
+
+    function getStatusIcon(status) {
+      switch (status) {
+        case 'passed':
+          return `<span style="display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;border-radius:50%;background:var(--pass-bg);color:var(--pass);border:1px solid var(--pass-border);flex-shrink:0;" title="Passed">
+            <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+          </span>`;
+        case 'failed':
+          return `<span style="display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;border-radius:50%;background:var(--fail-bg);color:var(--fail);border:1px solid var(--fail-border);flex-shrink:0;" title="Failed">
+            <svg width="7" height="7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </span>`;
+        case 'blocked':
+          return `<span style="display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;border-radius:50%;background:var(--block-bg);color:var(--block);border:1px solid var(--block-border);flex-shrink:0;" title="Blocked">
+            <svg width="7" height="7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="8" x2="12" y2="13"/><circle cx="12" cy="17" r="1" fill="currentColor"/></svg>
+          </span>`;
+        case 'skipped':
+          return `<span style="display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;border-radius:50%;background:var(--skip-bg);color:var(--skip);border:1px solid var(--skip-border);flex-shrink:0;" title="Skipped">
+            <svg width="7" height="7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="6" y1="12" x2="18" y2="12"/></svg>
+          </span>`;
+        case 'pending':
+        default:
+          return `<span style="display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;border-radius:50%;background:var(--pending-bg);color:var(--pending);border:1px solid var(--pending-border);flex-shrink:0;" title="Not Run Yet">
+            <svg width="5" height="5" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="5"/></svg>
+          </span>`;
+      }
+    }
+
+    function updateActiveNotes(val) {
+      if (activeRun && activeRunItems.length > 0 && activeRunItems[activeItemIndex]) {
+        activeRunItems[activeItemIndex].notes = val;
       }
     }
 
@@ -1333,7 +2512,7 @@
       const detailEl = document.getElementById('exec-active-detail');
       if (!listEl || !detailEl) return;
 
-      if (!activeRun || activeRunItems.length === 0) {
+      if (!activeRun) {
         listEl.innerHTML = `
           <div style="padding: 40px 20px; text-align: center; color: var(--text-submuted); font-size: 13px;">
             <div style="font-size: 24px; margin-bottom: 8px;">📋</div>
@@ -1361,40 +2540,42 @@
         return;
       }
 
+      if (activeRunItems.length === 0) {
+        listEl.innerHTML = `
+          <div style="padding: 40px 20px; text-align: center; color: var(--text-submuted); font-size: 13px;">
+            <div style="font-size: 24px; margin-bottom: 8px;">📋</div>
+            No test cases in this run.<br/>
+            <button class="btn btn-primary" onclick="startNewRun()" style="margin-top: 14px; font-size: 12px;">Create Run With Test Cases</button>
+          </div>
+        `;
+        detailEl.innerHTML = `
+          <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; color: var(--text-submuted); font-size: 13px;">
+            <div style="font-size: 32px; margin-bottom: 12px;">⚡</div>
+            <h3 style="font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 4px;">Empty Test Run</h3>
+            <p>No test cases are currently linked to this run.</p>
+          </div>
+        `;
+        const titleLabel = document.getElementById('run-title-label');
+        if (titleLabel) titleLabel.innerText = activeRun.title;
+        const envBadge = document.getElementById('run-env-badge');
+        if (envBadge) envBadge.innerText = activeRun.environment || 'Localhost';
+        const metaStats = document.getElementById('run-meta-stats');
+        if (metaStats) metaStats.innerHTML = '<span>Total: 0 Cases</span>';
+        return;
+      }
+
       const titleLabel = document.getElementById('run-title-label');
       if (titleLabel) titleLabel.innerText = activeRun.title;
       const envBadge = document.getElementById('run-env-badge');
       if (envBadge) envBadge.innerText = activeRun.environment || 'Localhost';
 
       let passCount = 0, failCount = 0, blockCount = 0, skipCount = 0, pendingCount = 0;
-      listEl.innerHTML = '';
-
-      activeRunItems.forEach((item, idx) => {
+      activeRunItems.forEach(item => {
         if (item.status === 'passed') passCount++;
         else if (item.status === 'failed') failCount++;
         else if (item.status === 'blocked') blockCount++;
         else if (item.status === 'skipped') skipCount++;
         else pendingCount++;
-
-        const isSelected = idx === activeItemIndex;
-        const row = document.createElement('div');
-        row.className = `case-row ${isSelected ? 'active' : ''}`;
-        row.style.background = isSelected ? 'var(--card-raised)' : 'transparent';
-        row.style.borderLeft = isSelected ? '2px solid var(--accent)' : '2px solid transparent';
-        row.style.cursor = 'pointer';
-        row.innerHTML = `
-          <div style="display: flex; align-items: center; min-width: 0; flex: 1;">
-            <span class="pill pill-${item.status}" style="font-size: 10px; text-transform: uppercase;">${item.status}</span>
-            <span class="case-id" style="margin-left: 8px; font-size: 11px;">#${currentProject ? currentProject.key : 'LOC'}-${item.case_number}</span>
-            <span class="case-title" style="margin-left: 8px; font-size: 12px;">${escapeHtml(item.title)}</span>
-          </div>
-          ${item.duration_ms ? `<span style="font-size: 10px; font-family: monospace; color: var(--text-submuted);">${item.duration_ms}ms</span>` : ''}
-        `;
-        row.onclick = () => {
-          activeItemIndex = idx;
-          renderExecutionView();
-        };
-        listEl.appendChild(row);
       });
 
       // Update Segments & Stats
@@ -1406,20 +2587,81 @@
 
       const metaStats = document.getElementById('run-meta-stats');
       if (metaStats) {
+        let ghHtml = '';
+        if (activeRun && activeRun.github_repo) {
+          ghHtml = `
+            <span style="color: var(--border);">·</span>
+            <a href="https://github.com/${escapeHtml(activeRun.github_repo)}" target="_blank" rel="noreferrer" style="display: inline-flex; align-items: center; gap: 4px; padding: 1px 6px; border-radius: 4px; font-size: 10.5px; background: rgba(255,255,255,0.06); border: 1px solid var(--border); color: var(--text); text-decoration: none;" title="Linked GitHub Repository">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+              <span>${escapeHtml(activeRun.github_repo)}</span>
+            </a>
+            ${activeRun.branch ? `<span style="font-size: 10px; font-family: monospace; color: var(--text-muted); background: var(--canvas); padding: 1px 5px; border-radius: 4px; border: 1px solid var(--border);"> ${escapeHtml(activeRun.branch)}</span>` : ''}
+            ${activeRun.commit_sha ? `<a href="https://github.com/${escapeHtml(activeRun.github_repo)}/commit/${escapeHtml(activeRun.commit_sha)}" target="_blank" rel="noreferrer" style="font-size: 10px; font-family: monospace; color: var(--accent); background: var(--canvas); padding: 1px 5px; border-radius: 4px; border: 1px solid var(--border); text-decoration: none;">${escapeHtml(activeRun.commit_sha.slice(0, 7))} ↗</a>` : ''}
+            ${activeRun.pull_request_number ? `<a href="${activeRun.pull_request_url || `https://github.com/${escapeHtml(activeRun.github_repo)}/pull/${activeRun.pull_request_number}`}" target="_blank" rel="noreferrer" style="font-size: 10px; font-family: monospace; color: #a855f7; background: rgba(168,85,247,0.1); border: 1px solid rgba(168,85,247,0.3); padding: 1px 5px; border-radius: 4px; text-decoration: none;">#${activeRun.pull_request_number} (PR) ↗</a>` : ''}
+          `;
+        }
         metaStats.innerHTML = `
-          <span>Total: ${total} Cases</span>
-          <span>•</span>
-          <span style="color: var(--pass);" id="run-stat-pass">${passCount} Passed</span>
-          <span>•</span>
-          <span style="color: var(--fail);" id="run-stat-fail">${failCount} Failed</span>
-          <span>•</span>
-          <span style="color: var(--block);" id="run-stat-block">${blockCount} Blocked</span>
-          <span>•</span>
-          <span style="color: var(--skip);" id="run-stat-skip">${skipCount} Skipped</span>
-          <span>•</span>
-          <span style="color: var(--text-submuted);">${pendingCount} Pending</span>
+          <span style="color: var(--text-muted);">${total} cases</span>
+          <span style="color: var(--border);">·</span>
+          <span style="display: inline-flex; align-items: center; gap: 4px; color: var(--pass);" id="run-stat-pass"><span style="width: 6px; height: 6px; border-radius: 50%; background: var(--pass);"></span>${passCount} passed</span>
+          <span style="color: var(--border);">·</span>
+          <span style="display: inline-flex; align-items: center; gap: 4px; color: var(--fail);" id="run-stat-fail"><span style="width: 6px; height: 6px; border-radius: 50%; background: var(--fail);"></span>${failCount} failed</span>
+          <span style="color: var(--border);">·</span>
+          <span style="display: inline-flex; align-items: center; gap: 4px; color: var(--block);" id="run-stat-block"><span style="width: 6px; height: 6px; border-radius: 50%; background: var(--block);"></span>${blockCount} blocked</span>
+          <span style="color: var(--border);">·</span>
+          <span style="display: inline-flex; align-items: center; gap: 4px; color: var(--pending);"><span style="width: 6px; height: 6px; border-radius: 50%; background: var(--pending);"></span>${pendingCount} not run yet</span>
+          ${ghHtml}
         `;
       }
+
+      listEl.innerHTML = '';
+      const listHeader = document.createElement('div');
+      listHeader.style.padding = '10px 14px 6px';
+      listHeader.style.display = 'flex';
+      listHeader.style.alignItems = 'center';
+      listHeader.style.justifyContent = 'space-between';
+      listHeader.style.fontSize = '10px';
+      listHeader.style.fontWeight = '600';
+      listHeader.style.textTransform = 'uppercase';
+      listHeader.style.letterSpacing = '0.06em';
+      listHeader.style.color = 'var(--text-submuted)';
+      listHeader.innerHTML = `<span>Test Cases</span><span class="count-pill">${activeRunItems.length}</span>`;
+      listEl.appendChild(listHeader);
+
+      activeRunItems.forEach((item, idx) => {
+        const isSelected = idx === activeItemIndex;
+        const row = document.createElement('div');
+        row.style.background = isSelected ? 'var(--card-raised)' : 'transparent';
+        row.style.border = isSelected ? '1px solid var(--border)' : '1px solid transparent';
+        row.style.borderLeft = isSelected ? '2px solid var(--accent)' : '2px solid transparent';
+        row.style.borderRadius = '5px';
+        row.style.margin = '1px 6px';
+        row.style.padding = '7px 10px';
+        row.style.display = 'flex';
+        row.style.alignItems = 'center';
+        row.style.justifyContent = 'space-between';
+        row.style.cursor = 'pointer';
+        row.style.transition = 'all 0.1s ease-out';
+        row.innerHTML = `
+          <div style="display: flex; align-items: center; gap: 8px; min-width: 0; flex: 1;">
+            ${getStatusIcon(item.status)}
+            <span style="font-family: monospace; font-size: 10.5px; color: var(--text-muted); flex-shrink: 0; font-variant-numeric: tabular-nums;">#${currentProject ? currentProject.key : 'LOC'}-${item.case_number}</span>
+            <span style="font-size: 12px; font-weight: ${isSelected ? '600' : '400'}; color: ${isSelected ? 'var(--text)' : 'var(--text-muted)'}; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1;">${escapeHtml(item.title)}</span>
+          </div>
+          ${item.duration_ms ? `<span style="font-size: 10px; font-family: monospace; color: var(--text-submuted); margin-left: 6px; flex-shrink: 0; font-variant-numeric: tabular-nums;">${item.duration_ms}ms</span>` : ''}
+        `;
+        row.onmouseenter = () => {
+          if (!isSelected) row.style.background = 'rgba(255, 255, 255, 0.03)';
+        };
+        row.onmouseleave = () => {
+          if (!isSelected) row.style.background = 'transparent';
+        };
+        row.onclick = () => {
+          activeItemIndex = idx;
+          renderExecutionView();
+        };
+        listEl.appendChild(row);
+      });
 
       // Render Active Detail
       const currentItem = activeRunItems[activeItemIndex];
@@ -1436,30 +2678,28 @@
         <div style="display: flex; flex-direction: column; gap: 20px;">
           <div>
             <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
-              <span class="case-id" style="font-size: 13px; font-weight: 700;">#${currentProject ? currentProject.key : 'LOC'}-${currentItem.case_number}</span>
-              <span class="pill pill-${currentItem.status}" style="text-transform: uppercase; font-size: 11px;">${currentItem.status}</span>
-              <span class="pill pill-priority-${currentItem.priority}" style="text-transform: uppercase; font-size: 11px;">${currentItem.priority}</span>
-              ${currentItem.duration_ms ? `<span class="badge-pill">${currentItem.duration_ms}ms</span>` : ''}
+              <span class="case-id" style="font-size: 11px; font-weight: 600; font-variant-numeric: tabular-nums;">#${currentProject ? currentProject.key : 'LOC'}-${currentItem.case_number}</span>
+              <span class="pill pill-${currentItem.status}" style="font-size: 10px;">${currentItem.status === 'pending' ? 'NOT RUN YET' : currentItem.status.toUpperCase()}</span>
+              <span class="pill pill-priority-${currentItem.priority}" style="font-size: 10px;">${currentItem.priority.toUpperCase()}</span>
+              ${currentItem.duration_ms ? `<span class="badge-pill" style="font-size: 10px; font-variant-numeric: tabular-nums;">${currentItem.duration_ms}ms</span>` : ''}
             </div>
-            <h2 style="font-size: 22px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.3;">${escapeHtml(currentItem.title)}</h2>
+            <h1 style="font-size: 18px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.35; color: var(--text);">${escapeHtml(currentItem.title)}</h1>
             ${fullCase.preconditions ? `
-              <div style="font-size: 12px; color: var(--text-muted); margin-top: 10px; background: rgba(255,255,255,0.03); padding: 10px 14px; border-radius: 6px; border: 1px solid var(--border);">
-                <strong style="color: var(--text);">Preconditions:</strong> ${escapeHtml(fullCase.preconditions)}
+              <div style="font-size: 12px; color: var(--text-muted); margin-top: 12px; background: var(--canvas); padding: 10px 14px; border-radius: 6px; border: 1px solid var(--border); border-left: 2px solid var(--border-accent); line-height: 1.45;">
+                <strong style="color: var(--text); font-weight: 600;">Preconditions:</strong> ${escapeHtml(fullCase.preconditions)}
               </div>
             ` : ''}
           </div>
 
           <div>
-            <div class="step-label" style="margin-bottom: 8px;">STEPS TO EXECUTE (${steps.length})</div>
-            <div style="display: flex; flex-direction: column; gap: 10px;">
+            <div style="font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-submuted); margin-bottom: 8px;">Steps to Execute (${steps.length})</div>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
               ${steps.map((s, i) => `
-                <div style="padding: 14px; border: 1px solid var(--border); border-radius: 6px; background: var(--canvas);">
-                  <div style="font-size: 13px; font-weight: 600; color: var(--text); display: flex; align-items: baseline; gap: 8px;">
-                    <span class="step-number-badge">${i + 1}</span>
-                    <span>${escapeHtml(s.action)}</span>
-                  </div>
-                  <div style="font-size: 12px; color: var(--text-muted); margin-top: 6px; margin-left: 28px;">
-                    <strong style="color: var(--text-submuted);">Expected:</strong> ${escapeHtml(s.expected)}
+                <div style="padding: 12px 14px; border: 1px solid var(--border); border-radius: 6px; background: var(--canvas); display: flex; gap: 12px; align-items: flex-start;">
+                  <span style="font-family: monospace; font-size: 10.5px; font-weight: 600; color: var(--text-submuted); background: var(--card); border: 1px solid var(--border); border-radius: 4px; padding: 2px 5px; flex-shrink: 0; margin-top: 1px; font-variant-numeric: tabular-nums;">0${i + 1}</span>
+                  <div style="flex: 1; min-width: 0;">
+                    <div style="font-size: 13px; font-weight: 500; color: var(--text); line-height: 1.4;">${escapeHtml(s.action)}</div>
+                    ${s.expected ? `<div style="font-size: 12px; color: var(--text-muted); margin-top: 4px; line-height: 1.4;"><span style="color: var(--text-submuted); font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em;">Expected:</span> ${escapeHtml(s.expected)}</div>` : ''}
                   </div>
                 </div>
               `).join('')}
@@ -1467,29 +2707,37 @@
           </div>
 
           <div>
-            <div class="step-label" style="margin-bottom: 6px;">DEFECT NOTES / EXECUTION DETAILS</div>
-            <textarea id="exec-notes" rows="3" style="width: 100%; resize: vertical;" placeholder="Add failure logs, reproduction steps, or triage comments...">${escapeHtml(currentItem.notes || '')}</textarea>
+            <div style="font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-submuted); margin-bottom: 6px;">Defect Notes / Execution Details</div>
+            <textarea id="exec-notes" rows="3" spellcheck="false" oninput="updateActiveNotes(this.value)" style="width: 100%; resize: vertical; background: var(--canvas); border: 1px solid var(--border); border-radius: 6px; padding: 10px 12px; font-size: 12.5px; color: var(--text); font-family: inherit; line-height: 1.45;" placeholder="Add reproduction steps, failure logs, or triage comments...">${escapeHtml(currentItem.notes || '')}</textarea>
           </div>
         </div>
 
-        <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); padding-top: 20px; margin-top: 28px;">
-          <button class="btn" onclick="openScreenshotModal()">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>
-            📸 Attach Screenshot (⌘V)
+        <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); padding-top: 16px; margin-top: 20px;">
+          <button class="btn" onclick="openScreenshotModal()" style="gap: 6px; font-size: 11px; color: var(--text-muted); padding: 0 10px; height: 30px;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect width="18" height="18" x="3" y="3" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+            Attach Screenshot <kbd style="margin-left: 4px; font-size: 9px; padding: 1px 4px;">⌘V</kbd>
           </button>
 
-          <div style="display: flex; gap: 10px;">
-            <button class="btn" style="background: var(--pass-bg); color: var(--pass); border-color: var(--pass-border); font-weight: 600; padding: 8px 16px;" onclick="triageActive('passed')">
-              <kbd style="background: rgba(16,185,129,0.2); color: var(--pass);">P</kbd> Pass
+          <div style="display: flex; gap: 8px;">
+            <button class="btn" style="height: 32px; background: ${currentItem.status === 'passed' ? 'var(--pass-bg)' : 'var(--card)'}; color: ${currentItem.status === 'passed' ? 'var(--pass)' : 'var(--text)'}; border: 1px solid ${currentItem.status === 'passed' ? 'var(--pass)' : 'var(--border)'}; font-weight: 500; padding: 0 13px; gap: 7px;" onclick="triageActive('passed')">
+              <span>✓ Pass</span>
+              <kbd style="background: rgba(16,185,129,0.12); border: 1px solid rgba(16,185,129,0.25); color: var(--pass); font-size: 10px; padding: 1px 5px;">P</kbd>
             </button>
-            <button class="btn" style="background: var(--fail-bg); color: var(--fail); border-color: var(--fail-border); font-weight: 600; padding: 8px 16px;" onclick="triageActive('failed')">
-              <kbd style="background: rgba(244,63,94,0.2); color: var(--fail);">F</kbd> Fail
+            <button class="btn" style="height: 32px; background: ${currentItem.status === 'failed' ? 'var(--fail-bg)' : 'var(--card)'}; color: ${currentItem.status === 'failed' ? 'var(--fail)' : 'var(--text)'}; border: 1px solid ${currentItem.status === 'failed' ? 'var(--fail)' : 'var(--border)'}; font-weight: 500; padding: 0 13px; gap: 7px;" onclick="triageActive('failed')">
+              <span>✕ Fail</span>
+              <kbd style="background: rgba(244,63,94,0.12); border: 1px solid rgba(244,63,94,0.25); color: var(--fail); font-size: 10px; padding: 1px 5px;">F</kbd>
             </button>
-            <button class="btn" style="background: var(--block-bg); color: var(--block); border-color: var(--block-border); font-weight: 600; padding: 8px 16px;" onclick="triageActive('blocked')">
-              <kbd style="background: rgba(245,158,11,0.2); color: var(--block);">B</kbd> Block
+            <button class="btn" style="height: 32px; background: ${currentItem.status === 'blocked' ? 'var(--block-bg)' : 'var(--card)'}; color: ${currentItem.status === 'blocked' ? 'var(--block)' : 'var(--text)'}; border: 1px solid ${currentItem.status === 'blocked' ? 'var(--block)' : 'var(--border)'}; font-weight: 500; padding: 0 13px; gap: 7px;" onclick="triageActive('blocked')">
+              <span>⊘ Block</span>
+              <kbd style="background: rgba(245,158,11,0.12); border: 1px solid rgba(245,158,11,0.25); color: var(--block); font-size: 10px; padding: 1px 5px;">B</kbd>
             </button>
-            <button class="btn" style="background: var(--skip-bg); color: var(--skip); border-color: var(--skip-border); font-weight: 600; padding: 8px 16px;" onclick="triageActive('skipped')">
-              <kbd style="background: rgba(148,163,184,0.2); color: var(--skip);">S</kbd> Skip
+            <button class="btn" style="height: 32px; background: ${currentItem.status === 'skipped' ? 'var(--skip-bg)' : 'var(--card)'}; color: ${currentItem.status === 'skipped' ? 'var(--skip)' : 'var(--text-muted)'}; border: 1px solid ${currentItem.status === 'skipped' ? 'var(--skip)' : 'var(--border)'}; font-weight: 500; padding: 0 13px; gap: 7px;" onclick="triageActive('skipped')">
+              <span>— Skip</span>
+              <kbd style="background: rgba(148,163,184,0.12); border: 1px solid rgba(148,163,184,0.25); color: var(--skip); font-size: 10px; padding: 1px 5px;">S</kbd>
+            </button>
+            <button class="btn" style="height: 32px; background: ${currentItem.status === 'pending' ? 'var(--pending-bg)' : 'var(--card)'}; color: ${currentItem.status === 'pending' ? 'var(--pending)' : 'var(--text-muted)'}; border: 1px solid ${currentItem.status === 'pending' ? 'var(--pending)' : 'var(--border)'}; font-weight: 500; padding: 0 13px; gap: 7px;" onclick="triageActive('pending')" title="Mark as Not Run Yet (U or N)">
+              <span>○ Not Run Yet</span>
+              <kbd style="background: rgba(148,163,184,0.12); border: 1px solid rgba(148,163,184,0.25); color: var(--pending); font-size: 10px; padding: 1px 5px;">U</kbd>
             </button>
           </div>
         </div>
@@ -1512,7 +2760,7 @@
 
       // Optimistic update
       renderExecutionView();
-      showToast(`Marked #${currentProject ? currentProject.key : 'LOC'}-${item.case_number} as ${status.toUpperCase()}`, status === 'failed' ? 'error' : status === 'passed' ? 'success' : 'warn');
+      showToast(`Marked #${currentProject ? currentProject.key : 'LOC'}-${item.case_number} as ${status === 'pending' ? 'NOT RUN YET' : status.toUpperCase()}`, status === 'failed' ? 'error' : status === 'passed' ? 'success' : 'warn');
 
       // Persist to local server
       try {
@@ -1539,22 +2787,395 @@
       }
     }
 
-    function toggleHud() {
+    let pipWindow = null;
+    let hudBroadcast = null;
+    try {
+      hudBroadcast = new BroadcastChannel('kobean_hud_sync');
+      hudBroadcast.onmessage = (event) => {
+        const data = event.data;
+        if (data?.type === 'STATUS_UPDATE' && data.itemId && data.status) {
+          const idx = activeRunItems.findIndex(i => i.id === data.itemId);
+          if (idx !== -1) {
+            activeItemIndex = idx;
+            triageActive(data.status, data.note);
+          }
+        } else if (data?.type === 'REQUEST_ITEMS') {
+          broadcastHudItems();
+        }
+      };
+    } catch (e) {}
+
+    function broadcastHudItems() {
+      if (!hudBroadcast) return;
+      const items = activeRunItems.map(item => {
+        const tc = cases.find(c => c.id === item.case_id) || {};
+        let steps = [];
+        try { steps = JSON.parse(tc.steps_json || '[]'); } catch(e) {}
+        return {
+          id: item.id,
+          caseId: item.case_id,
+          caseNumber: item.case_number,
+          title: item.case_title || tc.title,
+          status: item.status,
+          steps
+        };
+      });
+      hudBroadcast.postMessage({ type: 'SYNC_ITEMS', items, activeIndex: activeItemIndex });
+    }
+
+    async function toggleHud() {
+      // 1. If PiP window is active, clicking toggle closes it
+      if (pipWindow) {
+        pipWindow.close();
+        pipWindow = null;
+        updateHudBtnState(false);
+        return;
+      }
+
+      // 2. If Document Picture-in-Picture is supported, open true OS always-on-top window
+      if ('documentPictureInPicture' in window) {
+        try {
+          await openDocumentPipHud();
+          return;
+        } catch (err) {
+          console.warn('Document Picture-in-Picture failed, falling back to in-page HUD:', err);
+        }
+      }
+
+      // 3. Fallback: Toggle In-Page Draggable HUD Widget
+      toggleInPageHud();
+    }
+
+    function toggleInPageHud() {
       const hud = document.getElementById('hud-widget');
-      hud.style.display = hud.style.display === 'flex' ? 'none' : 'flex';
+      if (!hud) return;
+      const isVisible = hud.style.display === 'flex';
+      hud.style.display = isVisible ? 'none' : 'flex';
+      updateHudBtnState(!isVisible);
+      if (!isVisible) {
+        initHudDrag();
+        updateHud();
+      }
+    }
+
+    function closeInPageHud() {
+      const hud = document.getElementById('hud-widget');
+      if (hud) hud.style.display = 'none';
+      if (!pipWindow) updateHudBtnState(false);
+    }
+
+    function updateHudBtnState(active) {
+      const btn = document.getElementById('btn-float-hud');
+      if (!btn) return;
+      if (active) {
+        btn.classList.add('active');
+        btn.style.borderColor = 'var(--accent)';
+        btn.style.color = 'var(--accent)';
+        btn.style.background = 'rgba(59,130,246,0.12)';
+      } else {
+        btn.classList.remove('active');
+        btn.style.borderColor = '';
+        btn.style.color = '';
+        btn.style.background = '';
+      }
+    }
+
+    async function openDocumentPipHud() {
+      if (!('documentPictureInPicture' in window)) return;
+
+      pipWindow = await window.documentPictureInPicture.requestWindow({
+        width: 380,
+        height: 250,
+      });
+
+      // Hide in-page widget while OS PiP is active
+      const inPageHud = document.getElementById('hud-widget');
+      if (inPageHud) inPageHud.style.display = 'none';
+
+      // Copy document stylesheets & theme
+      document.querySelectorAll('link[rel="stylesheet"], style').forEach((node) => {
+        pipWindow.document.head.appendChild(node.cloneNode(true));
+      });
+      const theme = document.documentElement.getAttribute('data-theme') || 'obsidian';
+      pipWindow.document.documentElement.setAttribute('data-theme', theme);
+      pipWindow.document.body.style.margin = '0';
+      pipWindow.document.body.style.padding = '0';
+      pipWindow.document.body.style.background = 'var(--canvas)';
+      pipWindow.document.body.style.color = 'var(--text)';
+      pipWindow.document.body.style.overflow = 'hidden';
+
+      // Render PiP DOM
+      pipWindow.document.body.innerHTML = `
+        <div style="height: 100vh; display: flex; flex-direction: column; justify-content: space-between; padding: 12px; background: var(--canvas); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; box-sizing: border-box; overflow: hidden; user-select: none;">
+          <!-- Header -->
+          <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 8px;">
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <span class="dot-live"></span>
+              <span style="font-size: 11px; font-weight: 700; font-family: monospace; color: var(--accent);" id="pip-hud-id">#LOC-101</span>
+              <span style="font-size: 10px; color: var(--text-submuted);">HUD Runner</span>
+              <span style="font-size: 10px; color: var(--text-muted); font-family: monospace;" id="pip-hud-step-counter">Step 1/1</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <span style="font-size: 10px; color: var(--text-muted); font-family: monospace;" id="pip-hud-progress">1/1</span>
+              <button id="pip-hud-close" style="background: none; border: none; color: var(--text-muted); cursor: pointer; padding: 2px 6px; font-size: 12px; border-radius: 4px;" title="Close Floating HUD">✕</button>
+            </div>
+          </div>
+
+          <!-- Body -->
+          <div style="flex: 1; padding: 10px 0; overflow-y: auto;">
+            <div style="font-size: 13px; font-weight: 600; color: var(--text); line-height: 1.4;" id="pip-hud-title">Title</div>
+            <div style="font-size: 12px; color: var(--text); margin-top: 6px; background: var(--card); padding: 8px 10px; border-radius: 6px; border: 1px solid var(--border);" id="pip-hud-action">
+              Action: ...
+            </div>
+            <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 6px; background: var(--card); padding: 6px 10px; border-radius: 6px; border: 1px solid var(--border); border-left: 3px solid var(--accent); display: none;" id="pip-hud-expected">
+              Expected: ...
+            </div>
+            <div id="pip-hud-note-drawer" style="display: none; margin-top: 8px;">
+              <input id="pip-hud-note-input" type="text" placeholder="What failed? (Press Enter to fail)" style="width: 100%; box-sizing: border-box; font-size: 11.5px; padding: 6px 8px; border-radius: 5px; border: 1px solid var(--fail-border); background: var(--canvas); color: var(--text); outline: none;">
+            </div>
+          </div>
+
+          <!-- Footer Triage Buttons -->
+          <div style="display: flex; gap: 6px; border-top: 1px solid var(--border); padding-top: 8px;">
+            <button id="pip-btn-pass" style="flex: 1; height: 28px; font-size: 11px; font-weight: 600; background: var(--pass-bg); color: var(--pass); border: 1px solid var(--pass-border); border-radius: 6px; cursor: pointer;">P Pass</button>
+            <button id="pip-btn-fail" style="flex: 1; height: 28px; font-size: 11px; font-weight: 600; background: var(--fail-bg); color: var(--fail); border: 1px solid var(--fail-border); border-radius: 6px; cursor: pointer;">F Fail</button>
+            <button id="pip-btn-block" style="flex: 1; height: 28px; font-size: 11px; font-weight: 600; background: var(--block-bg); color: var(--block); border: 1px solid var(--block-border); border-radius: 6px; cursor: pointer;">B Block</button>
+            <button id="pip-btn-skip" style="flex: 1; height: 28px; font-size: 11px; font-weight: 600; background: var(--skip-bg); color: var(--skip); border: 1px solid var(--skip-border); border-radius: 6px; cursor: pointer;">S Skip</button>
+          </div>
+        </div>
+      `;
+
+      pipWindow.document.getElementById('pip-hud-close').onclick = () => {
+        pipWindow.close();
+        pipWindow = null;
+        updateHudBtnState(false);
+      };
+
+      pipWindow.document.getElementById('pip-btn-pass').onclick = () => {
+        triageActive('passed');
+      };
+      pipWindow.document.getElementById('pip-btn-fail').onclick = () => {
+        promptPipFail();
+      };
+      pipWindow.document.getElementById('pip-btn-block').onclick = () => {
+        triageActive('blocked');
+      };
+      pipWindow.document.getElementById('pip-btn-skip').onclick = () => {
+        triageActive('skipped');
+      };
+
+      const noteInput = pipWindow.document.getElementById('pip-hud-note-input');
+      if (noteInput) {
+        noteInput.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') {
+            const note = noteInput.value;
+            const item = activeRunItems[activeItemIndex];
+            if (item) item.notes = note;
+            triageActive('failed');
+            noteInput.value = '';
+            pipWindow.document.getElementById('pip-hud-note-drawer').style.display = 'none';
+          } else if (e.key === 'Escape') {
+            pipWindow.document.getElementById('pip-hud-note-drawer').style.display = 'none';
+          }
+        });
+      }
+
+      // Keyboard navigation in PiP window
+      pipWindow.addEventListener('keydown', (e) => {
+        const active = pipWindow.document.activeElement;
+        const inInput = active && active.tagName.toLowerCase() === 'input';
+        if (inInput) return;
+
+        const k = e.key.toLowerCase();
+        if (k === 'p') { e.preventDefault(); triageActive('passed'); }
+        else if (k === 'f') { e.preventDefault(); promptPipFail(); }
+        else if (k === 'b') { e.preventDefault(); triageActive('blocked'); }
+        else if (k === 's') { e.preventDefault(); triageActive('skipped'); }
+        else if (k === 'u' || k === 'n') { e.preventDefault(); triageActive('pending'); }
+        else if (k === 'j' || k === ']' || k === 'arrowright') {
+          e.preventDefault();
+          if (activeItemIndex < activeRunItems.length - 1) {
+            activeItemIndex++;
+            renderExecutionView();
+          }
+        } else if (k === 'k' || k === '[' || k === 'arrowleft') {
+          e.preventDefault();
+          if (activeItemIndex > 0) {
+            activeItemIndex--;
+            renderExecutionView();
+          }
+        }
+      });
+
+      // Clipboard screenshot paste inside PiP window
+      pipWindow.addEventListener('paste', async (e) => {
+        const clipItems = e.clipboardData?.items;
+        if (!clipItems) return;
+        for (let i = 0; i < clipItems.length; i++) {
+          if (clipItems[i].type.indexOf('image') !== -1) {
+            const item = activeRunItems[activeItemIndex];
+            if (item) {
+              showToast(`Attached screenshot to #${currentProject ? currentProject.key : 'LOC'}-${item.case_number}`, 'success');
+            }
+            break;
+          }
+        }
+      });
+
+      pipWindow.addEventListener('pagehide', () => {
+        pipWindow = null;
+        updateHudBtnState(false);
+      });
+      pipWindow.addEventListener('unload', () => {
+        pipWindow = null;
+        updateHudBtnState(false);
+      });
+
+      updateHudBtnState(true);
       updateHud();
+    }
+
+    function promptPipFail() {
+      if (!pipWindow) return;
+      const drawer = pipWindow.document.getElementById('pip-hud-note-drawer');
+      const input = pipWindow.document.getElementById('pip-hud-note-input');
+      if (drawer && input) {
+        drawer.style.display = drawer.style.display === 'block' ? 'none' : 'block';
+        if (drawer.style.display === 'block') input.focus();
+      }
+    }
+
+    function promptHudFail() {
+      const drawer = document.getElementById('hud-note-drawer');
+      const input = document.getElementById('hud-note-input');
+      if (drawer && input) {
+        drawer.style.display = drawer.style.display === 'block' ? 'none' : 'block';
+        if (drawer.style.display === 'block') input.focus();
+      }
+    }
+
+    function initHudDrag() {
+      const hud = document.getElementById('hud-widget');
+      const header = document.getElementById('hud-header');
+      if (!hud || !header || hud.dataset.dragInitialized) return;
+      hud.dataset.dragInitialized = 'true';
+
+      let isDragging = false;
+      let startX = 0, startY = 0, initialLeft = 0, initialTop = 0;
+
+      header.style.cursor = 'grab';
+
+      header.addEventListener('mousedown', (e) => {
+        if (e.target.closest('button')) return;
+        isDragging = true;
+        header.style.cursor = 'grabbing';
+        startX = e.clientX;
+        startY = e.clientY;
+
+        const rect = hud.getBoundingClientRect();
+        initialLeft = rect.left;
+        initialTop = rect.top;
+
+        hud.style.bottom = 'auto';
+        hud.style.right = 'auto';
+        hud.style.left = `${initialLeft}px`;
+        hud.style.top = `${initialTop}px`;
+        e.preventDefault();
+      });
+
+      window.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        const dx = e.clientX - startX;
+        const dy = e.clientY - startY;
+
+        let newLeft = initialLeft + dx;
+        let newTop = initialTop + dy;
+
+        const maxLeft = window.innerWidth - hud.offsetWidth - 8;
+        const maxTop = window.innerHeight - hud.offsetHeight - 8;
+        newLeft = Math.max(8, Math.min(newLeft, maxLeft));
+        newTop = Math.max(8, Math.min(newTop, maxTop));
+
+        hud.style.left = `${newLeft}px`;
+        hud.style.top = `${newTop}px`;
+      });
+
+      window.addEventListener('mouseup', () => {
+        if (isDragging) {
+          isDragging = false;
+          header.style.cursor = 'grab';
+        }
+      });
+
+      const noteInput = document.getElementById('hud-note-input');
+      if (noteInput && !noteInput.dataset.bound) {
+        noteInput.dataset.bound = 'true';
+        noteInput.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') {
+            const note = noteInput.value;
+            const item = activeRunItems[activeItemIndex];
+            if (item) item.notes = note;
+            triageActive('failed');
+            noteInput.value = '';
+            document.getElementById('hud-note-drawer').style.display = 'none';
+          } else if (e.key === 'Escape') {
+            document.getElementById('hud-note-drawer').style.display = 'none';
+          }
+        });
+      }
     }
 
     function updateHud() {
       const item = activeRunItems[activeItemIndex];
       if (!item) return;
-      const tc = cases.find(c => c.id === item.case_id) || { title: 'Test Case', case_number: 101 };
+      const tc = cases.find(c => c.id === item.case_id) || { title: item.case_title || 'Test Case', case_number: item.case_number || 101 };
       let steps = [];
       try { steps = JSON.parse(tc.steps_json || '[]'); } catch(e) {}
+      const step = steps[0] || null;
 
-      document.getElementById('hud-id').innerText = `#LOC-${tc.case_number}`;
-      document.getElementById('hud-title').innerText = tc.title;
-      document.getElementById('hud-action').innerText = steps[0] ? `Action: ${steps[0].action}` : 'Executing test case...';
+      const caseTag = `#${currentProject ? currentProject.key : 'LOC'}-${tc.case_number}`;
+      const titleText = tc.title;
+      const actionText = step ? `Action: ${step.action}` : 'Executing test case...';
+      const expectedText = step && step.expected ? `Expected: ${step.expected}` : '';
+      const progressText = `${activeItemIndex + 1}/${activeRunItems.length}`;
+      const stepCountText = steps.length > 0 ? `Step 1/${steps.length}` : 'Step 1/1';
+
+      // 1. Update In-Page HUD
+      const hudId = document.getElementById('hud-id');
+      if (hudId) hudId.innerText = caseTag;
+      const hudTitle = document.getElementById('hud-title');
+      if (hudTitle) hudTitle.innerText = titleText;
+      const hudAction = document.getElementById('hud-action');
+      if (hudAction) hudAction.innerText = actionText;
+      const hudExpected = document.getElementById('hud-expected');
+      if (hudExpected) {
+        hudExpected.innerText = expectedText;
+        hudExpected.style.display = expectedText ? 'block' : 'none';
+      }
+      const hudStepCounter = document.getElementById('hud-step-counter');
+      if (hudStepCounter) hudStepCounter.innerText = `${stepCountText} (${progressText})`;
+
+      // 2. Update Document PiP window if open
+      if (pipWindow && !pipWindow.closed) {
+        const pId = pipWindow.document.getElementById('pip-hud-id');
+        if (pId) pId.innerText = caseTag;
+        const pTitle = pipWindow.document.getElementById('pip-hud-title');
+        if (pTitle) pTitle.innerText = titleText;
+        const pAction = pipWindow.document.getElementById('pip-hud-action');
+        if (pAction) pAction.innerText = actionText;
+        const pExpected = pipWindow.document.getElementById('pip-hud-expected');
+        if (pExpected) {
+          pExpected.innerText = expectedText;
+          pExpected.style.display = expectedText ? 'block' : 'none';
+        }
+        const pProgress = pipWindow.document.getElementById('pip-hud-progress');
+        if (pProgress) pProgress.innerText = progressText;
+        const pStepCounter = pipWindow.document.getElementById('pip-hud-step-counter');
+        if (pStepCounter) pStepCounter.innerText = stepCountText;
+      }
+
+      // 3. Broadcast to any detached windows
+      broadcastHudItems();
     }
 
     // Search via FTS5
@@ -1574,6 +3195,23 @@
           renderCases(results);
         }
       }, 50);
+    }
+
+    // Grid Filter Dropdowns
+    function handleGridFilterChange() {
+      const priority = document.getElementById('grid-filter-priority')?.value || 'all';
+      const type = document.getElementById('grid-filter-type')?.value || 'all';
+      let list = cases;
+      if (selectedSuiteId) {
+        list = list.filter(c => c.suite_id === selectedSuiteId);
+      }
+      if (priority !== 'all') {
+        list = list.filter(c => c.priority === priority);
+      }
+      if (type !== 'all') {
+        list = list.filter(c => c.type === type);
+      }
+      renderCases(list);
     }
 
     // Modal Screenshot Annotator
@@ -1603,10 +3241,238 @@
       closeModal();
     }
 
+    // Integrations Modal Handlers
+    function openIntegrationsModal() {
+      const overlay = document.getElementById('integrations-modal-overlay');
+      if (overlay) overlay.style.display = 'flex';
+      updateIntegrationsDaemonStatus();
+    }
+
+    function closeIntegrationsModal() {
+      const overlay = document.getElementById('integrations-modal-overlay');
+      if (overlay) overlay.style.display = 'none';
+    }
+
+    function switchIntegrationsTab(tabId) {
+      const tabs = ['playwright', 'cypress', 'jest', 'pytest', 'cucumber', 'ci'];
+      tabs.forEach(t => {
+        const btn = document.getElementById(`int-tab-${t}`);
+        const pane = document.getElementById(`int-pane-${t}`);
+        if (btn) btn.className = t === tabId ? 'btn btn-primary' : 'btn';
+        if (pane) pane.style.display = t === tabId ? 'block' : 'none';
+      });
+    }
+
+    function copySnippet(elementId, btnElement) {
+      const el = document.getElementById(elementId);
+      if (!el) return;
+      const text = el.innerText || el.textContent || '';
+      navigator.clipboard.writeText(text);
+      if (btnElement) {
+        const orig = btnElement.innerText;
+        btnElement.innerText = 'Copied!';
+        setTimeout(() => { btnElement.innerText = orig; }, 1500);
+      }
+      showToast('Copied to clipboard!');
+    }
+
+    async function updateIntegrationsDaemonStatus() {
+      const badge = document.getElementById('integrations-daemon-status-text');
+      const prjKey = currentProject ? currentProject.key : 'LOC';
+      try {
+        const res = await fetch('/health');
+        if (res.ok) {
+          if (badge) badge.innerText = `127.0.0.1:${window.location.port || '4000'} Active [${prjKey}]`;
+        }
+      } catch {
+        if (badge) badge.innerText = 'Daemon Offline';
+      }
+    }
+
+    // Layout State & Sidebar Manager
+    let layoutState = {
+      showLeftSidebar: true,
+      showBottomPanel: false,
+      showRightSidebar: true,
+    };
+
+    function initLayoutState() {
+      try {
+        const stored = localStorage.getItem('kobean_layout_state');
+        if (stored) {
+          const parsed = JSON.parse(stored);
+          if (typeof parsed.showLeftSidebar === 'boolean') layoutState.showLeftSidebar = parsed.showLeftSidebar;
+          if (typeof parsed.showBottomPanel === 'boolean') layoutState.showBottomPanel = parsed.showBottomPanel;
+          if (typeof parsed.showRightSidebar === 'boolean') layoutState.showRightSidebar = parsed.showRightSidebar;
+        }
+      } catch (e) {
+        console.warn('Failed to load layout state:', e);
+      }
+      applyLayoutState();
+    }
+
+    function saveLayoutState() {
+      try {
+        localStorage.setItem('kobean_layout_state', JSON.stringify(layoutState));
+      } catch (e) {
+        // ignore
+      }
+    }
+
+    function applyLayoutState() {
+      const paneLeft = document.getElementById('pane-left');
+      const paneRight = document.getElementById('pane-right');
+      const paneBottom = document.getElementById('pane-bottom');
+
+      const btnLeft = document.getElementById('btn-toggle-left');
+      const btnBottom = document.getElementById('btn-toggle-bottom');
+      const btnRight = document.getElementById('btn-toggle-right');
+
+      const fillLeft = document.getElementById('svg-fill-left');
+      const fillBottom = document.getElementById('svg-fill-bottom');
+      const fillRight = document.getElementById('svg-fill-right');
+
+      const chkLeft = document.getElementById('chk-left');
+      const chkBottom = document.getElementById('chk-bottom');
+      const chkRight = document.getElementById('chk-right');
+
+      if (paneLeft) paneLeft.style.display = layoutState.showLeftSidebar ? 'flex' : 'none';
+      if (btnLeft) {
+        btnLeft.classList.toggle('active', layoutState.showLeftSidebar);
+        btnLeft.setAttribute('aria-pressed', layoutState.showLeftSidebar ? 'true' : 'false');
+      }
+      if (fillLeft) fillLeft.style.display = layoutState.showLeftSidebar ? 'block' : 'none';
+      if (chkLeft) chkLeft.style.opacity = layoutState.showLeftSidebar ? '1' : '0';
+
+      if (paneBottom) paneBottom.style.display = layoutState.showBottomPanel ? 'flex' : 'none';
+      if (btnBottom) {
+        btnBottom.classList.toggle('active', layoutState.showBottomPanel);
+        btnBottom.setAttribute('aria-pressed', layoutState.showBottomPanel ? 'true' : 'false');
+      }
+      if (fillBottom) fillBottom.style.display = layoutState.showBottomPanel ? 'block' : 'none';
+      if (chkBottom) chkBottom.style.opacity = layoutState.showBottomPanel ? '1' : '0';
+
+      if (paneRight) paneRight.style.display = layoutState.showRightSidebar ? 'flex' : 'none';
+      if (btnRight) {
+        btnRight.classList.toggle('active', layoutState.showRightSidebar);
+        btnRight.setAttribute('aria-pressed', layoutState.showRightSidebar ? 'true' : 'false');
+      }
+      if (fillRight) fillRight.style.display = layoutState.showRightSidebar ? 'block' : 'none';
+      if (chkRight) chkRight.style.opacity = layoutState.showRightSidebar ? '1' : '0';
+    }
+
+    function toggleLeftSidebar() {
+      layoutState.showLeftSidebar = !layoutState.showLeftSidebar;
+      applyLayoutState();
+      saveLayoutState();
+    }
+
+    function toggleBottomPanel() {
+      layoutState.showBottomPanel = !layoutState.showBottomPanel;
+      applyLayoutState();
+      saveLayoutState();
+    }
+
+    function toggleRightSidebar() {
+      layoutState.showRightSidebar = !layoutState.showRightSidebar;
+      applyLayoutState();
+      saveLayoutState();
+    }
+
+    function toggleLayoutMenu(e) {
+      if (e) e.stopPropagation();
+      const menu = document.getElementById('layout-menu-popover');
+      const btnMenu = document.getElementById('btn-layout-menu');
+      if (menu) {
+        const isHidden = menu.style.display === 'none' || !menu.style.display;
+        menu.style.display = isHidden ? 'block' : 'none';
+        if (btnMenu) btnMenu.classList.toggle('active', isHidden);
+      }
+    }
+
+    function closeLayoutMenu() {
+      const menu = document.getElementById('layout-menu-popover');
+      const btnMenu = document.getElementById('btn-layout-menu');
+      if (menu) menu.style.display = 'none';
+      if (btnMenu) btnMenu.classList.remove('active');
+    }
+
+    function applyLayoutPreset(preset) {
+      if (preset === 'default') {
+        layoutState.showLeftSidebar = true;
+        layoutState.showBottomPanel = false;
+        layoutState.showRightSidebar = true;
+      } else if (preset === 'zen') {
+        layoutState.showLeftSidebar = false;
+        layoutState.showBottomPanel = false;
+        layoutState.showRightSidebar = false;
+      } else if (preset === 'triage') {
+        layoutState.showLeftSidebar = true;
+        layoutState.showBottomPanel = true;
+        layoutState.showRightSidebar = true;
+      }
+      applyLayoutState();
+      saveLayoutState();
+      closeLayoutMenu();
+    }
+
+    function resetLayout() {
+      applyLayoutPreset('default');
+    }
+
+    function switchBottomTab(tabId) {
+      ['triage', 'connections', 'daemon', 'ingest'].forEach((t) => {
+        const btn = document.getElementById(`bottom-tab-${t}`);
+        const content = document.getElementById(`bottom-tab-content-${t}`);
+        if (btn) {
+          btn.style.color = t === tabId ? 'var(--text)' : 'var(--text-muted)';
+          btn.style.fontWeight = t === tabId ? '600' : '500';
+        }
+        if (content) {
+          content.style.display = t === tabId ? 'block' : 'none';
+        }
+      });
+    }
+
+    document.addEventListener('click', (e) => {
+      const group = document.getElementById('layout-toggle-group');
+      if (group && !group.contains(e.target)) {
+        closeLayoutMenu();
+      }
+    });
+
     // Global Keydown Listeners
     window.addEventListener('keydown', (e) => {
+      // Escape closes open modals or popovers
+      if (e.key === 'Escape') {
+        closeIntegrationsModal();
+        closeConnectionsModal();
+        closeModal();
+        closeLayoutMenu();
+        return;
+      }
+
+      const activeTag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
+      const hasMod = e.metaKey || e.ctrlKey;
+
+      if (hasMod && e.altKey && e.key.toLowerCase() === 'b') {
+        e.preventDefault();
+        toggleRightSidebar();
+        return;
+      }
+      if (hasMod && !e.altKey && !e.shiftKey && e.key.toLowerCase() === 'b' && activeTag !== 'input' && activeTag !== 'textarea') {
+        e.preventDefault();
+        toggleLeftSidebar();
+        return;
+      }
+      if (hasMod && !e.altKey && !e.shiftKey && e.key.toLowerCase() === 'j' && activeTag !== 'input' && activeTag !== 'textarea') {
+        e.preventDefault();
+        toggleBottomPanel();
+        return;
+      }
+
       // ⌘K for search focus
-      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+      if (hasMod && e.key.toLowerCase() === 'k') {
         e.preventDefault();
         const sInput = document.getElementById('search-input');
         if (sInput) sInput.focus();
@@ -1614,7 +3480,6 @@
       }
 
       // Suppress hotkeys inside input/textarea/select
-      const activeTag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
       if (activeTag === 'input' || activeTag === 'textarea' || activeTag === 'select') return;
 
       const key = e.key.toLowerCase();
@@ -1622,6 +3487,7 @@
       else if (key === 'f') triageActive('failed');
       else if (key === 'b') triageActive('blocked');
       else if (key === 's') triageActive('skipped');
+      else if (key === 'u' || key === 'n') triageActive('pending');
       else if (key === 'j') {
         if (activeItemIndex < activeRunItems.length - 1) {
           activeItemIndex++;
@@ -1714,10 +3580,15 @@
     function toggleNewSuiteInput(force) {
       const form = document.getElementById('new-suite-form');
       const input = document.getElementById('new-suite-title');
+      const repoSelect = document.getElementById('new-suite-repo');
       const show = force !== undefined ? force : form.style.display === 'none';
       form.style.display = show ? 'block' : 'none';
       if (show) {
         input.value = '';
+        if (repoSelect) {
+          repoSelect.innerHTML = '<option value="">No GitHub Repository Linked</option>' +
+            connections.map(c => `<option value="${c.id}">${escapeHtml(c.repo_name)} (${escapeHtml(c.name)})</option>`).join('');
+        }
         input.focus();
       }
     }
@@ -1734,12 +3605,16 @@
 
     async function submitNewSuite() {
       const input = document.getElementById('new-suite-title');
+      const repoSelect = document.getElementById('new-suite-repo');
       const title = input.value.trim();
       if (!title) {
         toggleNewSuiteInput(false);
         return;
       }
       if (!currentProject) return;
+
+      const connId = repoSelect ? repoSelect.value : '';
+      const matchedConn = connections.find(c => c.id === connId);
 
       try {
         const res = await fetch(`/api/v1/projects/${currentProject.id}/suites`, {
@@ -1748,7 +3623,12 @@
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ title, description: 'Created via console' })
+          body: JSON.stringify({
+            title,
+            description: 'Created via console',
+            repo_connection_id: matchedConn ? matchedConn.id : undefined,
+            github_repo: matchedConn ? matchedConn.repo_name : undefined
+          })
         });
         if (res.ok) {
           const created = await res.json();
@@ -1830,14 +3710,37 @@
     }
 
     async function startNewRun() {
-      if (!currentProject) return;
-      if (cases.length === 0) {
-        showToast('No test cases available. Load or create test cases first.', 'warn');
+      if (!currentProject) {
+        try {
+          const pRes = await fetch('/api/v1/projects', {
+            headers: { 'Authorization': `Bearer ${token}` }
+          });
+          if (pRes.ok) {
+            const pList = await pRes.json();
+            if (pList.length > 0) {
+              currentProject = pList[0];
+              document.getElementById('project-label').innerText = currentProject.name;
+              document.getElementById('project-key-badge').innerText = currentProject.key;
+              await refreshData();
+            }
+          }
+        } catch (e) {
+          console.warn('Could not re-fetch project:', e);
+        }
+      }
+
+      if (!currentProject) {
+        showToast('No active project found. Load or create a project first.', 'warn');
         return;
+      }
+
+      if (cases.length === 0) {
+        await loadCases();
       }
 
       try {
         const title = `Regression Run — ${new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}`;
+        const caseIds = cases.map(c => c.id);
         const res = await fetch(`/api/v1/projects/${currentProject.id}/runs`, {
           method: 'POST',
           headers: {
@@ -1848,7 +3751,7 @@
             title,
             environment: 'Localhost',
             source: 'manual',
-            case_ids: cases.map(c => c.id)
+            case_ids: caseIds
           })
         });
 
@@ -1858,10 +3761,13 @@
           setMode('execution');
           showToast(`Started new test run: ${title}`, 'success');
         } else {
+          const errData = await res.json().catch(() => ({}));
+          showToast(errData.error || `Failed to create run (HTTP ${res.status})`, 'error');
           setMode('execution');
         }
       } catch (err) {
         console.error('Failed to create run:', err);
+        showToast('Network error creating test run', 'error');
         setMode('execution');
       }
     }

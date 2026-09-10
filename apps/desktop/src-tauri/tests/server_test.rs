@@ -322,4 +322,47 @@ fn test_http_server_endpoints_and_security() {
     );
     assert_eq!(status, 200);
     assert_eq!(triage_res["status"], "passed");
+
+    // 14. GitHub Account Authentication API -> GET, POST, DELETE
+    let (status, gh_init) = run_request(
+        Arc::clone(&db),
+        secret_token,
+        "GET",
+        "/api/v1/github/account",
+        "",
+        Some(secret_token),
+        None,
+    );
+    assert_eq!(status, 200);
+    assert_eq!(gh_init, Value::Null);
+
+    let (status, gh_saved) = run_request(
+        Arc::clone(&db),
+        secret_token,
+        "POST",
+        "/api/v1/github/account",
+        "",
+        Some(secret_token),
+        Some(&json!({
+            "login": "octocat",
+            "name": "The Octocat",
+            "avatar_url": "https://avatars.githubusercontent.com/u/583231",
+            "token": "ghp_securetoken1234567890"
+        })),
+    );
+    assert_eq!(status, 200);
+    assert_eq!(gh_saved["login"], "octocat");
+    assert_eq!(gh_saved["token_masked"], "ghp_se...7890");
+
+    let (status, gh_del) = run_request(
+        Arc::clone(&db),
+        secret_token,
+        "DELETE",
+        "/api/v1/github/account",
+        "",
+        Some(secret_token),
+        None,
+    );
+    assert_eq!(status, 200);
+    assert_eq!(gh_del["deleted"], true);
 }

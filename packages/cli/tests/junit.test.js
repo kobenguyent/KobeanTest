@@ -29,6 +29,7 @@ Error: Expected 401, received 500
   assert.equal(results[0]?.automation_id, 'auth.spec.ts#valid login creates JWT');
   assert.equal(results[0]?.status, 'passed');
   assert.equal(results[0]?.duration_ms, 320);
+  assert.deepEqual(results[0]?.suite_path, ['AuthSuite']);
 
   // Case 2: Failed
   assert.equal(results[1]?.title, 'invalid password returns 401');

@@ -1,16 +1,20 @@
 use crate::db::{
-    add_attachment, create_case, create_project, create_run, create_suite, create_workspace,
-    get_run, get_run_items, ingest_batch, list_attachments, list_cases, list_projects,
-    list_runs, list_suites, list_workspaces, record_execution, search_cases, seed_starter_data,
-    AddAttachmentInput, CreateCaseInput, CreateRunInput, IngestBatchInput, ListCasesFilter,
-    RecordExecutionInput,
+    add_attachment, create_case, create_connection, create_project, create_run,
+    create_suite_full, create_workspace, delete_case, delete_connection, delete_github_account,
+    delete_suite, get_case, get_case_revisions, get_connection, get_github_account, get_project,
+    get_run, get_run_items, get_suite, ingest_batch, list_attachments, list_cases,
+    list_connections, list_projects, list_runs, list_suites, list_workspaces, record_execution,
+    save_github_account, search_cases, seed_starter_data, update_case, update_connection,
+    update_suite_full, AddAttachmentInput, CreateCaseInput, CreateRunInput, CreateSuiteInput,
+    IngestBatchInput, ListCasesFilter, RecordExecutionInput, UpdateCaseInput, UpdateSuiteInput,
 };
+use crate::models::Project;
 use crate::error::AppError;
 use crate::media::{
     get_media_dir, read_media_file, save_media_file, SaveMediaInput, DEFAULT_MAX_QUOTA_BYTES,
 };
 use crate::session::{get_kobean_dir, validate_token};
-use rusqlite::Connection;
+use rusqlite::{Connection, OptionalExtension};
 use serde_json::{json, Value};
 use std::io::{Read, Write};
 use std::net::{TcpListener, TcpStream};
@@ -42,6 +46,54 @@ impl HttpRequest {
         }
         None
     }
+}
+
+pub fn is_loopback_host(host: &str) -> bool {
+    let host_trim = host.trim();
+    let hostname = if let Some(stripped) = host_trim.strip_prefix('[') {
+        if let Some((ipv6, _)) = stripped.split_once(']') {
+            ipv6
+        } else {
+            host_trim
+        }
+    } else if let Some((h, _)) = host_trim.split_once(':') {
+        h
+    } else {
+        host_trim
+    };
+
+    hostname.eq_ignore_ascii_case("127.0.0.1")
+        || hostname.eq_ignore_ascii_case("localhost")
+        || hostname == "::1"
+        || hostname.eq_ignore_ascii_case("tauri.localhost")
+}
+
+pub fn is_allowed_origin(origin: &str) -> bool {
+    let origin_lower = origin.trim().to_lowercase();
+    origin_lower.starts_with("http://127.0.0.1:")
+        || origin_lower == "http://127.0.0.1"
+        || origin_lower.starts_with("http://localhost:")
+        || origin_lower == "http://localhost"
+        || origin_lower == "tauri://localhost"
+        || origin_lower.starts_with("https://tauri.localhost")
+        || origin_lower.starts_with("http://tauri.localhost")
+}
+
+fn cors_headers_for_req(req: Option<&HttpRequest>) -> String {
+    if let Some(req) = req {
+        if let Some(origin) = req.get_header("origin") {
+            if is_allowed_origin(origin) {
+                return format!(
+                    "Access-Control-Allow-Origin: {}\r\n\
+                     Vary: Origin\r\n\
+                     Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS\r\n\
+                     Access-Control-Allow-Headers: Authorization, Content-Type, X-Workspace-Id, X-Project-Id\r\n",
+                    origin
+                );
+            }
+        }
+    }
+    String::new()
 }
 
 impl HttpServer {
@@ -119,12 +171,12 @@ fn handle_client(
 
             let request_line = match lines.next() {
                 Some(line) => line,
-                None => return send_response(&mut stream, 400, "Bad Request", json!({"error": "Empty request"})),
+                None => return send_response(&mut stream, 400, "Bad Request", json!({"error": "Empty request"}), None),
             };
 
             let parts: Vec<&str> = request_line.split_whitespace().collect();
             if parts.len() < 2 {
-                return send_response(&mut stream, 400, "Bad Request", json!({"error": "Invalid request line"}));
+                return send_response(&mut stream, 400, "Bad Request", json!({"error": "Invalid request line"}), None);
             }
 
             let method = parts[0].to_string();
@@ -180,13 +232,25 @@ pub fn dispatch_request<W: Write>(
     expected_token: &str,
     db: Arc<Mutex<Connection>>,
 ) -> Result<(), AppError> {
-
-    // 1. Handle CORS Preflight
-    if req.method == "OPTIONS" {
-        return send_cors_options(stream);
+    // 1. Validate Host header to prevent DNS rebinding attacks
+    if let Some(host) = req.get_header("host") {
+        if !is_loopback_host(host) {
+            return send_response(
+                stream,
+                400,
+                "Bad Request",
+                json!({"error": "Invalid Host header: loopback hostname required"}),
+                Some(&req),
+            );
+        }
     }
 
-    // 2. Health check requires NO auth
+    // 2. Handle CORS Preflight
+    if req.method == "OPTIONS" {
+        return send_cors_options(stream, &req);
+    }
+
+    // 3. Health check requires NO auth
     if req.path == "/health" && req.method == "GET" {
         return send_response(
             stream,
@@ -197,26 +261,45 @@ pub fn dispatch_request<W: Write>(
                 "version": "0.1.0",
                 "service": "kobeantest-localhost-daemon"
             }),
+            Some(&req),
         );
     }
 
     // Root web UI
     if (req.path == "/" || req.path == "/index.html") && req.method == "GET" {
-        let html = include_str!("../static/index.html");
-        return send_raw_response(stream, 200, "OK", "text/html; charset=utf-8", html.as_bytes());
+        let dynamic_html = std::fs::read_to_string("apps/desktop/src-tauri/static/index.html")
+            .or_else(|_| std::fs::read_to_string("static/index.html"))
+            .or_else(|_| std::fs::read_to_string("src-tauri/static/index.html"));
+        let html = match &dynamic_html {
+            Ok(content) => content.as_str(),
+            Err(_) => include_str!("../static/index.html"),
+        };
+        return send_raw_response(stream, 200, "OK", "text/html; charset=utf-8", html.as_bytes(), Some(&req));
     }
 
-    // Session discovery for local web UI
+    // Session discovery for local web UI (guarded against unauthorized external origins)
     if req.path == "/session" && req.method == "GET" {
+        if let Some(origin) = req.get_header("origin") {
+            if !is_allowed_origin(origin) {
+                return send_response(
+                    stream,
+                    403,
+                    "Forbidden",
+                    json!({"error": "Cross-origin session access forbidden"}),
+                    Some(&req),
+                );
+            }
+        }
         return send_response(
             stream,
             200,
             "OK",
             json!({ "token": expected_token, "status": "ok" }),
+            Some(&req),
         );
     }
 
-    // 3. Authenticate Bearer Token for /api/v1/*
+    // 4. Authenticate Bearer Token for /api/v1/*
     if req.path.starts_with("/api/v1") {
         let auth_header = req.get_header("Authorization").unwrap_or("");
         let mut token = if let Some(stripped) = auth_header.strip_prefix("Bearer ") {
@@ -238,14 +321,15 @@ pub fn dispatch_request<W: Write>(
                 401,
                 "Unauthorized",
                 json!({"error": "Unauthorized: valid loopback bearer token required"}),
+                Some(&req),
             );
         }
     }
 
-    // 4. Dispatch routes
+    // 5. Dispatch database routes
     let mut conn = match db.lock() {
         Ok(guard) => guard,
-        Err(_) => return send_response(stream, 500, "Internal Server Error", json!({"error": "Database lock poisoned"})),
+        Err(_) => return send_response(stream, 500, "Internal Server Error", json!({"error": "Database lock poisoned"}), Some(&req)),
     };
 
     if req.path == "/api/v1/seed" && req.method == "POST" {
@@ -253,19 +337,19 @@ pub fn dispatch_request<W: Write>(
         return send_response(stream, 200, "OK", json!({
             "status": "ok",
             "message": "Starter data seeded successfully"
-        }));
+        }), Some(&req));
     }
 
     if req.path == "/api/v1/workspaces" {
         if req.method == "GET" {
             let list = list_workspaces(&conn)?;
-            return send_response(stream, 200, "OK", json!(list));
+            return send_response(stream, 200, "OK", json!(list), Some(&req));
         } else if req.method == "POST" {
             let body: Value = serde_json::from_slice(&req.body)?;
             let name = body["name"].as_str().unwrap_or("Default Workspace");
             let slug = body["slug"].as_str().unwrap_or("default");
             let ws = create_workspace(&conn, name, slug)?;
-            return send_response(stream, 201, "Created", json!(ws));
+            return send_response(stream, 201, "Created", json!(ws), Some(&req));
         }
     }
 
@@ -279,68 +363,204 @@ pub fn dispatch_request<W: Write>(
             let _ = seed_starter_data(&mut conn);
             list = list_projects(&conn, ws_id)?;
         }
-        return send_response(stream, 200, "OK", json!(list));
+        return send_response(stream, 200, "OK", json!(list), Some(&req));
     }
 
     if req.path == "/api/v1/projects" {
         if req.method == "GET" {
-            let ws_id = req.get_header("X-Workspace-Id").unwrap_or("ws-default");
-            let mut list = list_projects(&conn, ws_id)?;
+            let ws_id = if let Some(header_ws) = req.get_header("X-Workspace-Id") {
+                Some(header_ws.to_string())
+            } else {
+                conn.query_row(
+                    "SELECT id FROM workspaces ORDER BY created_at ASC LIMIT 1",
+                    [],
+                    |r| r.get(0),
+                )
+                .optional()?
+            };
+
+            let mut list = if let Some(ref wid) = ws_id {
+                list_projects(&conn, wid)?
+            } else {
+                Vec::new()
+            };
+
+            // If empty, return all projects from database or seed default
             if list.is_empty() {
-                let _ = seed_starter_data(&mut conn);
-                list = list_projects(&conn, ws_id)?;
+                let all_projects: Vec<Project> = {
+                    let mut stmt = conn.prepare(
+                        "SELECT id, workspace_id, name, key, description, created_at, updated_at
+                         FROM projects ORDER BY created_at ASC",
+                    )?;
+                    let rows = stmt.query_map([], |row| {
+                        Ok(Project {
+                            id: row.get(0)?,
+                            workspace_id: row.get(1)?,
+                            name: row.get(2)?,
+                            key: row.get(3)?,
+                            description: row.get(4)?,
+                            created_at: row.get(5)?,
+                            updated_at: row.get(6)?,
+                        })
+                    })?;
+                    rows.filter_map(Result::ok).collect()
+                };
+
+                if !all_projects.is_empty() {
+                    list = all_projects;
+                } else {
+                    let _ = seed_starter_data(&mut conn);
+                    let mut stmt = conn.prepare(
+                        "SELECT id, workspace_id, name, key, description, created_at, updated_at
+                         FROM projects ORDER BY created_at ASC",
+                    )?;
+                    let rows = stmt.query_map([], |row| {
+                        Ok(Project {
+                            id: row.get(0)?,
+                            workspace_id: row.get(1)?,
+                            name: row.get(2)?,
+                            key: row.get(3)?,
+                            description: row.get(4)?,
+                            created_at: row.get(5)?,
+                            updated_at: row.get(6)?,
+                        })
+                    })?;
+                    list = rows.filter_map(Result::ok).collect();
+                }
             }
-            return send_response(stream, 200, "OK", json!(list));
+            return send_response(stream, 200, "OK", json!(list), Some(&req));
         } else if req.method == "POST" {
             let body: Value = serde_json::from_slice(&req.body)?;
-            let ws_id = body["workspace_id"].as_str().unwrap_or("ws-default");
+            let ws_id = if let Some(wid) = body["workspace_id"].as_str() {
+                wid.to_string()
+            } else {
+                conn.query_row(
+                    "SELECT id FROM workspaces ORDER BY created_at ASC LIMIT 1",
+                    [],
+                    |r| r.get(0),
+                )
+                .optional()?
+                .unwrap_or_else(|| "ws-default".to_string())
+            };
             let name = body["name"].as_str().unwrap_or("Untitled Project");
             let key = body["key"].as_str().unwrap_or("PRJ");
             let desc = body["description"].as_str();
-            let proj = create_project(&conn, ws_id, name, key, desc)?;
-            return send_response(stream, 201, "Created", json!(proj));
+            let proj = create_project(&conn, &ws_id, name, key, desc)?;
+            return send_response(stream, 201, "Created", json!(proj), Some(&req));
         }
     }
 
-    // Dynamic routes: /api/v1/projects/:project_id/suites
+    // Dynamic routes: /api/v1/projects/:project_id/*
     if req.path.starts_with("/api/v1/projects/") {
         let remainder = &req.path["/api/v1/projects/".len()..];
         let segments: Vec<&str> = remainder.split('/').collect();
+
+        if segments.len() == 1 && !segments[0].is_empty() {
+            let project_id = segments[0];
+            if req.method == "GET" {
+                match get_project(&conn, project_id) {
+                    Ok(p) => return send_response(stream, 200, "OK", json!(p), Some(&req)),
+                    Err(AppError::NotFound(msg)) => {
+                        return send_response(stream, 404, "Not Found", json!({"error": msg}), Some(&req))
+                    }
+                    Err(e) => return Err(e),
+                }
+            }
+        }
 
         if segments.len() >= 2 {
             let project_id = segments[0];
             let resource = segments[1];
 
+            if resource == "connections" {
+                if req.method == "GET" {
+                    let conns = list_connections(&conn, project_id)?;
+                    return send_response(stream, 200, "OK", json!(conns), Some(&req));
+                } else if req.method == "POST" {
+                    let body: Value = serde_json::from_slice(&req.body)?;
+                    let name = body["name"].as_str().unwrap_or("GitHub Repository");
+                    let repo_name = body["repo_name"].as_str().unwrap_or("");
+                    let repo_url = body["repo_url"].as_str().unwrap_or("");
+                    let default_branch = body["default_branch"].as_str();
+                    let connection = create_connection(&conn, project_id, name, repo_name, repo_url, default_branch)?;
+                    return send_response(stream, 201, "Created", json!(connection), Some(&req));
+                }
+            }
+
             if resource == "suites" {
                 if req.method == "GET" {
                     let suites = list_suites(&conn, project_id)?;
-                    return send_response(stream, 200, "OK", json!(suites));
+                    return send_response(stream, 200, "OK", json!(suites), Some(&req));
                 } else if req.method == "POST" {
                     let body: Value = serde_json::from_slice(&req.body)?;
                     let title = body["title"].as_str().unwrap_or("New Suite");
                     let parent_id = body["parent_id"].as_str();
                     let desc = body["description"].as_str();
                     let pos = body["position"].as_i64();
-                    let suite = create_suite(&conn, project_id, parent_id, title, desc, pos)?;
-                    return send_response(stream, 201, "Created", json!(suite));
+                    let repo_conn_id = body["repo_connection_id"].as_str();
+                    let github_repo = body["github_repo"].as_str();
+                    let file_path = body["file_path"].as_str();
+                    let suite = create_suite_full(
+                        &conn,
+                        CreateSuiteInput {
+                            project_id: project_id.to_string(),
+                            parent_id: parent_id.map(String::from),
+                            title: title.to_string(),
+                            description: desc.map(String::from),
+                            position: pos,
+                            repo_connection_id: repo_conn_id.map(String::from),
+                            github_repo: github_repo.map(String::from),
+                            file_path: file_path.map(String::from),
+                        },
+                    )?;
+                    return send_response(stream, 201, "Created", json!(suite), Some(&req));
                 }
             }
 
             if resource == "cases" {
                 if req.method == "GET" {
+                    let mut suite_id: Option<String> = None;
+                    let mut priority: Option<String> = None;
+                    let mut type_: Option<String> = None;
+                    let mut is_archived: Option<bool> = Some(false);
+                    let mut limit: Option<i64> = Some(100);
+                    let mut offset: Option<i64> = None;
+
+                    for param in req.query.split('&') {
+                        if let Some((k, v)) = param.split_once('=') {
+                            match k {
+                                "suite_id" if !v.is_empty() => suite_id = Some(v.to_string()),
+                                "priority" if !v.is_empty() => priority = Some(v.to_string()),
+                                "type" if !v.is_empty() => type_ = Some(v.to_string()),
+                                "is_archived" => is_archived = Some(v == "true" || v == "1"),
+                                "limit" => {
+                                    if let Ok(val) = v.parse::<i64>() {
+                                        limit = Some(val);
+                                    }
+                                }
+                                "offset" => {
+                                    if let Ok(val) = v.parse::<i64>() {
+                                        offset = Some(val);
+                                    }
+                                }
+                                _ => {}
+                            }
+                        }
+                    }
+
                     let cases = list_cases(
                         &conn,
                         ListCasesFilter {
                             project_id: project_id.to_string(),
-                            suite_id: None,
-                            priority: None,
-                            type_: None,
-                            is_archived: Some(false),
-                            limit: Some(100),
-                            offset: None,
+                            suite_id,
+                            priority,
+                            type_,
+                            is_archived,
+                            limit,
+                            offset,
                         },
                     )?;
-                    return send_response(stream, 200, "OK", json!(cases));
+                    return send_response(stream, 200, "OK", json!(cases), Some(&req));
                 } else if req.method == "POST" {
                     let body: Value = serde_json::from_slice(&req.body)?;
                     let title = body["title"].as_str().unwrap_or("New Case");
@@ -364,7 +584,7 @@ pub fn dispatch_request<W: Write>(
                             tags_json: None,
                         },
                     )?;
-                    return send_response(stream, 201, "Created", json!(case));
+                    return send_response(stream, 201, "Created", json!(case), Some(&req));
                 }
             }
 
@@ -375,26 +595,210 @@ pub fn dispatch_request<W: Write>(
                     ""
                 };
                 let hits = search_cases(&conn, query, 50)?;
-                return send_response(stream, 200, "OK", json!(hits));
+                return send_response(stream, 200, "OK", json!(hits), Some(&req));
             }
 
             if resource == "ci" && segments.len() >= 3 && segments[2] == "ingest" && req.method == "POST" {
                 let mut input: IngestBatchInput = serde_json::from_slice(&req.body)?;
                 input.project_id = project_id.to_string();
                 let resp = ingest_batch(&mut conn, input)?;
-                return send_response(stream, 200, "OK", json!(resp));
+                return send_response(stream, 200, "OK", json!(resp), Some(&req));
             }
 
             if resource == "runs" {
                 if req.method == "GET" {
                     let runs = list_runs(&conn, project_id)?;
-                    return send_response(stream, 200, "OK", json!(runs));
+                    return send_response(stream, 200, "OK", json!(runs), Some(&req));
                 } else if req.method == "POST" {
                     let mut input: CreateRunInput = serde_json::from_slice(&req.body)?;
                     input.project_id = project_id.to_string();
                     let run = create_run(&mut conn, input)?;
-                    return send_response(stream, 201, "Created", json!(run));
+                    return send_response(stream, 201, "Created", json!(run), Some(&req));
                 }
+            }
+        }
+    }
+
+    // Direct Runs collection endpoint
+    if req.path == "/api/v1/runs" {
+        if req.method == "GET" {
+            let runs = if let Some(header_prj) = req.get_header("X-Project-Id") {
+                list_runs(&conn, header_prj)?
+            } else {
+                let first_prj_id: Option<String> = conn
+                    .query_row("SELECT id FROM projects ORDER BY created_at ASC LIMIT 1", [], |r| r.get(0))
+                    .optional()?;
+                if let Some(pid) = first_prj_id {
+                    list_runs(&conn, &pid)?
+                } else {
+                    Vec::new()
+                }
+            };
+            return send_response(stream, 200, "OK", json!(runs), Some(&req));
+        } else if req.method == "POST" {
+            let mut input: CreateRunInput = serde_json::from_slice(&req.body)?;
+            if input.project_id.trim().is_empty() {
+                if let Some(header_prj) = req.get_header("X-Project-Id") {
+                    input.project_id = header_prj.to_string();
+                } else {
+                    let first_prj_id: Option<String> = conn
+                        .query_row("SELECT id FROM projects ORDER BY created_at ASC LIMIT 1", [], |r| r.get(0))
+                        .optional()?;
+                    input.project_id = first_prj_id.unwrap_or_else(|| "proj-default".to_string());
+                }
+            }
+            let run = create_run(&mut conn, input)?;
+            return send_response(stream, 201, "Created", json!(run), Some(&req));
+        }
+    }
+
+    // Direct CI Ingestion endpoint
+    if req.path == "/api/v1/ci/ingest" && req.method == "POST" {
+        let mut input: IngestBatchInput = serde_json::from_slice(&req.body)?;
+        if input.project_id.trim().is_empty() {
+            if let Some(header_prj) = req.get_header("X-Project-Id") {
+                input.project_id = header_prj.to_string();
+            } else {
+                let first_prj_id: Option<String> = conn
+                    .query_row("SELECT id FROM projects ORDER BY created_at ASC LIMIT 1", [], |r| r.get(0))
+                    .optional()?;
+                input.project_id = first_prj_id.unwrap_or_else(|| "proj-default".to_string());
+            }
+        }
+        let resp = ingest_batch(&mut conn, input)?;
+        return send_response(stream, 200, "OK", json!(resp), Some(&req));
+    }
+
+    // Standalone Test Case lifecycle routes: /api/v1/cases/:id and /api/v1/cases/:id/revisions
+    if req.path.starts_with("/api/v1/cases/") {
+        let remainder = &req.path["/api/v1/cases/".len()..];
+        if remainder.ends_with("/revisions") && req.method == "GET" {
+            let case_id = remainder.strip_suffix("/revisions").unwrap_or(remainder);
+            let revs = get_case_revisions(&conn, case_id)?;
+            return send_response(stream, 200, "OK", json!(revs), Some(&req));
+        }
+
+        let case_id = remainder;
+        if req.method == "GET" {
+            match get_case(&conn, case_id) {
+                Ok(case) => return send_response(stream, 200, "OK", json!(case), Some(&req)),
+                Err(AppError::NotFound(msg)) => return send_response(stream, 404, "Not Found", json!({"error": msg}), Some(&req)),
+                Err(e) => return Err(e),
+            }
+        } else if req.method == "PUT" {
+            let input: UpdateCaseInput = serde_json::from_slice(&req.body)?;
+            match update_case(&conn, case_id, input) {
+                Ok(case) => return send_response(stream, 200, "OK", json!(case), Some(&req)),
+                Err(AppError::NotFound(msg)) => return send_response(stream, 404, "Not Found", json!({"error": msg}), Some(&req)),
+                Err(e) => return Err(e),
+            }
+        } else if req.method == "DELETE" {
+            match delete_case(&conn, case_id) {
+                Ok(()) => return send_response(stream, 200, "OK", json!({"status": "ok", "deleted": true}), Some(&req)),
+                Err(AppError::NotFound(msg)) => return send_response(stream, 404, "Not Found", json!({"error": msg}), Some(&req)),
+                Err(e) => return Err(e),
+            }
+        }
+    }
+
+    // Standalone Connection lifecycle routes: /api/v1/connections/:id
+    if req.path.starts_with("/api/v1/connections/") {
+        let conn_id = &req.path["/api/v1/connections/".len()..];
+        if req.method == "GET" {
+            match get_connection(&conn, conn_id) {
+                Ok(c) => return send_response(stream, 200, "OK", json!(c), Some(&req)),
+                Err(AppError::NotFound(msg)) => return send_response(stream, 404, "Not Found", json!({"error": msg}), Some(&req)),
+                Err(e) => return Err(e),
+            }
+        } else if req.method == "PUT" {
+            let body: Value = serde_json::from_slice(&req.body)?;
+            let name = body["name"].as_str().unwrap_or("GitHub Repository");
+            let repo_name = body["repo_name"].as_str().unwrap_or("");
+            let repo_url = body["repo_url"].as_str().unwrap_or("");
+            let default_branch = body["default_branch"].as_str();
+            match update_connection(&conn, conn_id, name, repo_name, repo_url, default_branch) {
+                Ok(c) => return send_response(stream, 200, "OK", json!(c), Some(&req)),
+                Err(AppError::NotFound(msg)) => return send_response(stream, 404, "Not Found", json!({"error": msg}), Some(&req)),
+                Err(e) => return Err(e),
+            }
+        } else if req.method == "DELETE" {
+            match delete_connection(&conn, conn_id) {
+                Ok(()) => return send_response(stream, 200, "OK", json!({"status": "ok", "deleted": true}), Some(&req)),
+                Err(AppError::NotFound(msg)) => return send_response(stream, 404, "Not Found", json!({"error": msg}), Some(&req)),
+                Err(e) => return Err(e),
+            }
+        }
+    }
+
+    // GitHub Account Authentication routes: /api/v1/github/account
+    if req.path == "/api/v1/github/account" {
+        if req.method == "GET" {
+            match get_github_account(&conn) {
+                Ok(account) => return send_response(stream, 200, "OK", json!(account), Some(&req)),
+                Err(e) => return Err(e),
+            }
+        } else if req.method == "POST" {
+            let body: Value = serde_json::from_slice(&req.body)?;
+            let login = body["login"]
+                .as_str()
+                .ok_or_else(|| AppError::Validation("Missing 'login' field".to_string()))?;
+            let name = body["name"].as_str();
+            let avatar_url = body["avatar_url"].as_str();
+            let token = body["token"]
+                .as_str()
+                .ok_or_else(|| AppError::Validation("Missing 'token' field".to_string()))?;
+            match save_github_account(&conn, login, name, avatar_url, token) {
+                Ok(account) => return send_response(stream, 200, "OK", json!(account), Some(&req)),
+                Err(e) => return Err(e),
+            }
+        } else if req.method == "DELETE" {
+            match delete_github_account(&conn) {
+                Ok(()) => return send_response(stream, 200, "OK", json!({"status": "ok", "deleted": true}), Some(&req)),
+                Err(e) => return Err(e),
+            }
+        }
+    }
+
+    // Standalone Test Suite lifecycle routes: /api/v1/suites/:id
+    if req.path.starts_with("/api/v1/suites/") {
+        let suite_id = &req.path["/api/v1/suites/".len()..];
+        if req.method == "GET" {
+            match get_suite(&conn, suite_id) {
+                Ok(suite) => return send_response(stream, 200, "OK", json!(suite), Some(&req)),
+                Err(AppError::NotFound(msg)) => return send_response(stream, 404, "Not Found", json!({"error": msg}), Some(&req)),
+                Err(e) => return Err(e),
+            }
+        } else if req.method == "PUT" {
+            let body: Value = serde_json::from_slice(&req.body)?;
+            let title = body["title"].as_str().unwrap_or("Updated Suite");
+            let desc = body["description"].as_str();
+            let parent_id = body["parent_id"].as_str();
+            let pos = body["position"].as_i64();
+            let repo_conn_id = body["repo_connection_id"].as_str();
+            let github_repo = body["github_repo"].as_str();
+            let file_path = body["file_path"].as_str();
+            match update_suite_full(
+                &conn,
+                suite_id,
+                UpdateSuiteInput {
+                    title: title.to_string(),
+                    description: desc.map(String::from),
+                    parent_id: parent_id.map(String::from),
+                    position: pos,
+                    repo_connection_id: repo_conn_id.map(String::from),
+                    github_repo: github_repo.map(String::from),
+                    file_path: file_path.map(String::from),
+                },
+            ) {
+                Ok(suite) => return send_response(stream, 200, "OK", json!(suite), Some(&req)),
+                Err(AppError::NotFound(msg)) => return send_response(stream, 404, "Not Found", json!({"error": msg}), Some(&req)),
+                Err(e) => return Err(e),
+            }
+        } else if req.method == "DELETE" {
+            match delete_suite(&conn, suite_id) {
+                Ok(()) => return send_response(stream, 200, "OK", json!({"status": "ok", "deleted": true}), Some(&req)),
+                Err(AppError::NotFound(msg)) => return send_response(stream, 404, "Not Found", json!({"error": msg}), Some(&req)),
+                Err(e) => return Err(e),
             }
         }
     }
@@ -402,9 +806,14 @@ pub fn dispatch_request<W: Write>(
     if req.path.starts_with("/api/v1/runs/") {
         let run_id = &req.path["/api/v1/runs/".len()..];
         if req.method == "GET" {
-            let run = get_run(&conn, run_id)?;
-            let items = get_run_items(&conn, run_id)?;
-            return send_response(stream, 200, "OK", json!({ "run": run, "items": items }));
+            match get_run(&conn, run_id) {
+                Ok(run) => {
+                    let items = get_run_items(&conn, run_id)?;
+                    return send_response(stream, 200, "OK", json!({ "run": run, "items": items }), Some(&req));
+                }
+                Err(AppError::NotFound(msg)) => return send_response(stream, 404, "Not Found", json!({"error": msg}), Some(&req)),
+                Err(e) => return Err(e),
+            }
         }
     }
 
@@ -412,6 +821,10 @@ pub fn dispatch_request<W: Write>(
         let item_id = &req.path["/api/v1/run-items/".len()..];
         let body: Value = serde_json::from_slice(&req.body)?;
         let status = body["status"].as_str().unwrap_or("passed");
+        if status == "pending" {
+            crate::db::runs::reset_run_item_status(&mut conn, item_id)?;
+            return send_response(stream, 200, "OK", json!({ "id": item_id, "status": "pending" }), Some(&req));
+        }
         let notes = body["notes"].as_str().map(|s| s.to_string());
         let duration_ms = body["duration_ms"].as_i64();
         let exec = record_execution(
@@ -427,13 +840,17 @@ pub fn dispatch_request<W: Write>(
                 step_results: None,
             },
         )?;
-        return send_response(stream, 200, "OK", json!(exec));
+        return send_response(stream, 200, "OK", json!(exec), Some(&req));
     }
 
     if req.path == "/api/v1/executions" && req.method == "POST" {
         let input: RecordExecutionInput = serde_json::from_slice(&req.body)?;
+        if input.status == "pending" {
+            crate::db::runs::reset_run_item_status(&mut conn, &input.run_item_id)?;
+            return send_response(stream, 200, "OK", json!({ "run_item_id": input.run_item_id, "status": "pending" }), Some(&req));
+        }
         let exec = record_execution(&mut conn, input)?;
-        return send_response(stream, 201, "Created", json!(exec));
+        return send_response(stream, 201, "Created", json!(exec), Some(&req));
     }
 
     if req.path.starts_with("/api/v1/executions/") && req.path.ends_with("/attachments/upload") && req.method == "POST" {
@@ -444,7 +861,7 @@ pub fn dispatch_request<W: Write>(
             let kobean_dir = get_kobean_dir();
             let media_dir = get_media_dir(&kobean_dir);
             let att = save_media_file(&conn, &media_dir, &input, DEFAULT_MAX_QUOTA_BYTES)?;
-            return send_response(stream, 201, "Created", json!(att));
+            return send_response(stream, 201, "Created", json!(att), Some(&req));
         }
     }
 
@@ -453,12 +870,12 @@ pub fn dispatch_request<W: Write>(
         if let Some((exec_id, _)) = remainder.split_once('/') {
             if req.method == "GET" {
                 let list = list_attachments(&conn, exec_id)?;
-                return send_response(stream, 200, "OK", json!(list));
+                return send_response(stream, 200, "OK", json!(list), Some(&req));
             } else if req.method == "POST" {
                 let mut input: AddAttachmentInput = serde_json::from_slice(&req.body)?;
                 input.execution_id = exec_id.to_string();
                 let att = add_attachment(&conn, input)?;
-                return send_response(stream, 201, "Created", json!(att));
+                return send_response(stream, 201, "Created", json!(att), Some(&req));
             }
         }
     }
@@ -467,11 +884,14 @@ pub fn dispatch_request<W: Write>(
         let filename = &req.path["/api/v1/media/".len()..];
         let kobean_dir = get_kobean_dir();
         let media_dir = get_media_dir(&kobean_dir);
-        let (bytes, mime) = read_media_file(&media_dir, filename)?;
-        return send_raw_response(stream, 200, "OK", &mime, &bytes);
+        match read_media_file(&media_dir, filename) {
+            Ok((bytes, mime)) => return send_raw_response(stream, 200, "OK", &mime, &bytes, Some(&req)),
+            Err(AppError::NotFound(msg)) => return send_response(stream, 404, "Not Found", json!({"error": msg}), Some(&req)),
+            Err(e) => return Err(e),
+        }
     }
 
-    send_response(stream, 404, "Not Found", json!({"error": "Endpoint not found"}))
+    send_response(stream, 404, "Not Found", json!({"error": "Endpoint not found"}), Some(&req))
 }
 
 fn send_raw_response<W: Write>(
@@ -480,19 +900,19 @@ fn send_raw_response<W: Write>(
     status_text: &str,
     content_type: &str,
     bytes: &[u8],
+    req: Option<&HttpRequest>,
 ) -> Result<(), AppError> {
+    let cors = cors_headers_for_req(req);
     let response = format!(
         "HTTP/1.1 {} {}\r\n\
          Content-Type: {}\r\n\
          Content-Length: {}\r\n\
-         Access-Control-Allow-Origin: *\r\n\
-         Access-Control-Allow-Methods: GET, OPTIONS\r\n\
-         Access-Control-Allow-Headers: Authorization, Content-Type\r\n\
-         Connection: close\r\n\r\n",
+         {}Connection: close\r\n\r\n",
         status_code,
         status_text,
         content_type,
-        bytes.len()
+        bytes.len(),
+        cors
     );
 
     stream.write_all(response.as_bytes())?;
@@ -506,19 +926,19 @@ fn send_response<W: Write>(
     status_code: u16,
     status_text: &str,
     body: Value,
+    req: Option<&HttpRequest>,
 ) -> Result<(), AppError> {
     let body_bytes = serde_json::to_vec(&body)?;
+    let cors = cors_headers_for_req(req);
     let response = format!(
         "HTTP/1.1 {} {}\r\n\
          Content-Type: application/json\r\n\
          Content-Length: {}\r\n\
-         Access-Control-Allow-Origin: *\r\n\
-         Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS\r\n\
-         Access-Control-Allow-Headers: Authorization, Content-Type\r\n\
-         Connection: close\r\n\r\n",
+         {}Connection: close\r\n\r\n",
         status_code,
         status_text,
-        body_bytes.len()
+        body_bytes.len(),
+        cors
     );
 
     stream.write_all(response.as_bytes())?;
@@ -527,13 +947,33 @@ fn send_response<W: Write>(
     Ok(())
 }
 
-fn send_cors_options<W: Write>(stream: &mut W) -> Result<(), AppError> {
-    let response = "HTTP/1.1 204 No Content\r\n\
-         Access-Control-Allow-Origin: *\r\n\
-         Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS\r\n\
-         Access-Control-Allow-Headers: Authorization, Content-Type\r\n\
-         Access-Control-Max-Age: 86400\r\n\
-         Connection: close\r\n\r\n";
+fn send_cors_options<W: Write>(stream: &mut W, req: &HttpRequest) -> Result<(), AppError> {
+    if let Some(origin) = req.get_header("origin") {
+        if !is_allowed_origin(origin) {
+            return send_response(
+                stream,
+                403,
+                "Forbidden",
+                json!({"error": "Cross-origin request not allowed"}),
+                Some(req),
+            );
+        }
+        let response = format!(
+            "HTTP/1.1 204 No Content\r\n\
+             Access-Control-Allow-Origin: {}\r\n\
+             Vary: Origin\r\n\
+             Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS\r\n\
+             Access-Control-Allow-Headers: Authorization, Content-Type, X-Workspace-Id, X-Project-Id\r\n\
+             Access-Control-Max-Age: 86400\r\n\
+             Connection: close\r\n\r\n",
+            origin
+        );
+        stream.write_all(response.as_bytes())?;
+        stream.flush()?;
+        return Ok(());
+    }
+
+    let response = "HTTP/1.1 204 No Content\r\nConnection: close\r\n\r\n";
     stream.write_all(response.as_bytes())?;
     stream.flush()?;
     Ok(())

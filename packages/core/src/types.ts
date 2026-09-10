@@ -14,7 +14,7 @@ export interface TestStep {
   step_number: number;
   action: string;
   expected: string;
-  data?: string;
+  data?: string | undefined;
 }
 
 export interface Workspace {
@@ -35,6 +35,28 @@ export interface Project {
   updated_at: number;
 }
 
+export interface RepoConnection {
+  id: string;
+  project_id: string;
+  name: string;
+  provider: 'github';
+  repo_name: string; // e.g. "owner/repo"
+  repo_url: string;  // e.g. "https://github.com/owner/repo"
+  default_branch: string; // e.g. "main"
+  created_at: number;
+  updated_at: number;
+}
+
+export interface GitHubAccount {
+  id: string;
+  login: string;
+  name?: string | null;
+  avatar_url?: string | null;
+  token_masked: string;
+  created_at: number;
+  updated_at: number;
+}
+
 export interface TestSuite {
   id: string;
   project_id: string;
@@ -42,6 +64,9 @@ export interface TestSuite {
   title: string;
   description?: string | null;
   position: number;
+  repo_connection_id?: string | null;
+  github_repo?: string | null;
+  file_path?: string | null;
   created_at: number;
   updated_at: number;
 }
@@ -54,10 +79,13 @@ export interface TestCase {
   title: string;
   preconditions?: string | null;
   steps: TestStep[];
+  steps_json?: string;
   priority: Priority;
   type: TestType;
+  type_?: TestType;
   automation_id?: string | null;
   tags: string[];
+  tags_json?: string;
   is_flaky: boolean;
   is_archived: boolean;
   version: number;
@@ -87,6 +115,10 @@ export interface TestRun {
   idempotency_key?: string | null;
   commit_sha?: string | null;
   branch?: string | null;
+  repo_connection_id?: string | null;
+  github_repo?: string | null;
+  pull_request_number?: number | null;
+  pull_request_url?: string | null;
   total_count: number;
   passed_count: number;
   failed_count: number;
@@ -140,15 +172,24 @@ export interface TestExecution {
   attachments?: ExecutionAttachment[];
 }
 
+export interface IngestAttachmentInput {
+  file_name: string;
+  mime_type: string;
+  data_base64: string;
+  step_number?: number | null;
+}
+
 export interface IngestResultItem {
   automation_id: string;
   title: string;
   suite_path?: string[];
+  tags?: string[];
   status: ExecutionStatus;
   duration_ms?: number;
   error_message?: string | null;
   stack_trace?: string | null;
   attempt_number?: number;
+  attachments?: IngestAttachmentInput[];
 }
 
 export interface IngestBatchPayload {
@@ -157,6 +198,20 @@ export interface IngestBatchPayload {
   commit_sha?: string | null;
   branch?: string | null;
   environment?: string;
+  repo_connection_id?: string | null;
+  github_repo?: string | null;
+  pull_request_number?: number | null;
+  pull_request_url?: string | null;
   auto_create_cases?: boolean;
   results: IngestResultItem[];
+}
+
+export interface KobeanReporterOptions {
+  projectId?: string;
+  daemonUrl?: string;
+  token?: string;
+  runName?: string;
+  environment?: string;
+  autoCreateCases?: boolean;
+  uploadScreenshots?: boolean;
 }

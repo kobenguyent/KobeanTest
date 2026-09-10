@@ -7,7 +7,7 @@ import { ImageAnnotationCanvas } from './ImageAnnotationCanvas.tsx';
 export interface RunExecutionViewProps {
   run: TestRun;
   items: any[];
-  onRecordStatus: (itemId: string, status: 'passed' | 'failed' | 'blocked' | 'skipped') => void;
+  onRecordStatus: (itemId: string, status: 'passed' | 'failed' | 'blocked' | 'skipped' | 'pending') => void;
   onBackToAuthoring: () => void;
   projectKey: string;
 }
@@ -91,6 +91,9 @@ export function RunExecutionView({
       } else if (e.key.toLowerCase() === 'b') {
         e.preventDefault();
         if (activeItem) onRecordStatus(activeItem.item.id, 'blocked');
+      } else if (e.key.toLowerCase() === 'u' || e.key.toLowerCase() === 'n') {
+        e.preventDefault();
+        if (activeItem) onRecordStatus(activeItem.item.id, 'pending');
       } else if (e.key.toLowerCase() === 'j' || e.key === 'ArrowDown') {
         e.preventDefault();
         setSelectedIndex((prev) => Math.min(items.length - 1, prev + 1));
@@ -163,6 +166,7 @@ export function RunExecutionView({
   const failedCount = items.filter((i) => i.item.status === 'failed').length;
   const skippedCount = items.filter((i) => i.item.status === 'skipped').length;
   const blockedCount = items.filter((i) => i.item.status === 'blocked').length;
+  const pendingCount = items.filter((i) => i.item.status === 'pending').length;
 
   const passedPct = Math.round((passedCount / total) * 100);
   const failedPct = Math.round((failedCount / total) * 100);
@@ -185,10 +189,64 @@ export function RunExecutionView({
             <h2 className="text-[15px] font-semibold tracking-tight text-[var(--text)]">
               {run.title}
             </h2>
-            <div className="flex items-center gap-2 text-[11px] text-[var(--muted)] font-mono">
+            <div className="flex items-center gap-2 text-[11px] text-[var(--muted)] font-mono flex-wrap">
               <span>env: {run.environment}</span>
               <span>•</span>
               <span>source: {run.source}</span>
+              {run.github_repo && (
+                <>
+                  <span>•</span>
+                  <a
+                    href={`https://github.com/${run.github_repo}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-1 text-[var(--text)] hover:underline"
+                    title={`Open https://github.com/${run.github_repo}`}
+                  >
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+                    </svg>
+                    <span>{run.github_repo}</span>
+                  </a>
+                </>
+              )}
+              {run.branch && (
+                <>
+                  <span>•</span>
+                  <span className="text-[var(--muted)]">branch: {run.branch}</span>
+                </>
+              )}
+              {run.commit_sha && (
+                <>
+                  <span>•</span>
+                  {run.github_repo ? (
+                    <a
+                      href={`https://github.com/${run.github_repo}/commit/${run.commit_sha}`}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="tabular-nums text-[var(--muted)] hover:text-[var(--text)] hover:underline"
+                      title="View Commit on GitHub"
+                    >
+                      sha: {run.commit_sha.slice(0, 7)}
+                    </a>
+                  ) : (
+                    <span className="tabular-nums">sha: {run.commit_sha.slice(0, 7)}</span>
+                  )}
+                </>
+              )}
+              {(run.pull_request_number || run.pull_request_url) && (
+                <>
+                  <span>•</span>
+                  <a
+                    href={run.pull_request_url || `https://github.com/${run.github_repo}/pull/${run.pull_request_number}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-1 px-1.5 py-0.2 rounded bg-[var(--canvas)] border border-[var(--border)] text-[var(--accent)] hover:underline tabular-nums"
+                  >
+                    <span>PR #{run.pull_request_number || 'View'}</span>
+                  </a>
+                </>
+              )}
             </div>
           </div>
         </div>
@@ -199,6 +257,7 @@ export function RunExecutionView({
           <StatusPill status="failed" count={failedCount} />
           {blockedCount > 0 && <StatusPill status="blocked" count={blockedCount} />}
           {skippedCount > 0 && <StatusPill status="skipped" count={skippedCount} />}
+          {pendingCount > 0 && <StatusPill status="pending" count={pendingCount} />}
         </div>
       </div>
 
@@ -313,6 +372,16 @@ export function RunExecutionView({
                   >
                     <kbd className="px-1.5 py-0.5 text-[11px] font-mono bg-slate-500/20 rounded">S</kbd>
                     <span>Skip</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => onRecordStatus(activeItem.item.id, 'pending')}
+                    className="flex-1 py-3 px-4 rounded bg-slate-500/10 text-slate-400 hover:bg-slate-500/20 border border-slate-500/30 text-[13px] font-medium flex items-center justify-center gap-2 transition-colors duration-100"
+                    title="Mark as Not Run Yet (U or N)"
+                  >
+                    <kbd className="px-1.5 py-0.5 text-[11px] font-mono bg-slate-500/20 rounded">U</kbd>
+                    <span>Not Run Yet</span>
                   </button>
                 </div>
               </div>

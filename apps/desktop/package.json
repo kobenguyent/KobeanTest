@@ -9,6 +9,12 @@
   },
   "dependencies": {
     "@kobean/core": "workspace:*",
-    "@kobean/ui": "workspace:*"
+    "@kobean/ui": "workspace:*",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.7"
   }
 }

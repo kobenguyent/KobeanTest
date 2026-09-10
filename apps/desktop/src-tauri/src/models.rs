@@ -21,6 +21,30 @@ pub struct Project {
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+pub struct RepoConnection {
+    pub id: String,
+    pub project_id: String,
+    pub name: String,
+    pub provider: String,
+    pub repo_name: String,
+    pub repo_url: String,
+    pub default_branch: String,
+    pub created_at: i64,
+    pub updated_at: i64,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+pub struct GitHubAccount {
+    pub id: String,
+    pub login: String,
+    pub name: Option<String>,
+    pub avatar_url: Option<String>,
+    pub token_masked: String,
+    pub created_at: i64,
+    pub updated_at: i64,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct TestSuite {
     pub id: String,
     pub project_id: String,
@@ -28,6 +52,9 @@ pub struct TestSuite {
     pub title: String,
     pub description: Option<String>,
     pub position: i64,
+    pub repo_connection_id: Option<String>,
+    pub github_repo: Option<String>,
+    pub file_path: Option<String>,
     pub created_at: i64,
     pub updated_at: i64,
 }
@@ -76,6 +103,10 @@ pub struct TestRun {
     pub idempotency_key: Option<String>,
     pub commit_sha: Option<String>,
     pub branch: Option<String>,
+    pub repo_connection_id: Option<String>,
+    pub github_repo: Option<String>,
+    pub pull_request_number: Option<i64>,
+    pub pull_request_url: Option<String>,
     pub total_count: i64,
     pub passed_count: i64,
     pub failed_count: i64,

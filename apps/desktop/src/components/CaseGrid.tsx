@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { TestCase } from '@kobean/core';
-import { StatusPill } from '@kobean/ui';
+import { StatusPill, Select } from '@kobean/ui';
 
 export interface CaseGridProps {
   cases: TestCase[];
@@ -26,7 +26,8 @@ export function CaseGrid({
 
   const filtered = cases.filter((c) => {
     if (filterPriority !== 'all' && c.priority !== filterPriority) return false;
-    if (filterType !== 'all' && c.type_ !== filterType) return false;
+    const testType = c.type || c.type_;
+    if (filterType !== 'all' && testType !== filterType) return false;
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase();
       return (
@@ -107,31 +108,31 @@ export function CaseGrid({
 
         <div className="flex items-center gap-2">
           {/* Priority Filter */}
-          <select
+          <Select
             value={filterPriority}
             onChange={(e) => setFilterPriority(e.target.value)}
             aria-label="Filter test cases by priority"
-            className="h-8 px-2 text-[12px] bg-[var(--card)] text-[var(--text)] border border-[var(--border)] rounded focus:outline-none"
+            selectSize="sm"
           >
             <option value="all">All Priorities</option>
             <option value="critical">Critical</option>
             <option value="high">High</option>
             <option value="medium">Medium</option>
             <option value="low">Low</option>
-          </select>
+          </Select>
 
           {/* Type Filter */}
-          <select
+          <Select
             value={filterType}
             onChange={(e) => setFilterType(e.target.value)}
             aria-label="Filter test cases by type"
-            className="h-8 px-2 text-[12px] bg-[var(--card)] text-[var(--text)] border border-[var(--border)] rounded focus:outline-none"
+            selectSize="sm"
           >
             <option value="all">All Types</option>
             <option value="manual">Manual</option>
             <option value="automated">Automated</option>
             <option value="exploratory">Exploratory</option>
-          </select>
+          </Select>
 
           {/* New Case Button */}
           <button
@@ -166,7 +167,7 @@ export function CaseGrid({
               </tr>
             ) : (
               filtered.map((item, idx) => {
-                const isSelected = selectedCaseId === item.id;
+                const isSelected = selectedCaseId ? selectedCaseId === item.id : selectedIndex === idx;
                 const caseCode = `${projectKey}-${item.case_number}`;
 
                 return (
@@ -200,14 +201,14 @@ export function CaseGrid({
                     </td>
                     <td className="py-2.5 px-3">
                       <span className="text-[11px] capitalize text-[var(--muted)]">
-                        {item.type_}
+                        {item.type || item.type_}
                       </span>
                     </td>
                     <td className="py-2.5 px-3 text-center font-mono tabular-nums text-[11px] text-[var(--muted)]">
                       v{item.version}
                     </td>
                     <td className="py-2.5 px-3 text-right">
-                      <StatusPill status={item.type_ === 'automated' ? 'automated' : 'pending'} />
+                      <StatusPill status={(item.type || item.type_) === 'automated' ? 'automated' : 'pending'} />
                     </td>
                   </tr>
                 );

@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "typecheck": "echo '✓ Workspace baseline ready'",
+    "typecheck": "tsc --noEmit --project packages/core/tsconfig.json && tsc --noEmit --project packages/cli/tsconfig.json && tsc --noEmit --project packages/ui/tsconfig.json && tsc --noEmit --project apps/desktop/tsconfig.json",
     "test": "node --experimental-strip-types --test packages/*/tests/*.test.js apps/*/tests/*.test.js",
     "test:rust": "cd apps/desktop/src-tauri && cargo test",
     "start": "cd apps/desktop/src-tauri && cargo run",
@@ -13,5 +13,9 @@
     "benchmark": "cd apps/desktop/src-tauri && cargo test --test benchmark_test -- --nocapture",
     "lint:clippy": "cd apps/desktop/src-tauri && cargo clippy -- -D clippy::unwrap_used -D clippy::expect_used -D warnings",
     "security:scan": "betterleaks git --staged --validation=false --config .betterleaks.toml"
+  },
+  "devDependencies": {
+    "@types/node": "^26.5.0",
+    "typescript": "^7.0.2"
   }
 }

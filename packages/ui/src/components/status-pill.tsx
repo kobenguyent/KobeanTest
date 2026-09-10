@@ -1,4 +1,3 @@
-import React from 'react';
 import { STATUS_STYLES, StatusStyle } from '../tokens.js';
 
 export interface StatusPillProps {

@@ -41,3 +41,10 @@ test('KobeanApiClient getMediaUrl handles paths and includes auth query paramete
   const url3 = clientNoToken.getMediaUrl('plain.png');
   assert.equal(url3, 'http://127.0.0.1:4000/api/v1/media/plain.png');
 });
+
+test('KobeanApiClient provides methods for optional GitHub account lifecycle', () => {
+  const client = new KobeanApiClient(4000, 'tok-test');
+  assert.equal(typeof client.getGitHubAccount, 'function');
+  assert.equal(typeof client.saveGitHubAccount, 'function');
+  assert.equal(typeof client.deleteGitHubAccount, 'function');
+});
