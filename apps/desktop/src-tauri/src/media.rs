@@ -4,6 +4,7 @@ use crate::error::AppError;
 use rusqlite::Connection;
 use serde::{Deserialize, Serialize};
 use std::fs;
+#[cfg(unix)]
 use std::io::Write;
 use std::path::{Path, PathBuf};
 use std::time::SystemTime;
