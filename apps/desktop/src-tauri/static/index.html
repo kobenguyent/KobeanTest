@@ -1,14 +1,91 @@
 <!doctype html>
-<html lang="en" data-theme="obsidian">
+<html lang="en" data-theme="sand">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>KobeanTest — 100% Localhost Test Management</title>
+  <script>
+    (function() {
+      try {
+        const stored = localStorage.getItem('kobean_theme');
+        if (stored) {
+          document.documentElement.setAttribute('data-theme', stored);
+        }
+      } catch (e) {}
+    })();
+  </script>
   <style>
-    :root, [data-theme="obsidian"] {
+    :root, [data-theme="sand"], [data-theme="cream"] {
+      --canvas: #faf8f5;
+      --card: #ffffff;
+      --card-raised: #f3efea;
+      --card-hover: #f8f5f0;
+      --border: rgba(60, 60, 67, 0.10);
+      --border-hover: rgba(60, 60, 67, 0.20);
+      --border-accent: rgba(0, 113, 227, 0.35);
+      --text: #1c1917;
+      --text-muted: #57534e;
+      --text-submuted: #8c8882;
+      --accent: #0071e3;
+      --accent-glow: rgba(0, 113, 227, 0.12);
+      --accent-hover: #0062c4;
+      --pass: #1b7837;
+      --pass-bg: #ebf7ee;
+      --pass-border: rgba(40, 167, 69, 0.22);
+      --fail: #c62828;
+      --fail-bg: #fdf1f1;
+      --fail-border: rgba(220, 53, 69, 0.22);
+      --block: #b25e00;
+      --block-bg: #fef6e9;
+      --block-border: rgba(245, 158, 11, 0.22);
+      --skip: #5c564e;
+      --skip-bg: #f2efea;
+      --skip-border: rgba(120, 113, 108, 0.22);
+      --pending: #0066cc;
+      --pending-bg: #ebf3fe;
+      --pending-border: rgba(0, 102, 204, 0.22);
+      --glass-bg: rgba(250, 248, 245, 0.85);
+      --select-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238c8882' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      --select-chevron-focus: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%230071e3' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    }
+    [data-theme="paper"] {
+      --canvas: #fbfbfb;
+      --card: #ffffff;
+      --card-raised: #f3f4f6;
+      --card-hover: #f9fafb;
+      --border: rgba(0, 0, 0, 0.07);
+      --border-hover: rgba(0, 0, 0, 0.14);
+      --border-accent: rgba(79, 70, 229, 0.4);
+      --text: #09090b;
+      --text-muted: #52525b;
+      --text-submuted: #9ca3af;
+      --accent: #4f46e5;
+      --accent-glow: rgba(79, 70, 229, 0.12);
+      --accent-hover: #4338ca;
+      --pass: #059669;
+      --pass-bg: rgba(5, 150, 105, 0.08);
+      --pass-border: rgba(5, 150, 105, 0.25);
+      --fail: #e11d48;
+      --fail-bg: rgba(225, 29, 72, 0.08);
+      --fail-border: rgba(225, 29, 72, 0.25);
+      --block: #d97706;
+      --block-bg: rgba(217, 119, 6, 0.08);
+      --block-border: rgba(217, 119, 6, 0.25);
+      --skip: #64748b;
+      --skip-bg: rgba(100, 116, 139, 0.08);
+      --skip-border: rgba(100, 116, 139, 0.25);
+      --pending: #64748b;
+      --pending-bg: rgba(100, 116, 139, 0.08);
+      --pending-border: rgba(100, 116, 139, 0.25);
+      --glass-bg: rgba(255, 255, 255, 0.95);
+      --select-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2371717a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      --select-chevron-focus: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%234f46e5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    }
+    [data-theme="obsidian"] {
       --canvas: #090a0d;
       --card: #111317;
       --card-raised: #181a20;
+      --card-hover: #1c1f26;
       --border: rgba(255, 255, 255, 0.07);
       --border-hover: rgba(255, 255, 255, 0.14);
       --border-accent: rgba(99, 102, 241, 0.4);
@@ -41,6 +118,7 @@
       --canvas: #0b0f17;
       --card: #111723;
       --card-raised: #192233;
+      --card-hover: #1e283b;
       --border: rgba(255, 255, 255, 0.07);
       --border-hover: rgba(255, 255, 255, 0.14);
       --border-accent: rgba(56, 189, 248, 0.4);
@@ -68,70 +146,6 @@
       --glass-bg: rgba(11, 15, 23, 0.9);
       --select-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
       --select-chevron-focus: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2338bdf8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-    }
-    [data-theme="paper"] {
-      --canvas: #fbfbfb;
-      --card: #ffffff;
-      --card-raised: #f3f4f6;
-      --border: rgba(0, 0, 0, 0.07);
-      --border-hover: rgba(0, 0, 0, 0.14);
-      --border-accent: rgba(79, 70, 229, 0.4);
-      --text: #09090b;
-      --text-muted: #52525b;
-      --text-submuted: #9ca3af;
-      --accent: #4f46e5;
-      --accent-glow: rgba(79, 70, 229, 0.12);
-      --accent-hover: #4338ca;
-      --pass: #059669;
-      --pass-bg: rgba(5, 150, 105, 0.08);
-      --pass-border: rgba(5, 150, 105, 0.25);
-      --fail: #e11d48;
-      --fail-bg: rgba(225, 29, 72, 0.08);
-      --fail-border: rgba(225, 29, 72, 0.25);
-      --block: #d97706;
-      --block-bg: rgba(217, 119, 6, 0.08);
-      --block-border: rgba(217, 119, 6, 0.25);
-      --skip: #64748b;
-      --skip-bg: rgba(100, 116, 139, 0.08);
-      --skip-border: rgba(100, 116, 139, 0.25);
-      --pending: #64748b;
-      --pending-bg: rgba(100, 116, 139, 0.08);
-      --pending-border: rgba(100, 116, 139, 0.25);
-      --glass-bg: rgba(255, 255, 255, 0.95);
-      --select-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2371717a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-      --select-chevron-focus: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%234f46e5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-    }
-    [data-theme="sand"] {
-      --canvas: #151311;
-      --card: #1c1917;
-      --card-raised: #282421;
-      --border: rgba(255, 255, 255, 0.07);
-      --border-hover: rgba(255, 255, 255, 0.14);
-      --border-accent: rgba(245, 158, 11, 0.4);
-      --text: #fafaf9;
-      --text-muted: #a8a29e;
-      --text-submuted: #78716c;
-      --accent: #d97706;
-      --accent-glow: rgba(217, 119, 6, 0.18);
-      --accent-hover: #b45309;
-      --pass: #10b981;
-      --pass-bg: rgba(16, 185, 129, 0.08);
-      --pass-border: rgba(16, 185, 129, 0.25);
-      --fail: #f43f5e;
-      --fail-bg: rgba(244, 63, 94, 0.08);
-      --fail-border: rgba(244, 63, 94, 0.25);
-      --block: #fbbf24;
-      --block-bg: rgba(251, 191, 36, 0.08);
-      --block-border: rgba(251, 191, 36, 0.25);
-      --skip: #78716c;
-      --skip-bg: rgba(120, 113, 108, 0.08);
-      --skip-border: rgba(120, 113, 108, 0.25);
-      --pending: #a8a29e;
-      --pending-bg: rgba(168, 162, 158, 0.08);
-      --pending-border: rgba(168, 162, 158, 0.25);
-      --glass-bg: rgba(21, 19, 17, 0.9);
-      --select-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2378716c' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-      --select-chevron-focus: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23d97706' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -203,8 +217,8 @@
       font-size: 10px;
       font-family: "SF Mono", "Geist Mono", monospace;
       padding: 2px 6px;
-      border-radius: 4px;
-      background: rgba(255, 255, 255, 0.04);
+      border-radius: 6px;
+      background: var(--card-raised);
       border: 1px solid var(--border);
       color: var(--text-muted);
       display: inline-flex;
@@ -225,9 +239,9 @@
     /* Mode Segmented Switcher */
     .mode-switcher {
       display: flex;
-      background: rgba(255, 255, 255, 0.03);
+      background: var(--card-raised);
       border: 1px solid var(--border);
-      border-radius: 6px;
+      border-radius: 8px;
       padding: 2px;
       gap: 2px;
       flex-shrink: 0;
@@ -237,7 +251,7 @@
       padding: 3px 10px;
       font-size: 11.5px;
       font-weight: 500;
-      border-radius: 4px;
+      border-radius: 6px;
       border: 1px solid transparent;
       background: transparent;
       color: var(--text-muted);
@@ -250,10 +264,11 @@
     }
 
     .mode-tab.active {
-      background: var(--card-raised);
+      background: var(--card);
       color: var(--text);
+      font-weight: 600;
       border-color: var(--border);
-      box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
     }
 
     /* Buttons */
@@ -262,7 +277,7 @@
       color: var(--text);
       border: 1px solid var(--border);
       padding: 0 10px;
-      border-radius: 5px;
+      border-radius: 8px;
       font-size: 11.5px;
       font-weight: 500;
       cursor: pointer;
@@ -290,12 +305,12 @@
     .btn-primary {
       background: var(--accent);
       color: #ffffff;
-      border-color: rgba(255, 255, 255, 0.15);
-      box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+      border-color: transparent;
+      box-shadow: 0 1px 3px rgba(0, 113, 227, 0.25);
     }
 
     .btn-primary:hover {
-      filter: brightness(1.08);
+      filter: brightness(1.06);
     }
 
     .btn-ghost {
@@ -304,9 +319,10 @@
       box-shadow: none;
       height: auto;
       padding: 3px 6px;
+      border-radius: 6px;
     }
     .btn-ghost:hover {
-      background: rgba(255, 255, 255, 0.05);
+      background: var(--card-raised);
     }
 
     /* Sidebar & Layout Toggle Controls */
@@ -315,9 +331,9 @@
       align-items: center;
       gap: 2px;
       padding: 2px;
-      background: var(--card);
+      background: var(--card-raised);
       border: 1px solid var(--border);
-      border-radius: 6px;
+      border-radius: 8px;
       position: relative;
     }
     .layout-btn {
@@ -328,7 +344,7 @@
       justify-content: center;
       background: transparent;
       border: 1px solid transparent;
-      border-radius: 4px;
+      border-radius: 6px;
       color: var(--text-muted);
       cursor: pointer;
       transition: all 0.1s ease;
@@ -340,19 +356,20 @@
       color: var(--text);
     }
     .layout-btn.active {
-      background: var(--card-raised);
+      background: var(--card);
       border-color: var(--border);
       color: var(--text);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
     }
     .layout-menu-popover {
       position: absolute;
       top: calc(100% + 6px);
       right: 0;
       width: 210px;
-      background: var(--canvas);
+      background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 6px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+      border-radius: 10px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
       z-index: 1200;
       padding: 6px;
     }
@@ -362,7 +379,7 @@
       align-items: center;
       justify-content: space-between;
       padding: 5px 8px;
-      border-radius: 4px;
+      border-radius: 6px;
       background: transparent;
       border: none;
       color: var(--text);
@@ -453,16 +470,16 @@
     }
 
     .tree-item:hover {
-      background: rgba(255, 255, 255, 0.03);
+      background: var(--card-raised);
       color: var(--text);
     }
 
     .tree-item.active {
-      background: var(--card-raised);
-      color: var(--text);
+      background: var(--card);
+      color: var(--accent);
       font-weight: 600;
       border-color: var(--border);
-      box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
     }
 
     .count-pill {
@@ -470,7 +487,8 @@
       font-family: monospace;
       padding: 1px 6px;
       border-radius: 9999px;
-      background: rgba(255, 255, 255, 0.06);
+      background: var(--card-raised);
+      border: 1px solid var(--border);
       color: var(--text-submuted);
       flex-shrink: 0;
     }
@@ -498,9 +516,8 @@
     }
 
     .case-row.active {
-      background: var(--canvas);
+      background: var(--card-raised);
       border-left: 3px solid var(--accent);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
     }
 
     .case-id {
@@ -508,9 +525,9 @@
       font-size: 11px;
       font-weight: 600;
       color: var(--text-muted);
-      background: rgba(255, 255, 255, 0.04);
+      background: var(--card-raised);
       padding: 2px 6px;
-      border-radius: 4px;
+      border-radius: 6px;
       border: 1px solid var(--border);
       margin-right: 10px;
       flex-shrink: 0;
@@ -687,7 +704,7 @@
       width: 22px;
       height: 22px;
       border-radius: 50%;
-      background: rgba(255, 255, 255, 0.05);
+      background: var(--card-raised);
       border: 1px solid var(--border);
       font-size: 11px;
       font-weight: 700;
@@ -749,9 +766,9 @@
     #modal-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.82);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
+      background: rgba(0, 0, 0, 0.45);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       z-index: 200;
       display: none;
       align-items: center;
@@ -760,36 +777,36 @@
     #modal-card {
       background: var(--card);
       border: 1px solid var(--border-hover);
-      border-radius: 12px;
+      border-radius: 16px;
       width: 900px;
       max-height: 90vh;
       display: flex;
       flex-direction: column;
       overflow: hidden;
-      box-shadow: 0 24px 64px rgba(0,0,0,0.7);
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.18), 0 4px 16px rgba(0, 0, 0, 0.06);
     }
 
     /* Welcome Hero Card for Empty State */
     .hero-card {
       margin: 40px auto;
       max-width: 600px;
-      background: var(--card-raised);
-      border: 1px solid var(--border-hover);
-      border-radius: 12px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
       padding: 32px;
       text-align: center;
-      box-shadow: 0 12px 32px rgba(0,0,0,0.3);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
     }
 
     kbd {
       font-family: "SF Mono", "Geist Mono", monospace;
       font-size: 11px;
       padding: 2px 6px;
-      border-radius: 4px;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 5px;
+      background: var(--card);
+      border: 1px solid var(--border);
       color: var(--text);
-      box-shadow: 0 1px 1px rgba(0,0,0,0.3);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
       white-space: nowrap;
     }
 
@@ -880,11 +897,11 @@
       <!-- Theme Switcher -->
       <div style="position: relative; display: inline-flex; align-items: center;">
         <svg style="position: absolute; left: 8px; pointer-events: none; color: var(--text-submuted);" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
-        <select onchange="document.documentElement.setAttribute('data-theme', this.value)" style="height: 28px; padding-left: 26px; font-size: 11.5px; border-radius: 6px;" aria-label="Switch Theme">
-          <option value="obsidian">Obsidian</option>
-          <option value="nordic">Nordic</option>
-          <option value="paper">Paper</option>
-          <option value="sand">Sand</option>
+        <select id="theme-selector" onchange="setAppTheme(this.value)" style="height: 28px; padding-left: 26px; font-size: 11.5px; border-radius: 8px;" aria-label="Switch Theme">
+          <option value="sand" selected>White Cream (Apple)</option>
+          <option value="paper">Clean Paper</option>
+          <option value="obsidian">Obsidian Dark</option>
+          <option value="nordic">Nordic Slate</option>
         </select>
       </div>
 
@@ -1314,8 +1331,8 @@
   </div>
 
   <!-- Test Framework Integrations Modal -->
-  <div id="integrations-modal-overlay" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.65); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 1000; align-items: center; justify-content: center; padding: 20px;">
-    <div id="integrations-modal-card" style="width: 100%; max-width: 780px; max-height: 88vh; background: var(--card); border: 1px solid var(--border); border-radius: 10px; box-shadow: 0 20px 45px rgba(0,0,0,0.5); display: flex; flex-direction: column; overflow: hidden;">
+  <div id="integrations-modal-overlay" style="display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.45); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); z-index: 1000; align-items: center; justify-content: center; padding: 20px;">
+    <div id="integrations-modal-card" style="width: 100%; max-width: 780px; max-height: 88vh; background: var(--card); border: 1px solid var(--border); border-radius: 16px; box-shadow: 0 24px 64px rgba(0, 0, 0, 0.18), 0 4px 16px rgba(0, 0, 0, 0.06); display: flex; flex-direction: column; overflow: hidden;">
       
       <!-- Modal Header -->
       <div class="pane-header" style="padding: 12px 18px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; background: var(--card);">
@@ -1500,12 +1517,12 @@ Scenario: Customer completes checkout with saved credit card
   </div>
 
   <!-- GitHub Repository Connections Modal -->
-  <div id="connections-modal-overlay" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.65); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 1000; align-items: center; justify-content: center; padding: 20px;">
-    <div id="connections-modal-card" style="width: 100%; max-width: 680px; max-height: 85vh; background: var(--card); border: 1px solid var(--border); border-radius: 10px; box-shadow: 0 20px 45px rgba(0,0,0,0.5); display: flex; flex-direction: column; overflow: hidden;">
+  <div id="connections-modal-overlay" style="display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.45); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); z-index: 1000; align-items: center; justify-content: center; padding: 20px;">
+    <div id="connections-modal-card" style="width: 100%; max-width: 680px; max-height: 85vh; background: var(--card); border: 1px solid var(--border); border-radius: 16px; box-shadow: 0 24px 64px rgba(0, 0, 0, 0.18), 0 4px 16px rgba(0, 0, 0, 0.06); display: flex; flex-direction: column; overflow: hidden;">
       <!-- Modal Header -->
       <div style="padding: 14px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; background: var(--card-raised);">
         <div style="display: flex; align-items: center; gap: 10px;">
-          <div style="width: 28px; height: 28px; border-radius: 6px; background: rgba(255,255,255,0.08); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--text);">
+          <div style="width: 28px; height: 28px; border-radius: 6px; background: var(--card); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--text);">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
           </div>
           <div>
@@ -1669,8 +1686,24 @@ Scenario: Customer completes checkout with saved credit card
     // Annotation Tool State
     let currentTool = 'rect';
 
+    function setAppTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      try {
+        localStorage.setItem('kobean_theme', theme);
+      } catch (e) {}
+      const sel = document.getElementById('theme-selector');
+      if (sel && sel.value !== theme) {
+        sel.value = theme;
+      }
+    }
+
     async function init() {
       initLayoutState();
+      try {
+        const savedTheme = localStorage.getItem('kobean_theme') || 'sand';
+        const sel = document.getElementById('theme-selector');
+        if (sel) sel.value = savedTheme;
+      } catch (e) {}
       try {
         const sRes = await fetch('/session');
         if (sRes.ok) {
@@ -2651,7 +2684,7 @@ Scenario: Customer completes checkout with saved credit card
           ${item.duration_ms ? `<span style="font-size: 10px; font-family: monospace; color: var(--text-submuted); margin-left: 6px; flex-shrink: 0; font-variant-numeric: tabular-nums;">${item.duration_ms}ms</span>` : ''}
         `;
         row.onmouseenter = () => {
-          if (!isSelected) row.style.background = 'rgba(255, 255, 255, 0.03)';
+          if (!isSelected) row.style.background = 'var(--card-raised)';
         };
         row.onmouseleave = () => {
           if (!isSelected) row.style.background = 'transparent';
@@ -2896,7 +2929,7 @@ Scenario: Customer completes checkout with saved credit card
       document.querySelectorAll('link[rel="stylesheet"], style').forEach((node) => {
         pipWindow.document.head.appendChild(node.cloneNode(true));
       });
-      const theme = document.documentElement.getAttribute('data-theme') || 'obsidian';
+      const theme = document.documentElement.getAttribute('data-theme') || 'sand';
       pipWindow.document.documentElement.setAttribute('data-theme', theme);
       pipWindow.document.body.style.margin = '0';
       pipWindow.document.body.style.padding = '0';

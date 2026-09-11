@@ -55,7 +55,7 @@ const rootElement = document.getElementById('root');
 if (rootElement) {
   ReactDOM.createRoot(rootElement).render(
     <React.StrictMode>
-      <ThemeProvider defaultTheme="obsidian">
+      <ThemeProvider defaultTheme="warm_sand">
         {isHudView ? <StandaloneHud /> : <App />}
       </ThemeProvider>
     </React.StrictMode>

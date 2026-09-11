@@ -14,7 +14,7 @@ export const THEME_STORAGE_KEY = 'kobean_theme';
 
 export function ThemeProvider({
   children,
-  defaultTheme = 'obsidian',
+  defaultTheme = 'warm_sand',
 }: {
   children: React.ReactNode;
   defaultTheme?: ThemeId;
@@ -29,7 +29,7 @@ export function ThemeProvider({
     return defaultTheme;
   });
 
-  const themeDef = THEMES[theme] || THEMES.obsidian;
+  const themeDef = THEMES[theme] || THEMES.warm_sand;
 
   useEffect(() => {
     if (typeof document === 'undefined') return;

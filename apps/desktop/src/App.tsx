@@ -929,7 +929,7 @@ export function App() {
                 document.querySelectorAll('link[rel="stylesheet"], style').forEach((node) => {
                   pip.document.head.appendChild(node.cloneNode(true));
                 });
-                pip.document.documentElement.setAttribute('data-theme', document.documentElement.getAttribute('data-theme') || 'obsidian');
+                pip.document.documentElement.setAttribute('data-theme', document.documentElement.getAttribute('data-theme') || 'warm_sand');
                 setShowFloatingHud(false);
               } catch (e) {
                 console.warn('PiP failed:', e);

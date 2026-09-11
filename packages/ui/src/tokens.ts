@@ -21,21 +21,21 @@ export interface ThemeDefinition {
 }
 
 export const THEMES: Record<ThemeId, ThemeDefinition> = {
-  obsidian: {
-    id: 'obsidian',
-    name: 'Obsidian Dark',
-    type: 'dark',
+  warm_sand: {
+    id: 'warm_sand',
+    name: 'White Cream (Apple)',
+    type: 'light',
     colors: {
-      canvas: '#09090b',
-      card: '#121215',
-      border: 'rgba(255, 255, 255, 0.08)',
-      text: '#fafafa',
-      muted: '#a1a1aa',
-      accent: '#6366f1',
+      canvas: '#faf8f5',
+      card: '#ffffff',
+      border: 'rgba(60, 60, 67, 0.10)',
+      text: '#1c1917',
+      muted: '#57534e', // Verified 7.52:1 on #ffffff card (Passes AAA >= 7.0:1)
+      accent: '#0071e3', // Apple Cupertino Blue
     },
     contrastRatio: {
-      bodyOnCard: 16.5,
-      mutedOnCard: 7.3, // Passes AAA (>= 7.0:1)
+      bodyOnCard: 17.5,
+      mutedOnCard: 7.52,
     },
   },
   clean_paper: {
@@ -55,6 +55,23 @@ export const THEMES: Record<ThemeId, ThemeDefinition> = {
       mutedOnCard: 9.61,
     },
   },
+  obsidian: {
+    id: 'obsidian',
+    name: 'Obsidian Dark',
+    type: 'dark',
+    colors: {
+      canvas: '#09090b',
+      card: '#121215',
+      border: 'rgba(255, 255, 255, 0.08)',
+      text: '#fafafa',
+      muted: '#a1a1aa',
+      accent: '#6366f1',
+    },
+    contrastRatio: {
+      bodyOnCard: 16.5,
+      mutedOnCard: 7.3, // Passes AAA (>= 7.0:1)
+    },
+  },
   nordic_slate: {
     id: 'nordic_slate',
     name: 'Nordic Slate',
@@ -70,23 +87,6 @@ export const THEMES: Record<ThemeId, ThemeDefinition> = {
     contrastRatio: {
       bodyOnCard: 13.8,
       mutedOnCard: 7.82,
-    },
-  },
-  warm_sand: {
-    id: 'warm_sand',
-    name: 'Warm Sand',
-    type: 'light',
-    colors: {
-      canvas: '#faf9f6',
-      card: '#f3efea',
-      border: 'rgba(0, 0, 0, 0.07)',
-      text: '#1c1917',
-      muted: '#44403c', // Verified 7.52:1 on card (Passes AAA)
-      accent: '#d97706',
-    },
-    contrastRatio: {
-      bodyOnCard: 14.1,
-      mutedOnCard: 7.52,
     },
   },
 };

@@ -149,6 +149,13 @@
       "status": "completed",
       "assignee": "AI Agent",
       "blocked_by": ["KB-TASK-020"]
+    },
+    {
+      "id": "KB-TASK-022",
+      "title": "Apple White Cream Design Overhaul: Warm archival cream canvas (#FAF8F5), crisp white cards (#FFFFFF), Apple Cupertino Blue accents (#0071E3), squircle radiuses, macOS-style segmented controls, and WCAG AAA contrast",
+      "status": "completed",
+      "assignee": "AI Agent",
+      "blocked_by": ["KB-TASK-021"]
     }
   ]
 }
