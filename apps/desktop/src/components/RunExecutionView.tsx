@@ -176,12 +176,12 @@ export function RunExecutionView({
   return (
     <div className="flex-1 h-full flex flex-col bg-[var(--card)] overflow-hidden">
       {/* Run Top Header */}
-      <div className="flex items-center justify-between px-6 py-3 border-b border-[var(--border)] bg-[var(--canvas)] shrink-0">
+      <div className="flex items-center justify-between px-6 py-3 border-b border-[var(--border)] bg-[var(--canvas)]/80 backdrop-blur-md shrink-0">
         <div className="flex items-center gap-3">
           <button
             type="button"
             onClick={onBackToAuthoring}
-            className="px-2 py-1 text-[11px] font-medium text-[var(--muted)] hover:text-[var(--text)] rounded border border-[var(--border)]"
+            className="px-2.5 py-1 text-[11px] font-medium text-[var(--muted)] hover:text-[var(--text)] bg-[var(--card)] rounded-md border border-[var(--border)] shadow-2xs hover:shadow-xs transition-all"
           >
             ← Back
           </button>
@@ -270,17 +270,17 @@ export function RunExecutionView({
       {/* Execution Split Workspace */}
       <div className="flex-1 flex overflow-hidden">
         {/* Run Items List (Left) */}
-        <div className="w-80 h-full border-r border-[var(--border)] overflow-y-auto p-2 space-y-1 bg-[var(--canvas)] shrink-0">
+        <div className="w-80 h-full border-r border-[var(--border)] overflow-y-auto p-2.5 space-y-1.5 bg-[var(--canvas)] shrink-0">
           {items.map((item, idx) => {
             const isSelected = idx === selectedIndex;
             return (
               <div
                 key={item.item.id}
                 onClick={() => setSelectedIndex(idx)}
-                className={`p-2.5 rounded text-[12px] cursor-pointer transition-colors duration-100 flex items-center justify-between border ${
+                className={`p-2.5 rounded-lg text-[12px] cursor-pointer transition-all duration-100 flex items-center justify-between border ${
                   isSelected
-                    ? 'bg-[var(--card)] text-[var(--text)] border-[var(--accent)] font-medium'
-                    : 'text-[var(--text)] hover:bg-[var(--card)]/50 border-transparent'
+                    ? 'bg-[var(--card)] text-[var(--text)] border-[var(--accent)]/50 shadow-xs font-medium'
+                    : 'text-[var(--text)] hover:bg-[var(--card)]/60 border-transparent'
                 }`}
               >
                 <div className="truncate mr-2">
@@ -311,7 +311,7 @@ export function RunExecutionView({
               </h1>
 
               {/* Triage hotkeys banner */}
-              <div className="p-4 rounded-lg bg-[var(--canvas)] border border-[var(--border)] space-y-2">
+              <div className="p-4 rounded-xl bg-[var(--card)] border border-[var(--border)] shadow-xs space-y-2.5">
                 <div className="flex items-center justify-between">
                   <span className="text-[11px] font-semibold uppercase tracking-wider text-[var(--muted)] block">
                     Quick Hotkeys Triage
@@ -328,7 +328,7 @@ export function RunExecutionView({
                     <button
                       type="button"
                       onClick={() => fileInputRef.current?.click()}
-                      className="px-2 py-1 text-[11px] bg-[var(--card)] hover:bg-[var(--border)]/30 border border-[var(--border)] rounded text-[var(--text)] flex items-center gap-1"
+                      className="px-2.5 py-1 text-[11px] font-medium bg-[var(--canvas)] hover:bg-[var(--card)] border border-[var(--border)] rounded-md text-[var(--text)] flex items-center gap-1.5 shadow-2xs transition-all"
                       title="Paste image with Cmd+V or browse"
                     >
                       <span>📸 Snap / Paste</span>
@@ -337,11 +337,11 @@ export function RunExecutionView({
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2 pt-2">
+                <div className="flex items-center gap-2 pt-1">
                   <button
                     type="button"
                     onClick={() => onRecordStatus(activeItem.item.id, 'passed')}
-                    className="flex-1 py-3 px-4 rounded bg-emerald-500/10 text-emerald-500 hover:bg-emerald-500/20 border border-emerald-500/30 text-[13px] font-medium flex items-center justify-center gap-2 transition-colors duration-100"
+                    className="flex-1 py-2.5 px-3 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500/20 border border-emerald-500/25 text-[13px] font-medium flex items-center justify-center gap-2 transition-all duration-100 shadow-2xs"
                   >
                     <kbd className="px-1.5 py-0.5 text-[11px] font-mono bg-emerald-500/20 rounded">P</kbd>
                     <span>Pass</span>
@@ -350,7 +350,7 @@ export function RunExecutionView({
                   <button
                     type="button"
                     onClick={() => onRecordStatus(activeItem.item.id, 'failed')}
-                    className="flex-1 py-3 px-4 rounded bg-rose-500/10 text-rose-500 hover:bg-rose-500/20 border border-rose-500/30 text-[13px] font-medium flex items-center justify-center gap-2 transition-colors duration-100"
+                    className="flex-1 py-2.5 px-3 rounded-lg bg-rose-500/10 text-rose-600 dark:text-rose-400 hover:bg-rose-500/20 border border-rose-500/25 text-[13px] font-medium flex items-center justify-center gap-2 transition-all duration-100 shadow-2xs"
                   >
                     <kbd className="px-1.5 py-0.5 text-[11px] font-mono bg-rose-500/20 rounded">F</kbd>
                     <span>Fail</span>
@@ -359,7 +359,7 @@ export function RunExecutionView({
                   <button
                     type="button"
                     onClick={() => onRecordStatus(activeItem.item.id, 'blocked')}
-                    className="flex-1 py-3 px-4 rounded bg-amber-500/10 text-amber-500 hover:bg-amber-500/20 border border-amber-500/30 text-[13px] font-medium flex items-center justify-center gap-2 transition-colors duration-100"
+                    className="flex-1 py-2.5 px-3 rounded-lg bg-amber-500/10 text-amber-600 dark:text-amber-400 hover:bg-amber-500/20 border border-amber-500/25 text-[13px] font-medium flex items-center justify-center gap-2 transition-all duration-100 shadow-2xs"
                   >
                     <kbd className="px-1.5 py-0.5 text-[11px] font-mono bg-amber-500/20 rounded">B</kbd>
                     <span>Block</span>
@@ -368,7 +368,7 @@ export function RunExecutionView({
                   <button
                     type="button"
                     onClick={() => onRecordStatus(activeItem.item.id, 'skipped')}
-                    className="flex-1 py-3 px-4 rounded bg-slate-500/10 text-slate-400 hover:bg-slate-500/20 border border-slate-500/30 text-[13px] font-medium flex items-center justify-center gap-2 transition-colors duration-100"
+                    className="flex-1 py-2.5 px-3 rounded-lg bg-slate-500/10 text-slate-600 dark:text-slate-400 hover:bg-slate-500/20 border border-slate-500/25 text-[13px] font-medium flex items-center justify-center gap-2 transition-all duration-100 shadow-2xs"
                   >
                     <kbd className="px-1.5 py-0.5 text-[11px] font-mono bg-slate-500/20 rounded">S</kbd>
                     <span>Skip</span>
@@ -377,7 +377,7 @@ export function RunExecutionView({
                   <button
                     type="button"
                     onClick={() => onRecordStatus(activeItem.item.id, 'pending')}
-                    className="flex-1 py-3 px-4 rounded bg-slate-500/10 text-slate-400 hover:bg-slate-500/20 border border-slate-500/30 text-[13px] font-medium flex items-center justify-center gap-2 transition-colors duration-100"
+                    className="flex-1 py-2.5 px-3 rounded-lg bg-slate-500/10 text-slate-600 dark:text-slate-400 hover:bg-slate-500/20 border border-slate-500/25 text-[13px] font-medium flex items-center justify-center gap-2 transition-all duration-100 shadow-2xs"
                     title="Mark as Not Run Yet (U or N)"
                   >
                     <kbd className="px-1.5 py-0.5 text-[11px] font-mono bg-slate-500/20 rounded">U</kbd>
@@ -388,7 +388,7 @@ export function RunExecutionView({
 
               {/* Execution Notes / Failure Context */}
               {activeExecution && (
-                <div className="p-4 rounded-lg bg-[var(--canvas)] border border-[var(--border)] space-y-2">
+                <div className="p-4 rounded-xl bg-[var(--card)] border border-[var(--border)] shadow-xs space-y-2">
                   <div className="flex items-center justify-between">
                     <span className="text-[11px] font-medium text-[var(--muted)]">
                       Attempt #{activeExecution.attempt_number} — Duration: {activeExecution.duration_ms}ms

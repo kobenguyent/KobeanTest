@@ -48,7 +48,7 @@ export function SuiteTree({
   };
 
   return (
-    <aside className="w-64 h-full flex flex-col bg-[var(--canvas)] border-r border-[var(--border)] shrink-0 select-none">
+    <aside className="w-64 h-full flex flex-col bg-[var(--sidebar,var(--card-raised))] border-r border-[var(--border)] shrink-0 select-none">
       {/* Header */}
       <div className="flex items-center justify-between px-3.5 py-3 border-b border-[var(--border)]">
         <span className="text-[11px] font-semibold uppercase tracking-wider text-[var(--muted)]">
@@ -57,7 +57,7 @@ export function SuiteTree({
         <button
           type="button"
           onClick={() => setIsCreating(true)}
-          className="p-1 rounded text-[var(--muted)] hover:text-[var(--text)] hover:bg-[var(--card)] transition-colors duration-100"
+          className="p-1 rounded-md text-[var(--muted)] hover:text-[var(--text)] hover:bg-[var(--card)] transition-colors duration-100"
           title="Create Test Suite"
           aria-label="Create Test Suite"
         >

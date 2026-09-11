@@ -10,7 +10,7 @@ interface ThemeContextValue {
 
 const ThemeContext = createContext<ThemeContextValue | null>(null);
 
-export const THEME_STORAGE_KEY = 'kobean_theme';
+export const THEME_STORAGE_KEY = 'kobean_theme_v2';
 
 export function ThemeProvider({
   children,

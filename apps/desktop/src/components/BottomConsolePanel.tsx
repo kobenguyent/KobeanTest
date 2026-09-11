@@ -90,7 +90,7 @@ export function BottomConsolePanel({
           <button
             type="button"
             onClick={() => setActiveTab('triage')}
-            className={`px-2.5 py-1 text-[11px] font-medium rounded transition-colors duration-100 flex items-center gap-1.5 ${
+            className={`px-2.5 py-1 text-[11px] font-medium rounded-md transition-all duration-100 flex items-center gap-1.5 ${
               activeTab === 'triage'
                 ? 'bg-[var(--canvas)] text-[var(--text)] shadow-xs border border-[var(--border)]/70'
                 : 'text-[var(--muted)] hover:text-[var(--text)]'
@@ -98,7 +98,7 @@ export function BottomConsolePanel({
           >
             <span>⚡ Runner Triage</span>
             {activeRun && (
-              <span className="text-[10px] font-mono px-1 py-0.2 rounded bg-[var(--accent)]/15 text-[var(--accent)] tabular-nums">
+              <span className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-[var(--accent)]/15 text-[var(--accent)] tabular-nums">
                 {progressPercent}%
               </span>
             )}
@@ -107,7 +107,7 @@ export function BottomConsolePanel({
           <button
             type="button"
             onClick={() => setActiveTab('daemon')}
-            className={`px-2.5 py-1 text-[11px] font-medium rounded transition-colors duration-100 flex items-center gap-1.5 ${
+            className={`px-2.5 py-1 text-[11px] font-medium rounded-md transition-all duration-100 flex items-center gap-1.5 ${
               activeTab === 'daemon'
                 ? 'bg-[var(--canvas)] text-[var(--text)] shadow-xs border border-[var(--border)]/70'
                 : 'text-[var(--muted)] hover:text-[var(--text)]'
@@ -124,7 +124,7 @@ export function BottomConsolePanel({
           <button
             type="button"
             onClick={() => setActiveTab('ingest')}
-            className={`px-2.5 py-1 text-[11px] font-medium rounded transition-colors duration-100 flex items-center gap-1.5 ${
+            className={`px-2.5 py-1 text-[11px] font-medium rounded-md transition-all duration-100 flex items-center gap-1.5 ${
               activeTab === 'ingest'
                 ? 'bg-[var(--canvas)] text-[var(--text)] shadow-xs border border-[var(--border)]/70'
                 : 'text-[var(--muted)] hover:text-[var(--text)]'
@@ -136,7 +136,7 @@ export function BottomConsolePanel({
           <button
             type="button"
             onClick={() => setActiveTab('connections')}
-            className={`px-2.5 py-1 text-[11px] font-medium rounded transition-colors duration-100 flex items-center gap-1.5 ${
+            className={`px-2.5 py-1 text-[11px] font-medium rounded-md transition-all duration-100 flex items-center gap-1.5 ${
               activeTab === 'connections'
                 ? 'bg-[var(--canvas)] text-[var(--text)] shadow-xs border border-[var(--border)]/70'
                 : 'text-[var(--muted)] hover:text-[var(--text)]'
@@ -146,7 +146,7 @@ export function BottomConsolePanel({
               <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
             </svg>
             <span>{githubAccount ? `@${githubAccount.login}` : 'GitHub Repos'}</span>
-            <span className="text-[10px] font-mono px-1 py-0.2 rounded bg-[var(--card)] text-[var(--muted)] border border-[var(--border)] tabular-nums">
+            <span className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-[var(--card)] text-[var(--muted)] border border-[var(--border)] tabular-nums">
               {connections.length}
             </span>
           </button>
@@ -160,7 +160,7 @@ export function BottomConsolePanel({
             onClick={onClose}
             aria-label="Close Bottom Panel"
             title="Close Panel (⌘J)"
-            className="w-5 h-5 flex items-center justify-center text-[var(--muted)] hover:text-[var(--text)] rounded hover:bg-[var(--border)]/30"
+            className="w-6 h-6 flex items-center justify-center text-[var(--muted)] hover:text-[var(--text)] rounded-md hover:bg-[var(--canvas)] transition-colors"
           >
             ✕
           </button>

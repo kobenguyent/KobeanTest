@@ -59,9 +59,9 @@ export function CaseDetailPane({
   };
 
   return (
-    <aside className="w-96 h-full flex flex-col bg-[var(--canvas)] border-l border-[var(--border)] shrink-0 select-none overflow-hidden transition-all duration-200">
+    <aside className="w-96 h-full flex flex-col bg-[var(--card)] border-l border-[var(--border)] shrink-0 select-none overflow-hidden transition-all duration-200">
       {/* Header */}
-      <div className="flex items-center justify-between px-4 py-3 border-b border-[var(--border)] bg-[var(--card)]">
+      <div className="flex items-center justify-between px-4 py-3 border-b border-[var(--border)] bg-[var(--card)]/90 backdrop-blur-md">
         <div className="flex items-center gap-2">
           <span className="font-mono text-[12px] font-semibold text-[var(--accent)] tabular-nums">
             #{projectKey}-{caseItem.case_number}
@@ -76,7 +76,7 @@ export function CaseDetailPane({
             <button
               type="button"
               onClick={handleSave}
-              className="px-2.5 py-1 text-[11px] font-medium bg-[var(--accent)] text-white rounded hover:opacity-90"
+              className="px-3 py-1 text-[11px] font-medium bg-[var(--accent)] text-white rounded-md hover:opacity-95 shadow-sm transition-opacity"
             >
               Save
             </button>
@@ -84,7 +84,7 @@ export function CaseDetailPane({
           <button
             type="button"
             onClick={onClose}
-            className="p-1 text-[var(--muted)] hover:text-[var(--text)] rounded"
+            className="w-6 h-6 flex items-center justify-center text-[var(--muted)] hover:text-[var(--text)] hover:bg-[var(--canvas)] rounded-md transition-colors"
             title="Close Panel"
             aria-label="Close Panel"
           >
@@ -107,7 +107,7 @@ export function CaseDetailPane({
               setTitle(e.target.value);
               setIsDirty(true);
             }}
-            className="w-full text-[14px] font-medium px-2.5 py-1.5 bg-[var(--card)] text-[var(--text)] border border-[var(--border)] rounded focus:outline-none focus:border-[var(--accent)]"
+            className="w-full text-[13px] font-medium px-3 py-2 bg-[var(--canvas)] text-[var(--text)] border border-[var(--border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] transition-all"
           />
         </div>
 
@@ -161,7 +161,7 @@ export function CaseDetailPane({
                 setAutomationId(e.target.value);
                 setIsDirty(true);
               }}
-              className="w-full text-[12px] font-mono px-2.5 py-1.5 bg-[var(--card)] text-[var(--text)] border border-[var(--border)] rounded focus:outline-none"
+              className="w-full text-[12px] font-mono px-3 py-2 bg-[var(--canvas)] text-[var(--text)] border border-[var(--border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] transition-all"
             />
           </div>
         )}
@@ -179,7 +179,7 @@ export function CaseDetailPane({
               setIsDirty(true);
             }}
             placeholder="Prerequisites required before execution..."
-            className="w-full text-[12px] px-2.5 py-1.5 bg-[var(--card)] text-[var(--text)] border border-[var(--border)] rounded focus:outline-none resize-none"
+            className="w-full text-[12px] px-3 py-2 bg-[var(--canvas)] text-[var(--text)] border border-[var(--border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] resize-none transition-all"
           />
         </div>
 

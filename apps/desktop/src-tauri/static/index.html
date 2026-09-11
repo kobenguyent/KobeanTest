@@ -7,16 +7,22 @@
   <script>
     (function() {
       try {
-        const stored = localStorage.getItem('kobean_theme');
-        if (stored) {
-          document.documentElement.setAttribute('data-theme', stored);
+        let theme = localStorage.getItem('kobean_theme_v2');
+        if (!theme) {
+          theme = 'sand';
+          localStorage.setItem('kobean_theme_v2', 'sand');
+          localStorage.setItem('kobean_theme', 'sand');
         }
-      } catch (e) {}
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'sand');
+      }
     })();
   </script>
   <style>
     :root, [data-theme="sand"], [data-theme="cream"] {
       --canvas: #faf8f5;
+      --sidebar: #f4f1eb;
       --card: #ffffff;
       --card-raised: #f3efea;
       --card-hover: #f8f5f0;
@@ -50,6 +56,7 @@
     }
     [data-theme="paper"] {
       --canvas: #fbfbfb;
+      --sidebar: #f4f5f7;
       --card: #ffffff;
       --card-raised: #f3f4f6;
       --card-hover: #f9fafb;
@@ -83,6 +90,7 @@
     }
     [data-theme="obsidian"] {
       --canvas: #090a0d;
+      --sidebar: #0e1014;
       --card: #111317;
       --card-raised: #181a20;
       --card-hover: #1c1f26;
@@ -116,6 +124,7 @@
     }
     [data-theme="nordic"] {
       --canvas: #0b0f17;
+      --sidebar: #0e1420;
       --card: #111723;
       --card-raised: #192233;
       --card-hover: #1e283b;
@@ -404,7 +413,7 @@
     .pane-left {
       width: 260px;
       border-right: 1px solid var(--border);
-      background: var(--canvas);
+      background: var(--sidebar);
       display: flex;
       flex-direction: column;
       flex-shrink: 0;
@@ -415,7 +424,7 @@
       min-width: 380px;
       display: flex;
       flex-direction: column;
-      background: var(--card);
+      background: var(--canvas);
       overflow: hidden;
       position: relative;
     }
@@ -423,7 +432,7 @@
     .pane-right {
       width: 400px;
       border-left: 1px solid var(--border);
-      background: var(--canvas);
+      background: var(--card);
       display: flex;
       flex-direction: column;
       flex-shrink: 0;
@@ -437,7 +446,9 @@
       align-items: center;
       justify-content: space-between;
       flex-shrink: 0;
-      background: var(--canvas);
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       gap: 12px;
     }
 
@@ -499,25 +510,38 @@
     }
 
     /* Test Case Rows in Grid */
+    #case-grid {
+      padding: 12px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
     .case-row {
-      padding: 12px 18px;
-      border-bottom: 1px solid var(--border);
+      padding: 11px 14px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
       display: flex;
       align-items: center;
       justify-content: space-between;
       cursor: pointer;
       font-size: 13px;
-      transition: all 0.12s ease-out;
+      transition: all 0.12s cubic-bezier(0.16, 1, 0.3, 1);
       background: var(--card);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
     }
 
     .case-row:hover {
-      background: var(--card-raised);
+      background: var(--card-hover);
+      border-color: var(--border-hover);
+      transform: translateY(-0.5px);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.04);
     }
 
     .case-row.active {
-      background: var(--card-raised);
-      border-left: 3px solid var(--accent);
+      background: var(--card);
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px var(--accent), 0 2px 8px var(--accent-glow);
     }
 
     .case-id {
@@ -526,12 +550,13 @@
       font-weight: 600;
       color: var(--text-muted);
       background: var(--card-raised);
-      padding: 2px 6px;
+      padding: 2px 7px;
       border-radius: 6px;
       border: 1px solid var(--border);
       margin-right: 10px;
       flex-shrink: 0;
       white-space: nowrap;
+      font-variant-numeric: tabular-nums;
     }
 
     .case-title {
@@ -542,22 +567,24 @@
       overflow: hidden;
       text-overflow: ellipsis;
       margin-right: 16px;
+      letter-spacing: -0.01em;
     }
 
-    /* Status Pills */
+    /* Status & Attribute Pills */
     .pill {
       display: inline-flex;
       align-items: center;
       gap: 5px;
-      padding: 3px 8px;
-      border-radius: 4px;
+      padding: 2px 8px;
+      border-radius: 9999px;
       font-size: 10px;
       font-weight: 600;
-      font-family: "SF Mono", "Geist Mono", monospace;
-      letter-spacing: 0.02em;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+      letter-spacing: 0.03em;
       text-transform: uppercase;
       white-space: nowrap;
       flex-shrink: 0;
+      line-height: 1.4;
     }
 
     .pill-passed { background: var(--pass-bg); color: var(--pass); border: 1px solid var(--pass-border); }
@@ -566,25 +593,43 @@
     .pill-skipped { background: var(--skip-bg); color: var(--skip); border: 1px solid var(--skip-border); }
     .pill-pending { background: var(--pending-bg); color: var(--pending); border: 1px solid var(--pending-border); }
 
-    .pill-priority-critical { background: rgba(244, 63, 94, 0.1); color: #f43f5e; border: 1px solid rgba(244, 63, 94, 0.25); }
-    .pill-priority-high { background: rgba(245, 158, 11, 0.1); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.25); }
-    .pill-priority-medium { background: rgba(59, 130, 246, 0.1); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.25); }
-    .pill-priority-low { background: rgba(148, 163, 184, 0.1); color: #94a3b8; border: 1px solid rgba(148, 163, 184, 0.25); }
+    .pill-priority-critical { background: #fee2e2; color: #991b1b; border: 1px solid rgba(153, 27, 27, 0.15); }
+    .pill-priority-high { background: #fef3c7; color: #92400e; border: 1px solid rgba(146, 64, 14, 0.15); }
+    .pill-priority-medium { background: #e0e7ff; color: #3730a3; border: 1px solid rgba(55, 48, 163, 0.15); }
+    .pill-priority-low { background: #f3f4f6; color: #374151; border: 1px solid rgba(55, 65, 81, 0.15); }
 
-    .pill-type-automated { background: rgba(6, 182, 212, 0.1); color: #22d3ee; border: 1px solid rgba(6, 182, 212, 0.25); }
-    .pill-type-manual { background: rgba(168, 85, 247, 0.1); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.25); }
+    .pill-type-automated { background: #e0f2fe; color: #0369a1; border: 1px solid rgba(3, 105, 161, 0.15); }
+    .pill-type-manual { background: #f3e8ff; color: #6b21a8; border: 1px solid rgba(107, 33, 168, 0.15); }
+    .pill-type-exploratory { background: #fef3c7; color: #92400e; border: 1px solid rgba(146, 64, 14, 0.15); }
+
+    [data-theme="obsidian"] .pill-priority-critical,
+    [data-theme="nordic"] .pill-priority-critical { background: rgba(244, 63, 94, 0.12); color: #f43f5e; border-color: rgba(244, 63, 94, 0.25); }
+    [data-theme="obsidian"] .pill-priority-high,
+    [data-theme="nordic"] .pill-priority-high { background: rgba(245, 158, 11, 0.12); color: #f59e0b; border-color: rgba(245, 158, 11, 0.25); }
+    [data-theme="obsidian"] .pill-priority-medium,
+    [data-theme="nordic"] .pill-priority-medium { background: rgba(99, 102, 241, 0.12); color: #818cf8; border-color: rgba(99, 102, 241, 0.25); }
+    [data-theme="obsidian"] .pill-priority-low,
+    [data-theme="nordic"] .pill-priority-low { background: rgba(148, 163, 184, 0.12); color: #94a3b8; border-color: rgba(148, 163, 184, 0.25); }
+
+    [data-theme="obsidian"] .pill-type-automated,
+    [data-theme="nordic"] .pill-type-automated { background: rgba(56, 189, 248, 0.12); color: #38bdf8; border-color: rgba(56, 189, 248, 0.25); }
+    [data-theme="obsidian"] .pill-type-manual,
+    [data-theme="nordic"] .pill-type-manual { background: rgba(168, 85, 247, 0.12); color: #c084fc; border-color: rgba(168, 85, 247, 0.25); }
+    [data-theme="obsidian"] .pill-type-exploratory,
+    [data-theme="nordic"] .pill-type-exploratory { background: rgba(245, 158, 11, 0.12); color: #f59e0b; border-color: rgba(245, 158, 11, 0.25); }
 
     /* Inputs & Textareas */
     input, textarea {
       background: var(--card);
       color: var(--text);
       border: 1px solid var(--border);
-      border-radius: 6px;
+      border-radius: 8px;
       padding: 7px 12px;
-      font-size: 13px;
+      font-size: 12.5px;
       font-family: inherit;
       outline: none;
-      transition: all 0.15s ease;
+      transition: border-color 0.12s ease, box-shadow 0.12s ease;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
     }
     input:focus, textarea:focus {
       border-color: var(--accent);
@@ -691,14 +736,19 @@
 
     /* Step Editor Cards */
     .step-card {
-      background: var(--card);
+      background: var(--card-raised);
       border: 1px solid var(--border);
-      border-radius: 8px;
+      border-radius: 12px;
       padding: 14px;
       display: flex;
       flex-direction: column;
       gap: 10px;
       position: relative;
+      transition: border-color 0.12s ease;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+    }
+    .step-card:hover {
+      border-color: var(--border-hover);
     }
     .step-number-badge {
       width: 22px;
@@ -1041,24 +1091,22 @@
       <div class="pane-center" id="pane-center">
         <div class="pane-header">
           <!-- Search bar input with flexible width -->
-          <div style="display: flex; align-items: center; gap: 8px; flex: 1; max-width: 320px;">
-            <div style="position: relative; flex: 1;">
-              <input type="text" id="search-input" placeholder="Search test cases..." style="width: 100%; padding-left: 32px;" oninput="handleSearch(this.value)" />
-              <svg style="position: absolute; left: 10px; top: 9px; color: var(--text-submuted);" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-            </div>
-            <span class="badge-pill" style="font-size: 10px; flex-shrink: 0;">⌘K</span>
+          <div style="display: flex; align-items: center; position: relative; flex: 1; max-width: 380px;">
+            <input type="text" id="search-input" placeholder="Search test cases... (⌘K)" style="width: 100%; height: 32px; padding-left: 32px; padding-right: 36px; border-radius: 8px; font-size: 12px;" oninput="handleSearch(this.value)" />
+            <svg style="position: absolute; left: 10px; top: 9px; color: var(--text-submuted); pointer-events: none;" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            <kbd style="position: absolute; right: 8px; top: 6px; font-size: 10px; padding: 1px 5px; pointer-events: none;">⌘K</kbd>
           </div>
 
           <!-- Filter Dropdowns for Priority and Type -->
           <div style="display: flex; align-items: center; gap: 6px;">
-            <select id="grid-filter-priority" onchange="handleGridFilterChange()" style="height: 28px; font-size: 11.5px; border-radius: 6px;" aria-label="Filter by priority">
+            <select id="grid-filter-priority" onchange="handleGridFilterChange()" style="height: 30px; font-size: 11.5px; border-radius: 8px;" aria-label="Filter by priority">
               <option value="all">All Priorities</option>
               <option value="critical">Critical</option>
               <option value="high">High</option>
               <option value="medium">Medium</option>
               <option value="low">Low</option>
             </select>
-            <select id="grid-filter-type" onchange="handleGridFilterChange()" style="height: 28px; font-size: 11.5px; border-radius: 6px;" aria-label="Filter by type">
+            <select id="grid-filter-type" onchange="handleGridFilterChange()" style="height: 30px; font-size: 11.5px; border-radius: 8px;" aria-label="Filter by type">
               <option value="all">All Types</option>
               <option value="automated">Automated</option>
               <option value="manual">Manual</option>
@@ -1068,7 +1116,7 @@
 
           <!-- Action Button: Guaranteed single-line non-wrapping -->
           <div style="display: flex; align-items: center; gap: 8px; flex-shrink: 0;">
-            <button class="btn btn-primary" onclick="toggleNewCaseInput()">
+            <button class="btn btn-primary" onclick="toggleNewCaseInput()" style="height: 30px; padding: 0 12px; font-size: 12px; font-weight: 500;">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
               New Test Case
             </button>
@@ -1689,6 +1737,7 @@ Scenario: Customer completes checkout with saved credit card
     function setAppTheme(theme) {
       document.documentElement.setAttribute('data-theme', theme);
       try {
+        localStorage.setItem('kobean_theme_v2', theme);
         localStorage.setItem('kobean_theme', theme);
       } catch (e) {}
       const sel = document.getElementById('theme-selector');
@@ -1700,7 +1749,7 @@ Scenario: Customer completes checkout with saved credit card
     async function init() {
       initLayoutState();
       try {
-        const savedTheme = localStorage.getItem('kobean_theme') || 'sand';
+        const savedTheme = localStorage.getItem('kobean_theme_v2') || 'sand';
         const sel = document.getElementById('theme-selector');
         if (sel) sel.value = savedTheme;
       } catch (e) {}

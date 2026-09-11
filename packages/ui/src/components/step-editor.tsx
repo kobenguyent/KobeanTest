@@ -69,11 +69,11 @@ export function StepEditor({ steps, onChange, readOnly = false }: StepEditorProp
         {steps.map((step, idx) => (
           <div
             key={idx}
-            className="group relative p-3 rounded-md bg-[var(--card)] border border-[var(--border)] transition-all duration-100 focus-within:border-[var(--accent)]"
+            className="group relative p-3 rounded-lg bg-[var(--canvas)] border border-[var(--border)] shadow-[0_1px_2px_rgba(0,0,0,0.02)] transition-all duration-150 focus-within:border-[var(--accent)] focus-within:ring-2 focus-within:ring-[var(--accent)]/15"
           >
             <div className="flex items-start gap-3">
               {/* Step Number Badge */}
-              <div className="flex items-center justify-center w-6 h-6 rounded bg-[var(--canvas)] border border-[var(--border)] text-[11px] font-mono tabular-nums text-[var(--muted)] shrink-0 mt-1">
+              <div className="flex items-center justify-center w-6 h-6 rounded-full bg-[var(--card)] border border-[var(--border)] text-[11px] font-mono tabular-nums text-[var(--muted)] shrink-0 mt-0.5 shadow-xs">
                 {step.step_number}
               </div>
 
@@ -86,7 +86,7 @@ export function StepEditor({ steps, onChange, readOnly = false }: StepEditorProp
                   <textarea
                     rows={2}
                     readOnly={readOnly}
-                    className="w-full text-[13px] bg-[var(--canvas)] text-[var(--text)] border border-[var(--border)] rounded p-2 focus:outline-none focus:border-[var(--accent)] resize-none"
+                    className="w-full text-[13px] bg-[var(--card)] text-[var(--text)] border border-[var(--border)] rounded-md p-2 focus:outline-none focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)]/20 resize-none transition-all"
                     placeholder="e.g. Enter card details and click Pay Now..."
                     value={step.action}
                     onChange={(e) => handleUpdateStep(idx, 'action', e.target.value)}
@@ -100,7 +100,7 @@ export function StepEditor({ steps, onChange, readOnly = false }: StepEditorProp
                   <textarea
                     rows={2}
                     readOnly={readOnly}
-                    className="w-full text-[13px] bg-[var(--canvas)] text-[var(--text)] border border-[var(--border)] rounded p-2 focus:outline-none focus:border-[var(--accent)] resize-none"
+                    className="w-full text-[13px] bg-[var(--card)] text-[var(--text)] border border-[var(--border)] rounded-md p-2 focus:outline-none focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)]/20 resize-none transition-all"
                     placeholder="e.g. 200 OK webhook received, receipt modal displayed..."
                     value={step.expected}
                     onChange={(e) => handleUpdateStep(idx, 'expected', e.target.value)}
@@ -115,7 +115,7 @@ export function StepEditor({ steps, onChange, readOnly = false }: StepEditorProp
                     type="button"
                     disabled={idx === 0}
                     onClick={() => handleMoveStep(idx, 'up')}
-                    className="p-1 text-[var(--muted)] hover:text-[var(--text)] disabled:opacity-20"
+                    className="p-1 text-[var(--muted)] hover:text-[var(--text)] disabled:opacity-20 rounded hover:bg-[var(--card)] transition-colors"
                     title="Move Step Up"
                     aria-label="Move Step Up"
                   >
@@ -125,7 +125,7 @@ export function StepEditor({ steps, onChange, readOnly = false }: StepEditorProp
                     type="button"
                     disabled={idx === steps.length - 1}
                     onClick={() => handleMoveStep(idx, 'down')}
-                    className="p-1 text-[var(--muted)] hover:text-[var(--text)] disabled:opacity-20"
+                    className="p-1 text-[var(--muted)] hover:text-[var(--text)] disabled:opacity-20 rounded hover:bg-[var(--card)] transition-colors"
                     title="Move Step Down"
                     aria-label="Move Step Down"
                   >
@@ -134,7 +134,7 @@ export function StepEditor({ steps, onChange, readOnly = false }: StepEditorProp
                   <button
                     type="button"
                     onClick={() => handleRemoveStep(idx)}
-                    className="p-1 text-rose-500 hover:text-rose-400"
+                    className="p-1 text-rose-500 hover:text-rose-600 rounded hover:bg-rose-500/10 transition-colors"
                     title="Delete Step"
                     aria-label="Delete Step"
                   >
@@ -151,7 +151,7 @@ export function StepEditor({ steps, onChange, readOnly = false }: StepEditorProp
         <button
           type="button"
           onClick={handleAddStep}
-          className="w-full py-2 text-[12px] font-medium text-[var(--text)] bg-[var(--card)] hover:bg-[var(--canvas)] border border-[var(--border)] rounded-md transition-colors duration-100 flex items-center justify-center gap-1.5"
+          className="w-full py-2 text-[12px] font-medium text-[var(--text)] bg-[var(--canvas)] hover:bg-[var(--card)] border border-[var(--border)] rounded-lg shadow-2xs hover:shadow-xs transition-all duration-150 flex items-center justify-center gap-1.5"
         >
           <span>+</span> Add Step
         </button>

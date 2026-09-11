@@ -4,6 +4,20 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>KobeanTest — 100% Localhost Test Management</title>
+    <script>
+      (function() {
+        try {
+          let theme = localStorage.getItem('kobean_theme_v2');
+          if (!theme) {
+            theme = 'warm_sand';
+            localStorage.setItem('kobean_theme_v2', 'warm_sand');
+          }
+          document.documentElement.setAttribute('data-theme', theme);
+        } catch (e) {
+          document.documentElement.setAttribute('data-theme', 'warm_sand');
+        }
+      })();
+    </script>
     <style>
       :root {
         --canvas: #faf8f5;

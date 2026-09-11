@@ -666,11 +666,11 @@ export function App() {
   return (
     <div className="w-screen h-screen flex flex-col bg-[var(--canvas)] text-[var(--text)] overflow-hidden font-sans">
       {/* Top Main Navigation Bar */}
-      <header className="h-12 border-b border-[var(--border)] bg-[var(--canvas)] flex items-center justify-between px-4 shrink-0 select-none z-20">
+      <header className="h-12 border-b border-[var(--border)] bg-[var(--canvas)]/80 backdrop-blur-xl flex items-center justify-between px-4 shrink-0 select-none z-20">
         <div className="flex items-center gap-4">
           {/* Brand */}
           <div className="flex items-center gap-2">
-            <div className="w-5 h-5 rounded bg-[var(--accent)] flex items-center justify-center text-[11px] font-bold text-white tracking-tighter">
+            <div className="w-5 h-5 rounded-md bg-[var(--accent)] flex items-center justify-center text-[11px] font-bold text-white tracking-tighter shadow-2xs">
               K
             </div>
             <span className="font-semibold text-[13px] tracking-tight">
@@ -688,13 +688,13 @@ export function App() {
           <div className="h-4 w-[1px] bg-[var(--border)]" />
 
           {/* Mode Switcher */}
-          <div className="flex items-center p-0.5 rounded bg-[var(--card)] border border-[var(--border)]">
+          <div className="flex items-center p-0.5 rounded-full bg-[var(--card)] border border-[var(--border)] shadow-2xs">
             <button
               type="button"
               onClick={() => setMode('authoring')}
-              className={`px-2.5 py-1 text-[11px] font-medium rounded transition-colors duration-100 ${
+              className={`px-3 py-1 text-[11px] font-medium rounded-full transition-all duration-150 ${
                 mode === 'authoring'
-                  ? 'bg-[var(--canvas)] text-[var(--text)] shadow-sm'
+                  ? 'bg-[var(--canvas)] text-[var(--text)] shadow-xs font-semibold'
                   : 'text-[var(--muted)] hover:text-[var(--text)]'
               }`}
             >
@@ -706,9 +706,9 @@ export function App() {
                 if (!activeRun) handleStartRun();
                 setMode('execution');
               }}
-              className={`px-2.5 py-1 text-[11px] font-medium rounded transition-colors duration-100 ${
+              className={`px-3 py-1 text-[11px] font-medium rounded-full transition-all duration-150 ${
                 mode === 'execution'
-                  ? 'bg-[var(--canvas)] text-[var(--text)] shadow-sm'
+                  ? 'bg-[var(--canvas)] text-[var(--text)] shadow-xs font-semibold'
                   : 'text-[var(--muted)] hover:text-[var(--text)]'
               }`}
             >
@@ -726,7 +726,7 @@ export function App() {
               setBottomConsoleTab('connections');
               setLayoutState((prev) => ({ ...prev, showBottomPanel: true }));
             }}
-            className="px-2.5 py-1 text-[11px] font-medium bg-[var(--card)] hover:bg-[var(--border)]/20 border border-[var(--border)] text-[var(--text)] rounded transition-colors duration-100 flex items-center gap-1.5"
+            className="px-2.5 py-1 text-[11px] font-medium bg-[var(--card)] hover:bg-[var(--border)]/30 border border-[var(--border)] text-[var(--text)] rounded-lg transition-all shadow-2xs flex items-center gap-1.5"
             title="Manage GitHub Repository Connections"
           >
             {githubAccount?.avatar_url ? (
@@ -751,7 +751,7 @@ export function App() {
             <button
               type="button"
               onClick={handleStartRun}
-              className="px-2.5 py-1 text-[11px] font-medium bg-[var(--card)] hover:bg-[var(--border)]/20 border border-[var(--border)] text-[var(--text)] rounded transition-colors duration-100 flex items-center gap-1.5"
+              className="px-3 py-1 text-[11px] font-medium bg-[var(--accent)] hover:opacity-90 text-white rounded-lg transition-all shadow-sm flex items-center gap-1.5"
             >
               <span>▶</span> Run Tests
             </button>
@@ -775,10 +775,10 @@ export function App() {
           <button
             type="button"
             onClick={() => setShowFloatingHud((prev) => !prev)}
-            className={`h-7 px-2 text-[11px] font-medium border rounded flex items-center gap-1 transition-colors ${
+            className={`h-7 px-2.5 text-[11px] font-medium border rounded-lg flex items-center gap-1.5 transition-all ${
               showFloatingHud
-                ? 'bg-[var(--accent)] text-white border-[var(--accent)]'
-                : 'bg-[var(--card)] hover:bg-[var(--border)]/30 text-[var(--muted)] hover:text-[var(--text)] border-[var(--border)]'
+                ? 'bg-[var(--accent)] text-white border-[var(--accent)] shadow-2xs'
+                : 'bg-[var(--card)] hover:bg-[var(--border)]/30 text-[var(--muted)] hover:text-[var(--text)] border-[var(--border)] shadow-2xs'
             }`}
             title="Toggle Always-on-Top Floating Mini-HUD"
           >
@@ -789,7 +789,7 @@ export function App() {
           <button
             type="button"
             onClick={() => setIsCommandOpen(true)}
-            className="h-7 px-2 text-[11px] font-mono text-[var(--muted)] hover:text-[var(--text)] bg-[var(--card)] border border-[var(--border)] rounded flex items-center gap-1.5"
+            className="h-7 px-2.5 text-[11px] font-mono text-[var(--muted)] hover:text-[var(--text)] bg-[var(--card)] border border-[var(--border)] rounded-lg flex items-center gap-1.5 shadow-2xs hover:bg-[var(--canvas)] transition-all"
           >
             <span>⌘K</span>
           </button>

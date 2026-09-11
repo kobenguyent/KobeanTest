@@ -70,17 +70,17 @@ export function CaseGrid({
   }, [filtered, onSelectCase]);
 
   return (
-    <div className="flex-1 h-full flex flex-col bg-[var(--card)] overflow-hidden">
+    <div className="flex-1 h-full flex flex-col bg-[var(--canvas)] overflow-hidden">
       {/* Action & Filter Header */}
-      <div className="flex items-center justify-between px-4 py-2.5 border-b border-[var(--border)] bg-[var(--canvas)] gap-3 shrink-0">
+      <div className="flex items-center justify-between px-4 py-2.5 border-b border-[var(--border)] bg-[var(--glass-bg,var(--canvas))] backdrop-blur-md gap-3 shrink-0">
         <div className="flex items-center gap-2 flex-1 max-w-md">
           <div className="relative w-full">
             <input
               type="text"
-              placeholder="Search cases... (Cmd + K)"
+              placeholder="Search cases... (⌘K)"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full h-8 pl-8 pr-3 text-[12px] bg-[var(--card)] text-[var(--text)] border border-[var(--border)] rounded focus:outline-none focus:border-[var(--accent)]"
+              className="w-full h-8 pl-8 pr-8 text-[12px] bg-[var(--card)] text-[var(--text)] border border-[var(--border)] rounded-lg focus:outline-none focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent)]/15 transition-all shadow-xs"
             />
             <svg
               className="absolute left-2.5 top-2.5 w-3.5 h-3.5 text-[var(--muted)]"
@@ -94,16 +94,15 @@ export function CaseGrid({
               <circle cx="11" cy="11" r="8" />
               <line x1="21" x2="16.65" y1="21" y2="16.65" />
             </svg>
+            <button
+              type="button"
+              onClick={onTriggerSearch}
+              title="Open Command Palette (⌘K)"
+              className="absolute right-1.5 top-1.5 text-[10px] font-mono px-1.5 py-0.5 rounded bg-[var(--card-raised)] hover:bg-[var(--card)] border border-[var(--border)] text-[var(--muted)] hover:text-[var(--text)] transition-colors"
+            >
+              ⌘K
+            </button>
           </div>
-
-          <button
-            type="button"
-            onClick={onTriggerSearch}
-            className="px-2 py-1 text-[11px] font-mono text-[var(--muted)] bg-[var(--card)] border border-[var(--border)] rounded hover:text-[var(--text)]"
-            title="Global Command Palette"
-          >
-            ⌘K
-          </button>
         </div>
 
         <div className="flex items-center gap-2">
@@ -138,7 +137,7 @@ export function CaseGrid({
           <button
             type="button"
             onClick={onOpenNewCase}
-            className="h-8 px-3 text-[12px] font-medium bg-[var(--accent)] text-white rounded hover:opacity-90 transition-opacity duration-100 flex items-center gap-1.5"
+            className="h-8 px-3 text-[12px] font-medium bg-[var(--accent)] text-white rounded-lg hover:brightness-105 active:scale-[0.98] transition-all duration-100 flex items-center gap-1.5 shadow-xs"
           >
             <span>+</span> New Case
           </button>
