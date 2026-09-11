@@ -753,10 +753,8 @@ pub fn dispatch_request<W: Write>(
     // GitHub Account Authentication routes: /api/v1/github/account
     if req.path == "/api/v1/github/account" {
         if req.method == "GET" {
-            match get_github_account(&conn) {
-                Ok(account) => return send_response(stream, 200, "OK", json!(account), Some(&req)),
-                Err(e) => return Err(e),
-            }
+            let account = get_github_account(&conn)?;
+            return send_response(stream, 200, "OK", json!(account), Some(&req));
         } else if req.method == "POST" {
             let body: Value = serde_json::from_slice(&req.body)?;
             let login = body["login"]
@@ -767,15 +765,11 @@ pub fn dispatch_request<W: Write>(
             let token = body["token"]
                 .as_str()
                 .ok_or_else(|| AppError::Validation("Missing 'token' field".to_string()))?;
-            match save_github_account(&conn, login, name, avatar_url, token) {
-                Ok(account) => return send_response(stream, 200, "OK", json!(account), Some(&req)),
-                Err(e) => return Err(e),
-            }
+            let account = save_github_account(&conn, login, name, avatar_url, token)?;
+            return send_response(stream, 200, "OK", json!(account), Some(&req));
         } else if req.method == "DELETE" {
-            match delete_github_account(&conn) {
-                Ok(()) => return send_response(stream, 200, "OK", json!({"status": "ok", "deleted": true}), Some(&req)),
-                Err(e) => return Err(e),
-            }
+            delete_github_account(&conn)?;
+            return send_response(stream, 200, "OK", json!({"status": "ok", "deleted": true}), Some(&req));
         }
     }
 
