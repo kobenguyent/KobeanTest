@@ -21,4 +21,4 @@ Inspired by the Superpowers methodology (Jesse Vincent / `obra/superpowers`): AI
    - Write only enough production code to make the test pass.
 5. **Step 5: Review & Blast Radius**
    - Verify that no callers or adjacent modules were broken.
-   - Run `pnpm typecheck` to guarantee zero compilation regressions.
+   - Run `bun run typecheck` to guarantee zero compilation regressions.

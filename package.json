@@ -2,19 +2,30 @@
   "name": "kobeantest-monorepo",
   "version": "0.1.0",
   "private": true,
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
   "scripts": {
-    "typecheck": "tsc --noEmit --project packages/core/tsconfig.json && tsc --noEmit --project packages/cli/tsconfig.json && tsc --noEmit --project packages/ui/tsconfig.json && tsc --noEmit --project apps/desktop/tsconfig.json",
-    "test": "node --experimental-strip-types --test packages/*/tests/*.test.js apps/*/tests/*.test.js",
-    "test:rust": "cd apps/desktop/src-tauri && cargo test",
-    "start": "cd apps/desktop/src-tauri && cargo run",
+    "dev": "cd apps/desktop/src-tauri && cargo run",
+    "tauri": "cd apps/desktop/src-tauri && cargo run",
+    "tauri:dev": "cd apps/desktop/src-tauri && cargo run",
     "desktop": "cd apps/desktop/src-tauri && cargo run",
+    "start": "cd apps/desktop/src-tauri && cargo run",
     "dev:daemon": "cd apps/desktop/src-tauri && cargo run",
+    "kobean": "bun packages/cli/src/index.ts",
+    "typecheck": "tsc --noEmit --project packages/core/tsconfig.json && tsc --noEmit --project packages/cli/tsconfig.json && tsc --noEmit --project packages/ui/tsconfig.json && tsc --noEmit --project apps/desktop/tsconfig.json",
+    "test": "bun test",
+    "test:rust": "cd apps/desktop/src-tauri && cargo test",
+    "build": "bun run build:desktop && bun run build:rust",
+    "build:desktop": "bun build apps/desktop/src/main.tsx --outdir apps/desktop/dist --minify",
     "build:rust": "cd apps/desktop/src-tauri && cargo build --release",
     "benchmark": "cd apps/desktop/src-tauri && cargo test --test benchmark_test -- --nocapture",
     "lint:clippy": "cd apps/desktop/src-tauri && cargo clippy -- -D clippy::unwrap_used -D clippy::expect_used -D warnings",
     "security:scan": "betterleaks git --staged --validation=false --config .betterleaks.toml"
   },
   "devDependencies": {
+    "@types/bun": "^1.3.6",
     "@types/node": "^26.5.0",
     "typescript": "^7.0.2"
   }

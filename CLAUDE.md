@@ -8,6 +8,8 @@
 - Canonical skills live in `.agents/skills/` with Claude adapters in `.claude/skills/`.
 
 ## Essential Commands
-- Typecheck: `pnpm run typecheck`
-- Secret scan: `betterleaks git --staged --validation=false --config .betterleaks.toml`
-- Rust check: `cd apps/desktop/src-tauri && cargo check` (once Phase 2 is scaffolded)
+- Typecheck: `bun run typecheck`
+- Test: `bun test`
+- Desktop App: `bun run dev` (or `bun run tauri`)
+- Secret scan: `bun run security:scan` (or `betterleaks git --staged --validation=false --config .betterleaks.toml`)
+- Rust check: `cd apps/desktop/src-tauri && cargo check`

@@ -142,6 +142,13 @@
       "status": "completed",
       "assignee": "AI Agent",
       "blocked_by": ["KB-TASK-019"]
+    },
+    {
+      "id": "KB-TASK-021",
+      "title": "Migrate Node runtime and pnpm package management to Bun (v1.3+) with developer workflow scripts",
+      "status": "completed",
+      "assignee": "AI Agent",
+      "blocked_by": ["KB-TASK-020"]
     }
   ]
 }

@@ -32,10 +32,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Node.js 22
-        uses: actions/setup-node@v4
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
         with:
-          node-version: 22
+          bun-version: latest
+
+      - name: Install Monorepo Dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Monorepo Typecheck
+        run: bun run typecheck
+
+      - name: Monorepo Tests
+        run: bun test
 
       - name: Setup Rust Stable
         uses: dtolnay/rust-toolchain@stable
@@ -46,9 +55,6 @@ jobs:
         uses: Swatinem/rust-cache@v2
         with:
           workspaces: apps/desktop/src-tauri
-
-      - name: Monorepo Node.js Tests
-        run: node --experimental-strip-types --test packages/*/tests/*.test.js apps/*/tests/*.test.js
 
       - name: Rust Core Integration Tests
         run: |

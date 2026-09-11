@@ -26,6 +26,38 @@ fn main() {
         },
     };
 
+    let should_open = !std::env::args().any(|arg| arg == "--headless" || arg == "--no-open")
+        && std::env::var("CI").is_err();
+
+    // Check if an existing KobeanTest daemon is already active on the session port
+    let is_already_running = if let Ok(mut stream) = std::net::TcpStream::connect(format!("127.0.0.1:{}", session.port)) {
+        use std::io::{Read, Write};
+        let _ = stream.set_read_timeout(Some(std::time::Duration::from_millis(250)));
+        if stream.write_all(b"GET /health HTTP/1.1\r\nHost: 127.0.0.1\r\nConnection: close\r\n\r\n").is_ok() {
+            let mut buf = [0u8; 512];
+            match stream.read(&mut buf) {
+                Ok(n) => String::from_utf8_lossy(&buf[..n]).contains("kobeantest-localhost-daemon"),
+                Err(_) => false,
+            }
+        } else {
+            false
+        }
+    } else {
+        false
+    };
+
+    if is_already_running {
+        println!("✓ Active KobeanTest daemon detected on http://127.0.0.1:{}", session.port);
+        println!("✓ Loopback Session Token: ~/.kobean/session.json (0600)");
+        println!("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+        if should_open {
+            let url = format!("http://127.0.0.1:{}", session.port);
+            println!("🚀 Launching KobeanTest Desktop Window at {}...", url);
+            open_desktop_window(&url);
+        }
+        return;
+    }
+
     // 2. Database Setup
     let db_path = kobean_dir.join("kobean.db");
     let mut conn = match Connection::open(&db_path) {
@@ -66,13 +98,15 @@ fn main() {
         }
     };
 
+    if bound_port != session.port {
+        println!("Notice: Port {} in use. Bound daemon to fallback port {}.", session.port, bound_port);
+        let _ = create_session(&kobean_dir, bound_port);
+    }
+
     println!("✓ Daemon Listening on http://127.0.0.1:{}", bound_port);
     println!("✓ Loopback Session Token: ~/.kobean/session.json (0600)");
     println!("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
     println!("Ready for local browser & CI test result ingestion.\n");
-
-    let should_open = !std::env::args().any(|arg| arg == "--headless" || arg == "--no-open")
-        && std::env::var("CI").is_err();
 
     if should_open {
         let url = format!("http://127.0.0.1:{}", bound_port);

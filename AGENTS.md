@@ -51,7 +51,7 @@ Do not guess project patterns. Read the authoritative domain rules in `.agents/r
 ## 3. Technology Stack Summary
 
 * **Desktop Runtime**: Tauri v2 (Rust 2021+ with `#![deny(clippy::unwrap_used, clippy::expect_used)]`).
-* **Frontend**: React 19, Vite, TypeScript (Strict Mode).
+* **Frontend & Package Runtime**: Bun v1.3+, React 19, TypeScript (Strict Mode).
 * **Design System**: Tailwind CSS v4, Radix Primitives / Shadcn UI, Lucide Icons (`strokeWidth={1.75}`).
 * **Local Storage**: SQLite 3 with WAL mode, FTS5 full-text search via `rusqlite`, and native point-in-time backup (`VACUUM INTO`).
 * **Data Security & Permissions**:
@@ -72,7 +72,7 @@ Do not guess project patterns. Read the authoritative domain rules in `.agents/r
 ## 5. Definition of Done (DoD)
 
 Before marking any task as complete:
-1. `pnpm run typecheck` passes with zero errors across all workspaces.
+1. `bun run typecheck` passes with zero errors across all workspaces.
 2. Code adheres strictly to Ponytail minimalism (no unused files, dead abstractions, or redundant state).
 3. UI components pass the Taste-Skill visual audit checklist.
 4. `betterleaks git --staged --validation=false --config .betterleaks.toml` passes with zero leaks.

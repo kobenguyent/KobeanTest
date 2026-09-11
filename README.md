@@ -29,9 +29,9 @@
 Launch the KobeanTest desktop application (Rust SQLite core, WAL mode, FTS5 engine, and interactive UI):
 
 ```bash
-pnpm start
+bun run dev
 # or
-pnpm run desktop
+bun run tauri
 ```
 
 When run, KobeanTest automatically:
@@ -44,16 +44,15 @@ When run, KobeanTest automatically:
 ## 🛠️ How to Run & Build
 
 ### Prerequisites
-* **Node.js**: `v22+`
-* **pnpm**: `v10+` or `v11+`
-* **Rust**: `1.85+` stable with Cargo
+* **Bun**: `v1.3+` (`bun -v`)
+* **Rust**: `1.85+` stable with Cargo (`cargo -V`)
 
 ### 1. Launch the Desktop Application / Dev Mode
 ```bash
 # Launch application (auto-opens the interface)
-pnpm start
+bun run dev
 # or
-pnpm run desktop
+bun run tauri
 
 # Run headless without auto-launching UI (e.g. for background CI daemons):
 cd apps/desktop/src-tauri && cargo run -- --headless
@@ -62,7 +61,7 @@ cd apps/desktop/src-tauri && cargo run -- --headless
 ### 2. Compile & Run the Native Release Binary (2.7 MB)
 ```bash
 # Build the ultra-compact, optimized native release binary:
-pnpm run build:rust
+bun run build:rust
 
 # Run the compiled native desktop executable directly:
 ./apps/desktop/src-tauri/target/release/kobean-desktop
@@ -75,13 +74,15 @@ pnpm run build:rust
 ### 4. Ingest CI Test Results (`@kobean/cli`)
 ```bash
 # Check daemon status
-node packages/cli/dist/index.js status
+bun run kobean status
+# or directly:
+./packages/cli/src/index.ts status
 
-# Ingest any standard JUnit XML test report (Playwright, Cypress, Pytest, Jest)
-node packages/cli/dist/index.js ingest \
+# Ingest any standard test report (Bun, Playwright, Cypress, Pytest, Jest, Cucumber)
+bun run kobean report \
   --project <project_id> \
   --file ./reports/junit.xml \
-  --run "Nightly Regression Build #142"
+  --name "Nightly Regression Build #142"
 ```
 
 ---
@@ -123,20 +124,23 @@ Tested directly against the compiled Rust SQLite core on local NVMe storage:
 ## 🧪 Testing & Verification Commands
 
 ```bash
-# Run all monorepo unit tests across core, ui, cli, and desktop (13/13 passing)
-pnpm test
+# Run all monorepo unit tests across core, ui, cli, and desktop (35/35 passing)
+bun test
 
-# Run Rust core integration tests (14/14 passing)
-pnpm run test:rust
+# Run strict TypeScript typecheck across all 4 packages
+bun run typecheck
+
+# Run Rust core integration tests
+bun run test:rust
 
 # Run automated SLA performance benchmarks (FTS5 < 5ms, 10k ingest < 2000ms)
-pnpm run benchmark
+bun run benchmark
 
 # Verify zero .unwrap() or .expect() in production Rust code
-pnpm run lint:clippy
+bun run lint:clippy
 
 # Run Betterleaks zero-secret scan
-pnpm run security:scan
+bun run security:scan
 ```
 
 ---

@@ -12,6 +12,7 @@
     "./status": "./src/status.ts"
   },
   "scripts": {
+    "test": "bun test",
     "typecheck": "tsc --noEmit"
   }
 }

@@ -5,10 +5,10 @@ pre-commit:
       run: betterleaks git --staged --validation=false --config .betterleaks.toml
       tags: security
     typecheck:
-      run: pnpm typecheck
+      run: bun run typecheck
       tags: quality
 
 commit-msg:
   commands:
     conventional-commit:
-      run: npx --yes commitlint --edit {1}
+      run: bunx --yes commitlint --edit {1}

@@ -107,8 +107,28 @@ impl HttpServer {
     }
 
     pub fn start(&self) -> Result<(u16, Arc<Mutex<bool>>), AppError> {
-        let listener = TcpListener::bind(format!("127.0.0.1:{}", self.port))?;
-        let actual_port = listener.local_addr()?.port();
+        let (listener, actual_port) = match TcpListener::bind(format!("127.0.0.1:{}", self.port)) {
+            Ok(l) => {
+                let p = l.local_addr()?.port();
+                (l, p)
+            }
+            Err(e) if e.kind() == std::io::ErrorKind::AddrInUse => {
+                // ADR-0003: Graceful port conflict fallback to 4001..4010
+                let mut fallback = None;
+                for p in (self.port + 1)..=(self.port + 10) {
+                    if let Ok(l) = TcpListener::bind(format!("127.0.0.1:{}", p)) {
+                        let actual = l.local_addr()?.port();
+                        fallback = Some((l, actual));
+                        break;
+                    }
+                }
+                match fallback {
+                    Some(f) => f,
+                    None => return Err(AppError::Io(e)),
+                }
+            }
+            Err(e) => return Err(AppError::Io(e)),
+        };
         listener.set_nonblocking(true)?;
 
         let token = self.token.clone();

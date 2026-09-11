@@ -15,7 +15,8 @@
     "./jest": "./src/reporters/jest.ts"
   },
   "scripts": {
-    "test": "node --experimental-strip-types --test tests/*.test.js"
+    "test": "bun test",
+    "kobean": "bun ./src/index.ts"
   },
   "dependencies": {
     "@kobean/core": "workspace:*"

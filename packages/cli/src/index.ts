@@ -1,3 +1,4 @@
+#!/usr/bin/env bun
 import fs from 'node:fs';
 import path from 'node:path';
 import os from 'node:os';
@@ -237,7 +238,10 @@ export async function runCli(args: string[]): Promise<number> {
     let repoConnectionId = process.env['KOBEAN_REPO_CONNECTION_ID'] || '';
 
     for (let i = 3; i < args.length; i++) {
-      if (args[i] === '--playwright') {
+      if (args[i] === '--bun') {
+        framework = 'bun';
+        execCommand = args[i + 1] && !args[i + 1]!.startsWith('--') ? args[++i]! : 'bun test';
+      } else if (args[i] === '--playwright') {
         framework = 'playwright';
         execCommand = args[i + 1] && !args[i + 1]!.startsWith('--') ? args[++i]! : 'npx playwright test';
       } else if (args[i] === '--cypress') {
@@ -245,7 +249,7 @@ export async function runCli(args: string[]): Promise<number> {
         execCommand = args[i + 1] && !args[i + 1]!.startsWith('--') ? args[++i]! : 'npx cypress run';
       } else if (args[i] === '--jest') {
         framework = 'jest';
-        execCommand = args[i + 1] && !args[i + 1]!.startsWith('--') ? args[++i]! : 'npm test';
+        execCommand = args[i + 1] && !args[i + 1]!.startsWith('--') ? args[++i]! : 'bun test';
       } else if (args[i] === '--vitest') {
         framework = 'vitest';
         execCommand = args[i + 1] && !args[i + 1]!.startsWith('--') ? args[++i]! : 'npx vitest run';
@@ -273,9 +277,10 @@ export async function runCli(args: string[]): Promise<number> {
     if (!framework && !execCommand) {
       console.error(`
 Usage:
+  kobean run --bun ["bun test"]
   kobean run --playwright ["npx playwright test"]
   kobean run --cypress ["npx cypress run"]
-  kobean run --jest ["npm test"]
+  kobean run --jest ["bun test"]
   kobean run --vitest ["npx vitest run"]
   kobean run --pytest ["pytest"]
   kobean run --cmd "<command>" --format <junit|playwright-json|cucumber-json> --file <path>
@@ -288,7 +293,13 @@ Usage:
     let format = customFormat || 'junit';
     const env = { ...process.env };
 
-    if (framework === 'playwright') {
+    if (framework === 'bun') {
+      reportFile = reportFile || path.join(tmpDir, `kobean-bun-${Date.now()}.xml`);
+      format = 'junit';
+      if (!execCommand.includes('--reporter')) {
+        execCommand += ` --reporter=junit --reporter-outfile=${reportFile}`;
+      }
+    } else if (framework === 'playwright') {
       reportFile = reportFile || path.join(tmpDir, `kobean-pw-${Date.now()}.json`);
       format = 'playwright-json';
       env['PLAYWRIGHT_JSON_OUTPUT_NAME'] = reportFile;
@@ -395,6 +406,7 @@ KobeanTest CLI (@kobean/cli)
 
 Usage:
   kobean status                                Check local daemon health
+  kobean run --bun ["cmd"]                     Run Bun tests & ingest results
   kobean run --playwright ["cmd"]              Run Playwright tests & ingest results
   kobean run --cypress ["cmd"]                 Run Cypress tests & ingest results
   kobean run --jest ["cmd"]                    Run Jest tests & ingest results

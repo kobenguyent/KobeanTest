@@ -8,9 +8,8 @@ KobeanTest is a high-performance, minimalist, 100% localhost-first test manageme
 
 Before running KobeanTest, verify that your local machine has the standard developer toolchains installed:
 
-* **Node.js**: `v22+` (`node -v`)
-* **pnpm**: `v10+` or `v11+` (`pnpm -v`)
-* **Rust**: `1.85+` stable with Cargo (`cargo -v`)
+* **Bun**: `v1.3+` (`bun -v`)
+* **Rust**: `1.85+` stable with Cargo (`cargo -V`)
 * **Operating System**: macOS (Apple Silicon or Intel), Windows 10/11, or Linux (Ubuntu 22.04+)
 
 All test data, media attachments, full-text indexes, and credentials live strictly on your local machine (`127.0.0.1`) under `~/.kobean/`. Zero cloud databases, zero telemetry.
@@ -24,9 +23,9 @@ All test data, media attachments, full-text indexes, and credentials live strict
 To compile and launch the complete application with a single command:
 
 ```bash
-pnpm start
+bun run dev
 # or
-pnpm run desktop
+bun run tauri
 ```
 
 When started, KobeanTest automatically:
@@ -43,7 +42,7 @@ To build the self-contained, optimized native release binary:
 
 ```bash
 # Build the native release binary:
-pnpm run build:rust
+bun run build:rust
 
 # Run the compiled native executable directly:
 ./apps/desktop/src-tauri/target/release/kobean-desktop
@@ -141,7 +140,9 @@ Submit 10,000+ test results from your CI pipelines (GitHub Actions, GitLab CI, l
 
 ### Step 1: Discover Daemon Status
 ```bash
-node packages/cli/dist/index.js status
+bun run kobean status
+# or directly:
+./packages/cli/src/index.ts status
 ```
 Output:
 ```text
@@ -149,16 +150,16 @@ Output:
   Token discovered in ~/.kobean/session.json
 ```
 
-### Step 2: Ingest JUnit XML Reports
+### Step 2: Ingest Test Reports
 ```bash
-node packages/cli/dist/index.js ingest \
+bun run kobean report \
   --project <project_id> \
   --file ./reports/junit.xml \
-  --run "CI Pipeline Run #101"
+  --name "CI Pipeline Run #101"
 ```
 
-The CLI uses a zero-dependency, regex-based JUnit XML parser that automatically:
-- Extracts test titles, classnames, execution durations, failure messages, and stack traces.
+The CLI uses a zero-dependency, regex-based JUnit XML and JSON parser that automatically:
+- Extracts test titles, classnames, execution durations, failure messages, attachments, and stack traces.
 - Auto-provisions new test cases matching the `automation_id` if they do not yet exist.
 - Prevents duplicate runs using network `idempotency_key` headers.
 
@@ -168,19 +169,24 @@ The CLI uses a zero-dependency, regex-based JUnit XML parser that automatically:
 
 ### Run Monorepo Unit Tests
 ```bash
-pnpm test
+bun test
 ```
-*Executes all 13 Node.js test suites across `@kobean/core`, `@kobean/ui`, `@kobean/cli`, and `@kobean/desktop` in ~100ms.*
+*Executes all 35 tests across `@kobean/core`, `@kobean/ui`, `@kobean/cli`, and `@kobean/desktop` in ~140ms.*
+
+### Run Strict TypeScript Typecheck
+```bash
+bun run typecheck
+```
 
 ### Run Rust Core Integration Tests
 ```bash
-pnpm run test:rust
+bun run test:rust
 ```
-*Executes all 14 Rust integration test suites (WAL migrations, composite FKs, atomic backup, media manager, HTTP daemon).*
+*Executes all Rust integration test suites (WAL migrations, composite FKs, atomic backup, media manager, HTTP daemon).*
 
 ### Run Automated SLA Performance Benchmarks
 ```bash
-pnpm run benchmark
+bun run benchmark
 ```
 *Verifies strict SLAs against SQLite:*
 - **FTS5 Porter Full-Text Search**: `< 5.0ms` SLA (Measured: **`1.86ms`**).
@@ -189,8 +195,8 @@ pnpm run benchmark
 ### Run Zero-Panic & Secret Scanners
 ```bash
 # Verify zero .unwrap() or .expect() in production Rust
-pnpm run lint:clippy
+bun run lint:clippy
 
 # Verify zero secrets or API tokens staged
-pnpm run security:scan
+bun run security:scan
 ```
