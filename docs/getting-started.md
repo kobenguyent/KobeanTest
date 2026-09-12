@@ -62,6 +62,8 @@ cd apps/desktop/src-tauri && cargo run -- --headless
 
 KobeanTest is designed for keyboard-driven efficiency with **sub-16ms** UI responsiveness (60–120 FPS):
 
+![KobeanTest three-pane workspace](assets/screenshots/app-overview.png)
+
 ### 1. Suite Tree Explorer (Left Pane)
 - Organize tests hierarchically with nested folders and test case count badges.
 - Click `+ New Suite` to add modules or features.
@@ -84,11 +86,15 @@ KobeanTest is designed for keyboard-driven efficiency with **sub-16ms** UI respo
 - Press <kbd>⌘K</kbd> anywhere in the application to open the quick action palette.
 - Instantly search all test cases, create cases, or trigger test runs.
 
+![KobeanTest command palette](assets/screenshots/command-palette.png)
+
 ---
 
 ## 5. Test Run Execution & Zero-Latency Triage
 
 Click **"▶ Run Tests"** or switch to **"Execution Run"** mode in the top header:
+
+![KobeanTest execution run view](assets/screenshots/execution-run.png)
 
 1. **0ms Optimistic Keyboard Triage**:
    - <kbd>P</kbd>: Mark test **Passed** and advance.
@@ -131,6 +137,8 @@ When testing external mobile simulators, emulators, or web apps, Alt-Tabbing bre
 3. Displays the current test case ID, title, active step action, and expected result.
 4. Execute tests directly from the widget with <kbd>P</kbd>, <kbd>F</kbd>, <kbd>S</kbd>, <kbd>[</kbd>, and <kbd>]</kbd>.
 5. Synchronizes bidirectionally with the main window in `< 1ms` via native `BroadcastChannel('kobean_hud_sync')`.
+
+![KobeanTest floating mini-hud](assets/screenshots/mini-hud.png)
 
 ---
 
