@@ -11,6 +11,22 @@
 
 ---
 
+## 🖼️ Real App Screenshots
+
+### Three-Pane Workspace
+![KobeanTest three-pane workspace](docs/assets/screenshots/app-overview.png)
+
+### Execution Run View
+![KobeanTest execution run view](docs/assets/screenshots/execution-run.png)
+
+### Command Palette
+![KobeanTest command palette](docs/assets/screenshots/command-palette.png)
+
+### Floating Mini-HUD
+![KobeanTest floating mini-hud](docs/assets/screenshots/mini-hud.png)
+
+---
+
 ## ⚡ Highlights & Features
 
 * 🔒 **100% Localhost & Air-Gapped**: Zero cloud database dependencies. All data (test cases, suites, runs, execution notes, screenshots) lives strictly on your local NVMe SSD (`127.0.0.1`) under `~/.kobean/`.
